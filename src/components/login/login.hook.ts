@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
-import useCreateState from 'react-hook-setstate';
+import { useStateStatus } from '../../util/use-state-status';
 import {
   handleSignin,
   handleSignout,
   isAppAuthenticated,
+  subscribeUserStatus,
 } from '../settings/settings.service';
 import { Status } from '../statuses/statuses.interface';
 
 export const useLoginState = () => {
-  const [state, setState] = useCreateState({
-    status: Status.initializing,
+  const [state, setState] = useStateStatus({
     authenticated: false,
     signedin: false,
   });
@@ -37,6 +37,17 @@ export const useLoginState = () => {
     };
 
     execute();
+    return () => {
+      mounted = false;
+    };
+  }, [setState]);
+
+  useEffect(() => {
+    let mounted = true;
+    subscribeUserStatus((signedin) => {
+      if (!mounted) return;
+      setState({ signedin });
+    });
     return () => {
       mounted = false;
     };

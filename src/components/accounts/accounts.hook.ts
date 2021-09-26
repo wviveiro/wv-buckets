@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useCreateState from 'react-hook-setstate';
+import { useStateStatus } from '../../util/use-state-status';
 import { getGlobalSettings, saveGlobalSettings } from '../settings';
 import { getSpreadsheetDetails } from '../sheet-api';
 import { Status } from '../statuses/statuses.interface';
@@ -7,15 +7,13 @@ import { AccountsStatesInterface } from './accounts.interface';
 import { initialiseAccounts } from './accounts.service';
 
 export const useAccountsState = () => {
-  const [state, setState] = useCreateState<AccountsStatesInterface>({
-    status: Status.initializing,
+  const [state, setState] = useStateStatus<AccountsStatesInterface>({
     defaultAccount: '',
     accounts: [],
     spreadsheets: {},
     addAccountModal: false,
     newaccount: '',
   });
-  const disabled = state.status !== Status.loaded;
 
   const handleModalState = (addAccountModal: boolean) => {
     return () => {
@@ -56,21 +54,14 @@ export const useAccountsState = () => {
 
   const makeAccountDefault = (index: number) => {
     return () => {
-      const currentDefault = state.defaultAccount;
       const selected = state.accounts[index];
-
-      const accounts = state.accounts.slice(0);
-      accounts.splice(index, 1);
-      accounts.push(currentDefault);
 
       const globalSettings = getGlobalSettings();
       globalSettings.spid = selected;
-      globalSettings.accounts = accounts;
       saveGlobalSettings(globalSettings);
 
       setState({
         defaultAccount: selected,
-        accounts,
       });
     };
   };
@@ -87,7 +78,6 @@ export const useAccountsState = () => {
   }, [setState]);
 
   return {
-    disabled,
     state,
     handleModalState,
     handleChangeNewAccount,

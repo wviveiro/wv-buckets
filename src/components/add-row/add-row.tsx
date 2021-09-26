@@ -1,63 +1,65 @@
 import React from 'react';
 import CreatableSelect from 'react-select/creatable';
-import { InputGroup } from '../../ui-components/input-group';
-import { Loading } from '../loading';
-import { Status } from '../statuses/statuses.interface';
 import { AddRowState } from './add-row.hook';
+import { Form, Modal, Button } from 'react-bootstrap';
 
 export const AddRow: React.FC = () => {
-  const { disabled, state, handleCategoryChange, changeField, onSave } =
+  const { state, handleCategoryChange, changeField, onSave, onClose } =
     AddRowState();
 
-  if (state.status === Status.initializing) {
-    return <Loading>Initializing</Loading>;
-  }
-
   return (
-    <div>
-      <h2>Add Row</h2>
-      <hr />
-      <InputGroup>
-        <label>Category</label>
-        <CreatableSelect
-          isClearable
-          placeholder="Category"
-          onChange={handleCategoryChange}
-          options={state.categories}
-          isDisabled={disabled}
-        />
-      </InputGroup>
-      <InputGroup>
-        <label>Date</label>
-        <input
-          type="date"
-          value={state.date}
-          onChange={changeField('date')}
-          disabled={disabled}
-        />
-      </InputGroup>
-      <InputGroup>
-        <label>Amount</label>
-        <input
-          type="number"
-          value={state.amount}
-          onChange={changeField('amount')}
-          disabled={disabled}
-        />
-      </InputGroup>
-
-      <InputGroup>
-        <label>Message</label>
-        <input
-          type="text"
-          value={state.message}
-          onChange={changeField('message')}
-          disabled={disabled}
-        />
-      </InputGroup>
-      <button disabled={disabled} onClick={onSave}>
-        Save
-      </button>
-    </div>
+    <Modal show={state.open} animation={false}>
+      <Modal.Header>
+        <Modal.Title>Edit Row</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Group className="mb-3">
+          <Form.Label>Category</Form.Label>
+          <CreatableSelect
+            isClearable
+            placeholder="Category"
+            options={state.categories}
+            isDisabled={state.disabled}
+            onChange={handleCategoryChange}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            type="date"
+            disabled={state.disabled}
+            onChange={changeField('date')}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Amount</Form.Label>
+          <Form.Control
+            type="number"
+            disabled={state.disabled}
+            onChange={changeField('amount')}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Message</Form.Label>
+          <Form.Control
+            as="textarea"
+            disabled={state.disabled}
+            onChange={changeField('message')}
+          />
+        </Form.Group>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            disabled={state.disabled}
+            onClick={onClose}
+          >
+            Close
+          </Button>
+          <Button variant="success" disabled={state.disabled} onClick={onSave}>
+            Add
+          </Button>
+        </Modal.Footer>
+      </Modal.Body>
+    </Modal>
   );
 };

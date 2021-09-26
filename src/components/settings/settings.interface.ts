@@ -1,5 +1,3 @@
-import { Status } from '../statuses/statuses.interface';
-
 export const bucketStorageName = 'wvbucketSettings';
 
 export interface SettingsInterface {
@@ -12,7 +10,6 @@ export interface SettingsInterface {
 }
 
 export interface SettingsStateInterface extends SettingsInterface {
-  status: Status;
   errors: {
     [key in keyof SettingsInterface]?: string;
   };

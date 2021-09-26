@@ -6,8 +6,9 @@ import {
   RouteComponentProps,
   RouteProps,
 } from 'react-router-dom';
+import { Layout } from '../../ui-components/layout/layout';
 import { Loading } from '../loading';
-import { isAppAuthenticated } from '../settings';
+import { isAppAuthenticated, subscribeUserStatus } from '../settings';
 import { Status } from '../statuses/statuses.interface';
 
 interface WrapperComponentProps extends RouteComponentProps {
@@ -40,6 +41,17 @@ const WrapperComponent: React.FC<WrapperComponentProps> = ({
       });
   }, [setState]);
 
+  useEffect(() => {
+    let mounted = true;
+    subscribeUserStatus((signedin) => {
+      if (!mounted) return;
+      setState({ signedin });
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [setState]);
+
   if (state.status !== Status.loaded) {
     return <Loading>Authenticating</Loading>;
   }
@@ -48,7 +60,11 @@ const WrapperComponent: React.FC<WrapperComponentProps> = ({
     return <Redirect to="/login" />;
   }
 
-  return <Component {...props} />;
+  return (
+    <Layout>
+      <Component {...props} />
+    </Layout>
+  );
 };
 
 export const AuthRoute: React.FC<RouteProps> = ({

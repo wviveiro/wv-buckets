@@ -90,7 +90,7 @@ export const isAppAuthenticated = async (
 
         // Listen for sign-in state changes.
         gapi.auth2.getAuthInstance().isSignedIn.listen(changeAuthStatus);
-        signedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+        signedIn = (await gapi.auth2.getAuthInstance()).isSignedIn.get();
 
         // Handle the initial sign-in state.
         changeAuthStatus(signedIn);

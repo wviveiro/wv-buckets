@@ -30,6 +30,19 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    button {
+        border: unset;
+        background: unset;
+      &.navbar-toggler {
+        border: unset;
+      }
+      &:focus, &.navbar-toggler:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: unset
+      }
+    }
+
     // Text color scheme
     ${['danger', 'success'].map(
       (color) => css`

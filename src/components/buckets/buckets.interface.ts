@@ -1,5 +1,4 @@
 import { SheetSchema } from '../sheet-api';
-import { Status } from '../statuses/statuses.interface';
 
 export interface WvBucketRow {
   date: string;
@@ -9,7 +8,6 @@ export interface WvBucketRow {
 }
 
 export interface BucketsStateInterface {
-  status: Status;
   rows: BucketEntity;
   search: string;
 }

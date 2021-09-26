@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import useCreateState from 'react-hook-setstate';
+import { useStateStatus } from '../../util/use-state-status';
 import { getSheet } from '../sheet-api';
 import { Status } from '../statuses/statuses.interface';
 import { BucketsStateInterface, wvbucket } from './buckets.interface';
 import { transformRowsIntoBuckets } from './buckets.service';
 
 export const useBucketsState = () => {
-  const [state, setState] = useCreateState<BucketsStateInterface>({
-    status: Status.initializing,
+  const [state, setState] = useStateStatus<BucketsStateInterface>({
     rows: { ids: [], entities: {} },
     search: '',
   });

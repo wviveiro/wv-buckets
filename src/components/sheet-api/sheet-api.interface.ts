@@ -29,5 +29,11 @@ export interface SpreadsheetDetailsResult {
     properties: {
       title: string;
     };
+    sheets: {
+      properties: {
+        title: string;
+        sheetId: number;
+      };
+    }[];
   };
 }

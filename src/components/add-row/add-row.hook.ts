@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import useCreateState from 'react-hook-setstate';
 import { wvbucket } from '../buckets/buckets.interface';
 import { transformRowsIntoOptions } from '../buckets/buckets.service';
 import { addSheetRows, getSheet } from '../sheet-api';
@@ -7,17 +6,24 @@ import { Status } from '../statuses/statuses.interface';
 import { AddRowStateInterface } from './add-row.interface';
 import { format } from 'date-fns';
 import { OptionType } from '../../util/option.interface';
+import { useStateStatus } from '../../util/use-state-status';
+import { alert } from '../alert/alert';
+
+export const modalRow = {
+  open: () => {
+    // Not implemented
+  },
+};
 
 export const AddRowState = () => {
-  const [state, setState] = useCreateState<AddRowStateInterface>({
-    status: Status.initializing,
+  const [state, setState] = useStateStatus<AddRowStateInterface>({
     categories: [],
     category: null,
     date: '',
     message: '',
     amount: 0,
+    open: false,
   });
-  const disabled = state.status !== Status.loaded;
 
   const handleCategoryChange = (option: OptionType | null) => {
     setState({ category: option });
@@ -27,6 +33,10 @@ export const AddRowState = () => {
     return (ev: React.ChangeEvent<HTMLInputElement>) => {
       setState({ [field]: ev.target.value });
     };
+  };
+
+  const onClose = () => {
+    setState({ open: false });
   };
 
   const onSave = async () => {
@@ -49,7 +59,7 @@ export const AddRowState = () => {
       ]);
     } catch (error) {
       setState({ status: Status.loaded });
-      return alert('Something went wrong trying to save the data');
+      return alert('Something went wrong trying to save the data', 'danger');
     }
 
     const now = new Date();
@@ -59,31 +69,41 @@ export const AddRowState = () => {
       date: format(now, 'yyyy-MM-dd'),
       message: '',
       amount: 0,
+      open: false,
     });
-    alert('Data saved successfully');
+    alert('Data saved successfully', 'success');
   };
 
   useEffect(() => {
-    getSheet(wvbucket)
-      .then((rows) => {
-        const now = new Date();
+    if (state.open) {
+      setState({ status: Status.loading });
 
-        setState({
-          status: Status.loaded,
-          categories: transformRowsIntoOptions(rows),
-          date: format(now, 'yyyy-MM-dd'),
+      getSheet(wvbucket)
+        .then((rows) => {
+          const now = new Date();
+          setState({
+            status: Status.loaded,
+            categories: transformRowsIntoOptions(rows),
+            date: format(now, 'yyyy-MM-dd'),
+          });
+        })
+        .catch((reason) => {
+          alert(reason.message, 'danger');
         });
-      })
-      .catch((reason) => {
-        alert(reason.message);
-      });
+    }
+  }, [setState, state.open]);
+
+  useEffect(() => {
+    modalRow.open = () => {
+      setState({ open: true });
+    };
   }, [setState]);
 
   return {
-    disabled,
     state,
     handleCategoryChange,
     changeField,
     onSave,
+    onClose,
   };
 };

@@ -1,17 +1,11 @@
 import React from 'react';
 import { Grid, GridItem } from '../../ui-components/grid/grid';
 import { InputGroup } from '../../ui-components/input-group';
-import { Loading } from '../loading';
-import { Status } from '../statuses/statuses.interface';
 import { useSettingsState } from './settings.hook';
 import { SettingsProps } from './settings.interface';
 
 export const Settings: React.FC<SettingsProps> = (props) => {
-  const { disabled, state, handleChange, onSave } = useSettingsState(props);
-
-  if (state.status === Status.initializing) {
-    return <Loading>Initializing...</Loading>;
-  }
+  const { state, handleChange, onSave } = useSettingsState(props);
 
   return (
     <div>
@@ -41,7 +35,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
             <input
               type="text"
               value={state.client_id}
-              disabled={disabled}
+              disabled={state.disabled}
               onChange={handleChange('client_id')}
             />
             {state.errors.client_id && (
@@ -55,7 +49,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
             <input
               type="text"
               value={state.apikey}
-              disabled={disabled}
+              disabled={state.disabled}
               onChange={handleChange('apikey')}
             />
             {state.errors.apikey && (
@@ -78,7 +72,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
           <input
             type="text"
             value={state.spid}
-            disabled={disabled}
+            disabled={state.disabled}
             onChange={handleChange('spid')}
           />
           {state.errors.spid && (
@@ -87,7 +81,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         </GridItem>
       </Grid>
       <hr />
-      <button onClick={onSave} disabled={disabled}>
+      <button onClick={onSave} disabled={state.disabled}>
         Save
       </button>
     </div>

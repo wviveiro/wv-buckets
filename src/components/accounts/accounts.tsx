@@ -8,7 +8,6 @@ import { useAccountsState } from './accounts.hook';
 
 export const Accounts: React.FC = () => {
   const {
-    disabled,
     state,
     handleModalState,
     handleChangeNewAccount,
@@ -34,20 +33,6 @@ export const Accounts: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{state.spreadsheets[state.defaultAccount].title}</td>
-            <td>
-              <a
-                href={`https://docs.google.com/spreadsheets/d/${state.defaultAccount}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open
-              </a>
-            </td>
-            <td>Default</td>
-            <td />
-          </tr>
           {state.accounts.map((account, i) => (
             <tr key={i}>
               <td>{state.spreadsheets[account].title}</td>
@@ -61,9 +46,16 @@ export const Accounts: React.FC = () => {
                 </a>
               </td>
               <td>
-                <button disabled={disabled} onClick={makeAccountDefault(i)}>
-                  Make Default
-                </button>
+                {state.defaultAccount === account ? (
+                  `Default`
+                ) : (
+                  <button
+                    disabled={state.disabled}
+                    onClick={makeAccountDefault(i)}
+                  >
+                    Make Default
+                  </button>
+                )}
               </td>
               <td />
             </tr>
@@ -71,7 +63,7 @@ export const Accounts: React.FC = () => {
         </tbody>
       </table>
       <br />
-      <button disabled={disabled} onClick={handleModalState(true)}>
+      <button disabled={state.disabled} onClick={handleModalState(true)}>
         Add Account
       </button>
       {state.addAccountModal && (
@@ -81,17 +73,17 @@ export const Accounts: React.FC = () => {
             <label>Spreadsheet ID</label>
             <input
               type="text"
-              disabled={disabled}
+              disabled={state.disabled}
               placeholder="Add new spreadsheetid"
               value={state.newaccount}
               onChange={handleChangeNewAccount}
             />
           </InputGroup>
           <Grid>
-            <button disabled={disabled} onClick={handleModalState(false)}>
+            <button disabled={state.disabled} onClick={handleModalState(false)}>
               Cancel
             </button>
-            <button disabled={disabled} onClick={onAddAccount}>
+            <button disabled={state.disabled} onClick={onAddAccount}>
               Create
             </button>
           </Grid>

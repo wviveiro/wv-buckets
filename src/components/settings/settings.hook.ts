@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import useCreateState from 'react-hook-setstate';
+import { useStateStatus } from '../../util/use-state-status';
 import { Status } from '../statuses/statuses.interface';
 import {
-  bucketStorageName,
   SettingsInterface,
   SettingsProps,
   SettingsStateInterface,
@@ -15,14 +14,12 @@ import {
 } from './settings.service';
 
 export const useSettingsState = (props: SettingsProps) => {
-  const [state, setState] = useCreateState<SettingsStateInterface>({
-    status: Status.initializing,
+  const [state, setState] = useStateStatus<SettingsStateInterface>({
     apikey: '',
     client_id: '',
     spid: '',
     errors: {},
   });
-  const disabled = state.status !== Status.loaded;
 
   const handleChange = (field: keyof typeof state) => {
     return (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,13 +48,23 @@ export const useSettingsState = (props: SettingsProps) => {
       );
     }
 
-    const globalSettings: Partial<SettingsInterface> = required.reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr]: state[curr],
-      }),
-      {}
+    let globalSettings = getGlobalSettings();
+
+    const accounts = (globalSettings.accounts || []).filter(
+      (account) => account !== state.spid
     );
+
+    globalSettings = {
+      ...globalSettings,
+      ...required.reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr]: state[curr],
+        }),
+        {}
+      ),
+      accounts: [...accounts, state.spid],
+    };
 
     saveGlobalSettings(globalSettings);
 
@@ -91,7 +98,6 @@ export const useSettingsState = (props: SettingsProps) => {
   }, [setState]);
 
   return {
-    disabled,
     state,
     handleChange,
     onSave,

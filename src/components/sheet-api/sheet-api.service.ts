@@ -22,7 +22,7 @@ export const getSheet = async <T = any>(
       return sheet.columns.reduce((acc, column, index) => {
         let value: string | number = columns[index];
         if (column.type === 'number') {
-          value = +columns[index].replace('$', '');
+          value = +columns[index].replace('$', '').replace(/,/gi, '');
         }
 
         return {
@@ -100,9 +100,22 @@ export const getSpreadsheetDetails = async (
 
   return gapi.client.sheets.spreadsheets.get({
     spreadsheetId,
-    fields: ['properties.title'],
+    fields:
+      'sheets.properties.title,sheets.properties.sheetId,properties.title',
   });
 };
+
+export const getSheetDetails = async <T>(
+  spreadsheetId: string,
+  sheet: SheetSchema<T>
+) => {
+  const spreadsheet = await getSpreadsheetDetails(spreadsheetId);
+  return spreadsheet.result.sheets.find(
+    (_sheet) => _sheet.properties.title === sheet.name
+  );
+};
+
+// export const deleteRows = async ()
 
 const treatError = (e: any) => {
   if (typeof e === 'string') throw new Error(e);

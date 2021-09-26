@@ -6,14 +6,10 @@ export const initialiseAccounts = async (
   callback: (state: Partial<AccountsStatesInterface>) => void
 ) => {
   const globalSettings = getGlobalSettings();
-  const defaultAccount = await getSpreadsheetDetails(globalSettings.spid);
+
   const state: Partial<AccountsStatesInterface> = {
     defaultAccount: globalSettings.spid,
-    spreadsheets: {
-      [globalSettings.spid]: {
-        title: defaultAccount.result.properties.title,
-      },
-    },
+    spreadsheets: {},
     accounts: [],
   };
 
