@@ -1,11 +1,16 @@
-import { setGlobalSettings } from 'components/global-settings';
+import {
+  getGlobalSettings,
+  setGlobalSettings,
+} from 'components/global-settings';
 import { useStateStatus } from 'components/util/use-state-status';
 import React from 'react';
 import { SettingsStateInterface } from './settings.interface';
 
 export const useSettingsState = () => {
+  const globalSettings = getGlobalSettings();
+
   const [state, setState] = useStateStatus<SettingsStateInterface>({
-    client_id: '',
+    client_id: globalSettings.client_id,
     error: {},
   });
 
