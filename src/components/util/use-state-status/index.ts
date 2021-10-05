@@ -1,5 +1,5 @@
 import useCreateState from 'react-hook-setstate';
-import { Status } from '../components/statuses/statuses.interface';
+import { Status } from '../status';
 
 type UseStateStatus<T> = T & {
   status: Status;

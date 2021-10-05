@@ -6,12 +6,18 @@ import { GlobalStyleTheme } from './global-style.interface';
  * Global CSS
  */
 export const GlobalStyle = createGlobalStyle`
+    
     html, body, #root {
       height: 100%;
     }
 
     * {
         box-sizing: border-box;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    h1, h2 {
+      font-weight: bold;
     }
   `;
 

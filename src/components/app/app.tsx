@@ -1,23 +1,25 @@
 import { Status } from 'components/util/status';
 import React from 'react';
 import { useAppState } from './app.hook';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/brands';
 import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import { LayoutTheme } from 'components/global-style';
 import { SplashScreen } from 'components/splash-screen';
+import { Settings } from 'components/settings';
+import { AlertsCreator } from 'components/alert';
 
 export const App: React.FC = () => {
   const { state } = useAppState();
 
-  if (state.status === Status.initializing) {
-    return (
-      <LayoutTheme>
+  return (
+    <LayoutTheme>
+      {state.status === Status.initializing ? (
         <SplashScreen hasSpinner={true}>Initialising</SplashScreen>
-      </LayoutTheme>
-    );
-  }
-
-  return <div />;
+      ) : !state.authenticated ? (
+        <Settings />
+      ) : null}
+      <AlertsCreator />
+    </LayoutTheme>
+  );
 };
