@@ -1,20 +1,6 @@
-export const bucketStorageName = 'wvbucketSettings';
-
-export interface SettingsInterface {
-  apikey: string;
+export interface SettingsStateInterface {
   client_id: string;
-  /** Default spreadsheet id */
-  spid: string;
-  /** Other spreadsheet ids to manage multiple accounts */
-  accounts?: string[];
-}
-
-export interface SettingsStateInterface extends SettingsInterface {
-  errors: {
-    [key in keyof SettingsInterface]?: string;
+  error: {
+    client_id?: string;
   };
-}
-
-export interface SettingsProps {
-  onAuthenticate?: () => void;
 }

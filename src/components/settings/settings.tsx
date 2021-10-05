@@ -1,18 +1,17 @@
 import React from 'react';
-import { Grid, GridItem } from '../../ui-components/grid/grid';
-import { InputGroup } from '../../ui-components/input-group';
+import { SettingsContainer } from './settings.styled';
+import { Form, Button } from 'react-bootstrap';
 import { useSettingsState } from './settings.hook';
-import { SettingsProps } from './settings.interface';
 
-export const Settings: React.FC<SettingsProps> = (props) => {
-  const { state, handleChange, onSave } = useSettingsState(props);
+export const Settings: React.FC = () => {
+  const { state, onChangeClient, onSave } = useSettingsState();
 
   return (
-    <div>
-      <h2>Settings Page</h2>
+    <SettingsContainer>
+      <h1>Authenticate</h1>
       <p>
-        In order to this project to work, we need you to create a new project
-        on&nbsp;
+        In order for this project to work, we need you to create a new project
+        on{' '}
         <a
           href="https://console.developers.google.com"
           target="_blank"
@@ -23,69 +22,42 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         .
       </p>
       <p>
-        Create a new project and OAUTH 2.0 credential and add the Client ID and
-        API Key below. This information will be retained on your device and we
-        will not save it online
+        Create a new project and OAUTH 2.0 credential and add the Client ID
+        below. This information will be retained on your device and we will not
+        save it online
       </p>
-      <hr />
-      <Grid>
-        <GridItem size={1}>
-          <InputGroup>
-            <label>Client ID</label>
-            <input
-              type="text"
-              value={state.client_id}
-              disabled={state.disabled}
-              onChange={handleChange('client_id')}
-            />
-            {state.errors.client_id && (
-              <p className="text-danger">{state.errors.client_id}</p>
-            )}
-          </InputGroup>
-        </GridItem>
-        <GridItem size={1}>
-          <InputGroup>
-            <label>API Key</label>
-            <input
-              type="text"
-              value={state.apikey}
-              disabled={state.disabled}
-              onChange={handleChange('apikey')}
-            />
-            {state.errors.apikey && (
-              <p className="text-danger">{state.errors.apikey}</p>
-            )}
-          </InputGroup>
-        </GridItem>
-      </Grid>
-      <hr />
       <p>
-        Set the google sheet id below. It is going to be used as your database.
-        The spreadsheet id can on found on the URL like the example
-        https://docs.google.com/spreadsheets/d/
-        <strong className="text-danger">spreedsheet_id</strong>/edit
+        To know more about how create credentials{' '}
+        <a
+          href="https://developers.google.com/workspace/guides/create-credentials"
+          target="_blank"
+          rel="noreferrer"
+        >
+          click here <i className="fas fa-external-link-alt" />
+        </a>
       </p>
       <hr />
-      <Grid>
-        <GridItem>
-          <label>Spreadsheet ID</label>
-          <input
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Client ID</Form.Label>
+          <Form.Control
             type="text"
-            value={state.spid}
-            disabled={state.disabled}
-            onChange={handleChange('spid')}
+            placeholder="Enter Client ID from Oauth 2"
+            value={state.client_id}
+            onChange={onChangeClient}
           />
-          {state.errors.spid && (
-            <p className="text-danger">{state.errors.spid}</p>
+          {state.error.client_id && (
+            <Form.Control.Feedback type="invalid" style={{ display: 'block' }}>
+              {state.error.client_id}
+            </Form.Control.Feedback>
           )}
-        </GridItem>
-      </Grid>
-      <hr />
-      <button onClick={onSave} disabled={state.disabled}>
-        Save
-      </button>
-    </div>
+        </Form.Group>
+      </Form>
+      <div className="d-grid">
+        <Button variant="success" onClick={onSave}>
+          Save
+        </Button>
+      </div>
+    </SettingsContainer>
   );
 };
-
-export default Settings;
