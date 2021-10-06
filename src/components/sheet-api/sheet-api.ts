@@ -34,3 +34,11 @@ export const authenticate = async () => {
     gapi.load('client:auth2', init);
   });
 };
+
+export const subscribeUserSignedStatus = (
+  callback: (signedin: boolean) => void
+) => {
+  const instance = gapi.auth2.getAuthInstance();
+  instance.isSignedIn.listen(callback);
+  callback(instance.isSignedIn.get());
+};
