@@ -1,9 +1,6 @@
 import { setAlert } from 'components/alert';
 import { getGlobalSettings } from 'components/global-settings';
-import {
-  authenticate,
-  subscribeUserSignedStatus,
-} from 'components/sheet-api/sheet-api';
+import { authenticate, subscribeUserSignedStatus } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { createContext, useContext, useEffect } from 'react';
 import useCreateState from 'react-hook-setstate';

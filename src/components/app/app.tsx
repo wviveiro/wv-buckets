@@ -8,6 +8,7 @@ import { LayoutTheme } from 'components/global-style';
 import { SplashScreen } from 'components/splash-screen';
 import { Settings } from 'components/settings';
 import { AlertsCreator } from 'components/alert';
+import { Login } from 'components/login';
 
 export const App: React.FC = () => {
   const { state } = useAppState();
@@ -18,7 +19,9 @@ export const App: React.FC = () => {
         <SplashScreen hasSpinner={true}>Initialising</SplashScreen>
       ) : !state.authenticated ? (
         <Settings />
-      ) : null}
+      ) : (
+        <Login />
+      )}
       <AlertsCreator />
     </LayoutTheme>
   );
