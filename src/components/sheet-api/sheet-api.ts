@@ -1,5 +1,8 @@
 import { getGlobalSettings } from 'components/global-settings';
 
+/**
+ * Authenticate application using client id from local storage
+ */
 export const authenticate = async () => {
   const globalSettings = getGlobalSettings();
   if (!globalSettings.client_id || !gapi)
@@ -33,4 +36,22 @@ export const authenticate = async () => {
 
     gapi.load('client:auth2', init);
   });
+};
+
+/**
+ * Subscribe user to receive user sign status
+ */
+export const subscribeUserSignedStatus = (
+  callback: (signedin: boolean) => void
+) => {
+  const instance = gapi.auth2.getAuthInstance();
+  instance.isSignedIn.listen(callback);
+  callback(instance.isSignedIn.get());
+};
+
+/**
+ * Start signin process
+ */
+export const onSignIn = () => {
+  return gapi.auth2.getAuthInstance().signIn();
 };

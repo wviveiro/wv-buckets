@@ -1,6 +1,6 @@
 import { setAlert } from 'components/alert';
 import { getGlobalSettings } from 'components/global-settings';
-import { authenticate } from 'components/sheet-api/sheet-api';
+import { authenticate, subscribeUserSignedStatus } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { createContext, useContext, useEffect } from 'react';
 import useCreateState from 'react-hook-setstate';
@@ -18,10 +18,12 @@ export const useAppState = () => {
 
   // Verify if app is authenticated
   useEffect(() => {
+    let mounted = true;
     const settings = getGlobalSettings();
     const { client_id } = settings;
 
     const notAuthenticated = () => {
+      if (!mounted) return;
       return setState({
         authenticated: false,
         signedin: false,
@@ -35,12 +37,27 @@ export const useAppState = () => {
     } else {
       // Verify if authentication is valid
       authenticate()
-        .then(() => {})
+        .then(() => {
+          // App authenticated, check if user is logged in
+          subscribeUserSignedStatus((signedin) => {
+            if (!mounted) return;
+            return setState({
+              authenticated: true,
+              signedin,
+              status: Status.loaded,
+            });
+          });
+        })
         .catch((reason) => {
+          if (!mounted) return;
           setAlert(reason, 'danger');
           notAuthenticated();
         });
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [setState]);
 
   return {
