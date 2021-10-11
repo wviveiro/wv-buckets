@@ -1,6 +1,9 @@
 export interface GlobalStyleTheme {
   colors: {
     primary: string;
+    background: string;
+    textWhite: string;
+    textBlack: string;
   };
 }
 

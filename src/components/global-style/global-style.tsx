@@ -27,6 +27,9 @@ export const GlobalStyle = createGlobalStyle`
 const theme: GlobalStyleTheme = {
   colors: {
     primary: 'var(--bs-primary)',
+    background: '#3264a8',
+    textWhite: '#FFF',
+    textBlack: '#000',
   },
 };
 

@@ -41,12 +41,33 @@ export const authenticate = async () => {
 /**
  * Subscribe user to receive user sign status
  */
+let _subscriptions: ((signedin: boolean) => void)[] = [];
+let _subscriptionInitialised = false;
 export const subscribeUserSignedStatus = (
   callback: (signedin: boolean) => void
 ) => {
+  _subscriptions.push(callback);
+
+  if (!_subscriptionInitialised) {
+    const subscriptionCaller = (signedin: boolean) => {
+      _subscriptions.forEach((callback) => callback(signedin));
+    };
+
+    const instance = gapi.auth2.getAuthInstance();
+    instance.isSignedIn.listen(subscriptionCaller);
+  }
+
+  return () => {
+    _subscriptions = _subscriptions.filter((_cb) => _cb !== callback);
+  };
+};
+
+/**
+ * Verify if user is signed in
+ */
+export const isSignedIn = () => {
   const instance = gapi.auth2.getAuthInstance();
-  instance.isSignedIn.listen(callback);
-  callback(instance.isSignedIn.get());
+  return instance.isSignedIn.get();
 };
 
 /**
@@ -54,4 +75,14 @@ export const subscribeUserSignedStatus = (
  */
 export const onSignIn = () => {
   return gapi.auth2.getAuthInstance().signIn();
+};
+
+export const getUserFirstName = async () => {
+  const profile = await gapi.auth2
+    .getAuthInstance()
+    .currentUser.get()
+    .getBasicProfile();
+
+  console.log('Profile = ', profile);
+  return profile;
 };

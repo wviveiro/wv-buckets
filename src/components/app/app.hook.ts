@@ -1,6 +1,10 @@
 import { setAlert } from 'components/alert';
 import { getGlobalSettings } from 'components/global-settings';
-import { authenticate, subscribeUserSignedStatus } from 'components/sheet-api';
+import {
+  authenticate,
+  isSignedIn,
+  subscribeUserSignedStatus,
+} from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { createContext, useContext, useEffect } from 'react';
 import useCreateState from 'react-hook-setstate';
@@ -39,13 +43,17 @@ export const useAppState = () => {
       authenticate()
         .then(() => {
           // App authenticated, check if user is logged in
-          subscribeUserSignedStatus((signedin) => {
+          subscribeUserSignedStatus((signedin: boolean) => {
             if (!mounted) return;
             return setState({
-              authenticated: true,
               signedin,
-              status: Status.loaded,
             });
+          });
+
+          return setState({
+            status: Status.loaded,
+            authenticated: true,
+            signedin: isSignedIn(),
           });
         })
         .catch((reason) => {
@@ -63,4 +71,8 @@ export const useAppState = () => {
   return {
     state,
   };
+};
+
+export const useAppContext = () => {
+  return useContext(AppContext);
 };
