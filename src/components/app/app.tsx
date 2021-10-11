@@ -12,10 +12,15 @@ import { Router } from 'components/router';
 import { Login } from 'components/login';
 
 export const App: React.FC = () => {
-  const { state } = useAppState();
+  const { state, onAddAccount } = useAppState();
 
   return (
-    <AppContext.Provider value={state}>
+    <AppContext.Provider
+      value={{
+        ...state,
+        onAddAccount,
+      }}
+    >
       <LayoutTheme>
         {state.status === Status.initializing ? (
           <SplashScreen hasSpinner={true}>Initialising</SplashScreen>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMainState } from './main.hook';
 import { MainContainer } from './main.styled';

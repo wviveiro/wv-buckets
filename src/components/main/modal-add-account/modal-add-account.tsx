@@ -4,16 +4,23 @@ import { Link } from 'react-router-dom';
 import { useModalAddAccountState } from './modal-add-account.hook';
 import { ModalAddAccountProps } from './modal-add-account.interface';
 import { ModalAddAccountContainer } from './modal-add-account.styled';
+import BottomModal from 'components/ui-components/bottom-modal';
 
 export const ModalAddAccount: React.FC<ModalAddAccountProps> = (props) => {
-  const { state, type, onCancel, onModalClose } =
-    useModalAddAccountState(props);
+  const {
+    state,
+    type,
+    onCancel,
+    onModalClose,
+    handleCreateButton,
+    onChangeValue,
+  } = useModalAddAccountState(props);
 
   return (
     <ModalAddAccountContainer show={state.show} onClose={onModalClose}>
       {type === 'create-account' ? (
         <>
-          <h2>Create Account</h2>
+          <BottomModal.Title>Create Account</BottomModal.Title>
           <p className="disclaimer">
             Accounts are based on spreadsheets in your google account. You can
             create a new spreadsheet by filling the title below. If you rather
@@ -31,7 +38,7 @@ export const ModalAddAccount: React.FC<ModalAddAccountProps> = (props) => {
         </>
       ) : type === 'import-account' ? (
         <>
-          <h2>Import Account</h2>
+          <BottomModal.Title>Import Account</BottomModal.Title>
           <p className="disclaimer">
             Accounts are based on spreadsheets in your google account. You can
             import a spreadsheet by filling its URL below. If you rather create
@@ -43,11 +50,25 @@ export const ModalAddAccount: React.FC<ModalAddAccountProps> = (props) => {
               type="text"
               placeholder="Spreadsheet URL"
               disabled={state.disabled}
+              value={state.url}
+              onChange={onChangeValue('url')}
             />
+            {state.error.url && (
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: 'block' }}
+              >
+                {state.error.url}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
         </>
       ) : null}
-      <button disabled={state.disabled} className="create-account">
+      <button
+        disabled={state.disabled}
+        className="create-account"
+        onClick={handleCreateButton}
+      >
         {type === 'create-account' ? 'Create Account' : 'Import Account'}
       </button>
       <button

@@ -77,12 +77,15 @@ export const onSignIn = () => {
   return gapi.auth2.getAuthInstance().signIn();
 };
 
-export const getUserFirstName = async () => {
-  const profile = await gapi.auth2
-    .getAuthInstance()
-    .currentUser.get()
-    .getBasicProfile();
-
-  console.log('Profile = ', profile);
-  return profile;
+/**
+ * Get details of a spreadsheet
+ */
+export const getSpreadsheetDetails = async (
+  spreadsheetId: string
+): Promise<gapi.client.Request<gapi.client.sheets.Spreadsheet>> => {
+  return gapi.client.sheets.spreadsheets.get({
+    spreadsheetId,
+    fields:
+      'sheets.properties.title,sheets.properties.sheetId,properties.title',
+  });
 };

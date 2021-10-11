@@ -2,10 +2,6 @@ import { BottomModal } from 'components/ui-components/bottom-modal';
 import styled from 'styled-components/macro';
 
 export const ModalAddAccountContainer = styled(BottomModal)`
-  h2 {
-    margin-bottom: 20px;
-  }
-
   .disclaimer {
     font-style: italic;
     font-size: 0.85rem;

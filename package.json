@@ -49,6 +49,7 @@
     "@types/date-fns": "^2.6.0",
     "@types/gapi": "0.0.41",
     "@types/gapi.auth2": "0.0.55",
+    "@types/gapi.client.sheets": "^4.0.20201029",
     "@types/react": "^17.0.21",
     "@types/react-bootstrap": "^0.32.26",
     "@types/react-dom": "^17.0.9",

@@ -8,18 +8,20 @@ export const useBottomModalState = (props: BottomModalProps) => {
     show: false,
   });
 
+  const { show, onOpen, onClose } = props;
+
   useEffect(() => {
-    if (state.show === props.show) return;
-    setState({ show: props.show });
+    if (state.show === show) return;
+    setState({ show });
 
     setTimeout(() => {
-      if (props.show && props.onOpen) {
-        props.onOpen();
-      } else if (!props.show && props.onClose) {
-        props.onClose();
+      if (show && onOpen) {
+        onOpen();
+      } else if (!show && onClose) {
+        onClose();
       }
     }, bottomModalTransitionMilliseconds);
-  }, [props.show, setState, state.show, props.onClose, props.onOpen]);
+  }, [show, setState, state.show, onClose, onOpen]);
 
   return { state };
 };

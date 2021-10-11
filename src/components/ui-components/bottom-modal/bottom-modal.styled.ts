@@ -5,6 +5,8 @@ export const bottomModalTransitionMilliseconds = 250;
 
 export const BottomModalContainerInner = styled.div``;
 
+export const BottomModalTitleContainer = styled.h2``;
+
 export const BottomModalContainer = styled.div<BottomModalProps>`
   position: fixed;
   top: 0;
@@ -22,6 +24,10 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
       : css`
           background-color: transparent;
         `}
+
+  ${BottomModalTitleContainer} {
+    margin-bottom: 20px;
+  }
 
   ${BottomModalContainerInner} {
     color: ${(props) => props.theme.colors.textBlack};

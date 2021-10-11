@@ -1,5 +1,8 @@
 import { setAlert } from 'components/alert';
-import { getGlobalSettings } from 'components/global-settings';
+import {
+  getGlobalSettings,
+  setGlobalSettings,
+} from 'components/global-settings';
 import {
   authenticate,
   isSignedIn,
@@ -8,17 +11,25 @@ import {
 import { Status } from 'components/util/status';
 import { createContext, useContext, useEffect } from 'react';
 import useCreateState from 'react-hook-setstate';
-import { AppContextInterface } from './app.interface';
+import {
+  AccountInterface,
+  AppContextInterface,
+  AppStateInterface,
+} from './app.interface';
 
 export const AppContext = createContext<AppContextInterface>({
   status: Status.initializing,
   authenticated: false,
   signedin: false,
+  accounts: [],
+  onAddAccount: () => {
+    // Not implemented
+  },
 });
 
 export const useAppState = () => {
   const context = useContext(AppContext);
-  const [state, setState] = useCreateState<AppContextInterface>({ ...context });
+  const [state, setState] = useCreateState<AppStateInterface>({ ...context });
 
   // Verify if app is authenticated
   useEffect(() => {
@@ -54,6 +65,10 @@ export const useAppState = () => {
             status: Status.loaded,
             authenticated: true,
             signedin: isSignedIn(),
+            accounts: settings.accounts.map((account) => ({
+              title: '',
+              spreadsheetId: account,
+            })),
           });
         })
         .catch((reason) => {
@@ -68,8 +83,19 @@ export const useAppState = () => {
     };
   }, [setState]);
 
+  const onAddAccount = (account: AccountInterface) => {
+    const globalSettings = getGlobalSettings();
+    setGlobalSettings({
+      accounts: [...globalSettings.accounts, account.spreadsheetId],
+    });
+    setState({
+      accounts: [...state.accounts, account],
+    });
+  };
+
   return {
     state,
+    onAddAccount,
   };
 };
 

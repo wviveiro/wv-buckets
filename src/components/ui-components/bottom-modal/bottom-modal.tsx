@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {
   BottomModalContainer,
   BottomModalContainerInner,
+  BottomModalTitleContainer,
 } from './bottom-modal.styled';
 import { BottomModalProps } from './bottom-modal.interface';
 import { useBottomModalState } from './bottom-modal.hook';
@@ -17,3 +18,10 @@ export const BottomModal: React.FC<BottomModalProps> = (props) => {
     </BottomModalContainer>
   );
 };
+
+const _default = {
+  default: BottomModal,
+  Title: BottomModalTitleContainer,
+};
+
+export default _default;
