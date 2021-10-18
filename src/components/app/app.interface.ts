@@ -1,10 +1,16 @@
+import { DatabaseInterface } from 'components/schemas';
 import { Status } from 'components/util/status';
 
 export interface AppStateInterface {
   status: Status;
   authenticated: boolean;
   signedin: boolean;
-  accounts: AccountInterface[];
+  accounts: {
+    initialised: boolean;
+    loading: boolean;
+    error: false | string;
+    entries: AccountInterface[];
+  };
 }
 
 export interface AppContextInterface extends AppStateInterface {
@@ -14,4 +20,5 @@ export interface AppContextInterface extends AppStateInterface {
 export interface AccountInterface {
   title: string;
   spreadsheetId: string;
+  schemas?: DatabaseInterface;
 }

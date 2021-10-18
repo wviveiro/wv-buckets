@@ -1,5 +1,18 @@
 import { getGlobalSettings } from 'components/global-settings';
 
+export const treatGoogleAPIError = (error: any): string => {
+  console.error(error);
+  if (error?.message) {
+    return error.message;
+  } else if (error?.details) {
+    return error.details;
+  } else if (error?.result?.error?.message) {
+    return error?.result?.error?.message;
+  } else {
+    return 'Something went wrong trying to authenticated. Check your log';
+  }
+};
+
 /**
  * Authenticate application using client id from local storage
  */
@@ -19,16 +32,7 @@ export const authenticate = async () => {
           scope: 'https://www.googleapis.com/auth/spreadsheets',
         });
       } catch (error: any) {
-        console.error(error);
-        if (error?.message) {
-          return reject(error.message);
-        } else if (error?.details) {
-          return reject(error.details);
-        } else {
-          return reject(
-            'Something went wrong trying to authenticated. Check your log'
-          );
-        }
+        return reject(treatGoogleAPIError(error));
       }
 
       resolve(true);
@@ -83,9 +87,17 @@ export const onSignIn = () => {
 export const getSpreadsheetDetails = async (
   spreadsheetId: string
 ): Promise<gapi.client.Request<gapi.client.sheets.Spreadsheet>> => {
-  return gapi.client.sheets.spreadsheets.get({
-    spreadsheetId,
-    fields:
-      'sheets.properties.title,sheets.properties.sheetId,properties.title',
+  return new Promise(async (resolve, reject) => {
+    try {
+      const details = await gapi.client.sheets.spreadsheets.get({
+        spreadsheetId,
+        fields:
+          'sheets.properties.title,sheets.properties.sheetId,properties.title',
+      });
+
+      return resolve(details);
+    } catch (error: any) {
+      return reject(treatGoogleAPIError(error));
+    }
   });
 };

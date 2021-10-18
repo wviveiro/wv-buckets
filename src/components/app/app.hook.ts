@@ -3,6 +3,7 @@ import {
   getGlobalSettings,
   setGlobalSettings,
 } from 'components/global-settings';
+import { initialiseDatabase } from 'components/schemas';
 import {
   authenticate,
   isSignedIn,
@@ -52,7 +53,7 @@ export const useAppState = () => {
     } else {
       // Verify if authentication is valid
       authenticate()
-        .then(() => {
+        .then(async () => {
           // App authenticated, check if user is logged in
           subscribeUserSignedStatus((signedin: boolean) => {
             if (!mounted) return;
@@ -61,14 +62,18 @@ export const useAppState = () => {
             });
           });
 
+          // const accounts = await initialiseDatabase(settings.accounts);
+
           return setState({
             status: Status.loaded,
             authenticated: true,
             signedin: isSignedIn(),
-            accounts: settings.accounts.map((account) => ({
-              title: '',
-              spreadsheetId: account,
-            })),
+            accounts: {
+              initialised: false,
+              loading: false,
+              error: false,
+              entries: [],
+            },
           });
         })
         .catch((reason) => {
@@ -88,9 +93,9 @@ export const useAppState = () => {
     setGlobalSettings({
       accounts: [...globalSettings.accounts, account.spreadsheetId],
     });
-    setState({
-      accounts: [...state.accounts, account],
-    });
+    // setState({
+    //   accounts: [...state.accounts, account],
+    // });
   };
 
   return {
