@@ -4,3 +4,7 @@ export interface BottomModalProps {
   onOpen?: () => void;
   onClose?: () => void;
 }
+
+export interface BottomModalButtonProps {
+  variant?: 'regular' | 'primary' | 'danger';
+}

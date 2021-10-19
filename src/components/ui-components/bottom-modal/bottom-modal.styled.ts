@@ -1,11 +1,16 @@
 import styled, { css } from 'styled-components/macro';
-import { BottomModalProps } from './bottom-modal.interface';
+import {
+  BottomModalButtonProps,
+  BottomModalProps,
+} from './bottom-modal.interface';
 
 export const bottomModalTransitionMilliseconds = 250;
 
 export const BottomModalContainerInner = styled.div``;
 
 export const BottomModalTitleContainer = styled.h2``;
+
+export const BottomModalDisclaimer = styled.p``;
 
 export const BottomModalContainer = styled.div<BottomModalProps>`
   position: fixed;
@@ -29,6 +34,12 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
     margin-bottom: 20px;
   }
 
+  ${BottomModalDisclaimer} {
+    font-style: italic;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
   ${BottomModalContainerInner} {
     color: ${(props) => props.theme.colors.textBlack};
     background: #fff;
@@ -48,4 +59,26 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
             bottom: -100vh;
           `}
   }
+`;
+
+export const BottomModalButton = styled.button<BottomModalButtonProps>`
+  width: 100%;
+  ${(props) =>
+    !props.variant || props.variant === 'regular'
+      ? css`
+          color: #000;
+          font-weight: bold;
+          text-decoration: none;
+        `
+      : css`
+          padding: 20px;
+          background: ${props.variant === 'primary'
+            ? props.theme.colors.background
+            : props.theme.colors[props.variant]};
+          color: ${(props) => props.theme.colors.textWhite};
+          border: 0;
+          border-radius: 5px;
+          margin: 30px 0 10px;
+          text-transform: uppercase;
+        `}
 `;

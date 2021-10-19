@@ -3,7 +3,6 @@ import {
   getGlobalSettings,
   setGlobalSettings,
 } from 'components/global-settings';
-import { initialiseDatabase } from 'components/schemas';
 import {
   authenticate,
   isSignedIn,

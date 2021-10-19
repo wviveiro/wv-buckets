@@ -82,6 +82,13 @@ export const onSignIn = () => {
 };
 
 /**
+ * Start signout process
+ */
+export const onSignOut = () => {
+  return gapi.auth2.getAuthInstance().signOut();
+};
+
+/**
  * Get details of a spreadsheet
  */
 export const getSpreadsheetDetails = async (

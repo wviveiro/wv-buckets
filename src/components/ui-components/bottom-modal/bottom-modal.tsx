@@ -1,8 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import {
+  BottomModalButton,
   BottomModalContainer,
   BottomModalContainerInner,
+  BottomModalDisclaimer,
   BottomModalTitleContainer,
 } from './bottom-modal.styled';
 import { BottomModalProps } from './bottom-modal.interface';
@@ -19,9 +21,14 @@ export const BottomModal: React.FC<BottomModalProps> = (props) => {
   );
 };
 
-const _default = {
-  default: BottomModal,
-  Title: BottomModalTitleContainer,
+export const Title = BottomModalTitleContainer;
+export const Disclaimer = BottomModalDisclaimer;
+export const Button = BottomModalButton;
+
+const components = {
+  Title,
+  Disclaimer,
+  Button,
 };
 
-export default _default;
+export default Object.assign(BottomModal, components);

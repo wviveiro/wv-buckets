@@ -10,6 +10,7 @@ import { Settings } from 'components/settings';
 import { AlertsCreator } from 'components/alert';
 import { Router } from 'components/router';
 import { Login } from 'components/login';
+import { ConfirmModal } from 'components/ui-components/confirm-modal/confirm-modal';
 
 export const App: React.FC = () => {
   const { state, onAddAccount } = useAppState();
@@ -32,6 +33,7 @@ export const App: React.FC = () => {
           <Router />
         )}
         <AlertsCreator />
+        <ConfirmModal />
       </LayoutTheme>
     </AppContext.Provider>
   );

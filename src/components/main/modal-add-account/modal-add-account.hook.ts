@@ -58,10 +58,10 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
     try {
       const details = await getSpreadsheetDetails(found[1]);
 
-      onAddAccount({
-        title: details.result.properties?.title || '',
-        spreadsheetId: found[1],
-      });
+      // onAddAccount({
+      //   title: details.result.properties?.title || '',
+      //   spreadsheetId: found[1],
+      // });
 
       setAlert('Account added successfully', 'success');
 

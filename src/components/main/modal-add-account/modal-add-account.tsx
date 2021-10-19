@@ -3,7 +3,6 @@ import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useModalAddAccountState } from './modal-add-account.hook';
 import { ModalAddAccountProps } from './modal-add-account.interface';
-import { ModalAddAccountContainer } from './modal-add-account.styled';
 import BottomModal from 'components/ui-components/bottom-modal';
 
 export const ModalAddAccount: React.FC<ModalAddAccountProps> = (props) => {
@@ -17,33 +16,43 @@ export const ModalAddAccount: React.FC<ModalAddAccountProps> = (props) => {
   } = useModalAddAccountState(props);
 
   return (
-    <ModalAddAccountContainer show={state.show} onClose={onModalClose}>
+    <BottomModal show={state.show} onClose={onModalClose}>
       {type === 'create-account' ? (
         <>
           <BottomModal.Title>Create Account</BottomModal.Title>
-          <p className="disclaimer">
+          <BottomModal.Disclaimer>
             Accounts are based on spreadsheets in your google account. You can
             create a new spreadsheet by filling the title below. If you rather
             import an existent spreadsheet{' '}
             <Link to="/import-account">Click here</Link>
-          </p>
+          </BottomModal.Disclaimer>
 
           <Form.Group>
             <Form.Control
               type="text"
               placeholder="Spreadsheet Title"
               disabled={state.disabled}
+              value={state.title}
+              onChange={onChangeValue('title')}
             />
+            {state.error.title && (
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: 'block' }}
+              >
+                {state.error.title}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
         </>
       ) : type === 'import-account' ? (
         <>
           <BottomModal.Title>Import Account</BottomModal.Title>
-          <p className="disclaimer">
+          <BottomModal.Disclaimer>
             Accounts are based on spreadsheets in your google account. You can
             import a spreadsheet by filling its URL below. If you rather create
             a new spreadsheet <Link to="/create-account">Click here</Link>
-          </p>
+          </BottomModal.Disclaimer>
 
           <Form.Group>
             <Form.Control
@@ -64,20 +73,16 @@ export const ModalAddAccount: React.FC<ModalAddAccountProps> = (props) => {
           </Form.Group>
         </>
       ) : null}
-      <button
+      <BottomModal.Button
+        variant="primary"
         disabled={state.disabled}
-        className="create-account"
         onClick={handleCreateButton}
       >
         {type === 'create-account' ? 'Create Account' : 'Import Account'}
-      </button>
-      <button
-        disabled={state.disabled}
-        className="cancel-creation"
-        onClick={onCancel}
-      >
+      </BottomModal.Button>
+      <BottomModal.Button disabled={state.disabled} onClick={onCancel}>
         Cancel
-      </button>
-    </ModalAddAccountContainer>
+      </BottomModal.Button>
+    </BottomModal>
   );
 };

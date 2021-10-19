@@ -10,7 +10,7 @@ export const Main: React.FC = () => {
   const { accounts, typeCreation } = useMainState();
 
   return (
-    <MainContainer className="flex">
+    <MainContainer>
       {accounts.ids.length > 0 ? (
         accounts.ids.map((id, i) => {
           return <Account key={i} />;
