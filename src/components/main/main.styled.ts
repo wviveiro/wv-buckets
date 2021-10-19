@@ -8,6 +8,7 @@ export const MainContainer = styled.div`
 
   .inner-container {
     padding: 0 40px;
+    width: 100%;
   }
 
   &.flex {

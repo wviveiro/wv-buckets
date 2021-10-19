@@ -22,7 +22,7 @@ export const AppContext = createContext<AppContextInterface>({
   status: Status.initializing,
   authenticated: false,
   signedin: false,
-  accounts: [],
+  accounts: { ids: [], entities: {} },
   onAddAccount: () => {
     // Not implemented
   },
@@ -62,18 +62,30 @@ export const useAppState = () => {
             });
           });
 
-          // const accounts = await initialiseDatabase(settings.accounts);
+          const accounts = settings.accounts.reduce(
+            (acc: AppStateInterface['accounts'], curr) => {
+              return {
+                ids: [...acc.ids, curr],
+                entities: {
+                  ...acc.entities,
+                  [curr]: {
+                    title: '',
+                    spreadsheetId: curr,
+                    initialised: false,
+                    loading: false,
+                    error: false,
+                  },
+                },
+              };
+            },
+            { ids: [], entities: {} }
+          );
 
           return setState({
             status: Status.loaded,
             authenticated: true,
             signedin: isSignedIn(),
-            accounts: {
-              initialised: false,
-              loading: false,
-              error: false,
-              entries: [],
-            },
+            accounts,
           });
         })
         .catch((reason) => {
@@ -93,9 +105,6 @@ export const useAppState = () => {
     setGlobalSettings({
       accounts: [...globalSettings.accounts, account.spreadsheetId],
     });
-    // setState({
-    //   accounts: [...state.accounts, account],
-    // });
   };
 
   return {

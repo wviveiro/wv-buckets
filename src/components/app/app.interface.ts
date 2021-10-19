@@ -6,10 +6,10 @@ export interface AppStateInterface {
   authenticated: boolean;
   signedin: boolean;
   accounts: {
-    initialised: boolean;
-    loading: boolean;
-    error: false | string;
-    entries: AccountInterface[];
+    ids: string[];
+    entities: {
+      [key: string]: AccountInterface;
+    };
   };
 }
 
@@ -21,4 +21,7 @@ export interface AccountInterface {
   title: string;
   spreadsheetId: string;
   schemas?: DatabaseInterface;
+  initialised: boolean;
+  loading: boolean;
+  error: boolean | string;
 }
