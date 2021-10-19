@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/wv-buckets/static/js/main.452e863c.chunk.js",
+    "main.js.map": "/wv-buckets/static/js/main.452e863c.chunk.js.map",
+    "runtime-main.js": "/wv-buckets/static/js/runtime-main.7896ae79.js",
+    "runtime-main.js.map": "/wv-buckets/static/js/runtime-main.7896ae79.js.map",
+    "static/js/2.70092cca.chunk.js": "/wv-buckets/static/js/2.70092cca.chunk.js",
+    "static/js/2.70092cca.chunk.js.map": "/wv-buckets/static/js/2.70092cca.chunk.js.map",
+    "static/js/3.58485a3f.chunk.js": "/wv-buckets/static/js/3.58485a3f.chunk.js",
+    "static/js/3.58485a3f.chunk.js.map": "/wv-buckets/static/js/3.58485a3f.chunk.js.map",
+    "index.html": "/wv-buckets/index.html",
+    "static/js/2.70092cca.chunk.js.LICENSE.txt": "/wv-buckets/static/js/2.70092cca.chunk.js.LICENSE.txt",
+    "static/media/btn_google_light_normal_ios.1e32a743.svg": "/wv-buckets/static/media/btn_google_light_normal_ios.1e32a743.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7896ae79.js",
+    "static/js/2.70092cca.chunk.js",
+    "static/js/main.452e863c.chunk.js"
+  ]
+}
