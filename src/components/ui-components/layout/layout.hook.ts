@@ -1,3 +1,4 @@
+import { deleteGlobalSettings } from 'components/global-settings';
 import { onSignOut } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
@@ -44,6 +45,10 @@ export const useLayoutState = () => {
     onConfirm({
       description:
         'All data of the application will be deleted, but the spreadsheets will be kept under your google account',
+      onConfirm: () => {
+        deleteGlobalSettings();
+        window.location.reload();
+      },
     });
   };
 

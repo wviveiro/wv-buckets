@@ -50,7 +50,7 @@ export const ConfirmModal = () => {
   };
 
   const onConfirmButton = (ev: React.MouseEvent<HTMLButtonElement>) => {
-    state.onCancel(ev);
+    state.onConfirm(ev);
     if (ev.isDefaultPrevented() || ev.isPropagationStopped()) return;
     setState({ show: false });
   };
