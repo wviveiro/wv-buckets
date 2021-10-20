@@ -1,6 +1,7 @@
 import { AccountInterface } from 'components/app/app.interface';
 import {
   createSheet,
+  getSheetRows,
   getSpreadsheetDetails,
   treatGoogleAPIError,
 } from 'components/sheet-api';
@@ -50,6 +51,24 @@ export const initialiseDatabase = async (
             rows: [],
           };
         }
+
+        const rows = await getSheetRows(spreadsheetId, Schema.name, {
+          columns: Object.entries(Schema.schema).length,
+        });
+
+        schemas[Schema.name].rows = rows.map((row) => {
+          const values = Object.keys(Schema.schema).map((key, index) => [
+            key,
+            row[index],
+          ]);
+
+          return values.reduce((acc, curr) => {
+            return {
+              ...acc,
+              [curr[0]]: curr[1],
+            };
+          }, {}) as SchemaTypes;
+        });
       }
 
       accounts.push({

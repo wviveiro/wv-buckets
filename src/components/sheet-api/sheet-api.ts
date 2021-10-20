@@ -1,4 +1,5 @@
 import { getGlobalSettings } from 'components/global-settings';
+import { numberToLetter } from 'components/util/number-to-letter';
 
 export const treatGoogleAPIError = (error: any): string => {
   console.error(error);
@@ -170,4 +171,47 @@ export const addSheetRows = async (
   } catch (e) {
     throw treatGoogleAPIError(e);
   }
+};
+
+/**
+ * Select content of specific sheet
+ */
+export const getSheetRows = async (
+  spreadsheetId: string,
+  title: string,
+  paramArgs?: { from?: number; to?: number; columns?: number }
+) => {
+  const args = {
+    from: 2,
+    columns: 3,
+    ...(paramArgs || {}),
+  };
+
+  const noLimit = !args.to;
+  if (args.from < 2) args.from = 2;
+  const limit = args.from - 2 + 1000;
+
+  const lastColumn = numberToLetter(args.columns || 1);
+
+  const result = await gapi.client.sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${title}!A${args.from}:${lastColumn}${noLimit ? limit : args.to}`,
+  });
+
+  let values = (result.result.values || []) as string[][];
+
+  if (noLimit) {
+    const diff = limit - args.from;
+    if (values.length >= diff) {
+      values = [
+        ...values,
+        ...(await getSheetRows(spreadsheetId, title, {
+          ...args,
+          from: limit + 1,
+        })),
+      ];
+    }
+  }
+
+  return values;
 };
