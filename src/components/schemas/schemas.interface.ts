@@ -1,7 +1,6 @@
 export interface SchemaInterface<Columns> {
   id: string | number;
-  name: string;
-  columns: Columns[];
+  rows: Columns[];
 }
 
 export interface SchemaBuilder<Columns> {

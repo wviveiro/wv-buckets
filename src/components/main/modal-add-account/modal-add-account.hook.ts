@@ -1,6 +1,6 @@
 import { setAlert } from 'components/alert';
 import { useAppContext } from 'components/app/app.hook';
-import { getSpreadsheetDetails } from 'components/sheet-api';
+import { initialiseDatabase } from 'components/schemas';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
 import React, { useEffect } from 'react';
@@ -56,7 +56,9 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
     setState({ status: Status.loading, error: {} });
 
     try {
-      const details = await getSpreadsheetDetails(found[1]);
+      const details = await initialiseDatabase([found[1]]);
+      console.log(details);
+      throw new Error('Not Implemented');
 
       // onAddAccount({
       //   title: details.result.properties?.title || '',
@@ -70,6 +72,13 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
         show: false,
       });
     } catch (error: any) {
+      if (typeof error === 'string') {
+        return setState({
+          status: Status.loaded,
+          error: { url: error },
+        });
+      }
+
       if (error instanceof Error)
         return setState({
           status: Status.loaded,

@@ -1,8 +1,20 @@
-import { SchemaInterface, WVBucketInterface } from '.';
+import { SchemaBuilder, SchemaInterface } from './schemas.interface';
+
+import {
+  WVBucketInterface,
+  WVBucketSchema,
+} from './wvbuckets/wvbuckets.interface';
+
+export type SchemaTypes = WVBucketInterface;
 
 /**
  * Build Application database
  */
 export interface DatabaseInterface {
-  wvbucket: SchemaInterface<WVBucketInterface>;
+  [key: string]: SchemaInterface<SchemaTypes>;
 }
+
+/**
+ * All schemas to build application
+ */
+export const Schemas: Array<SchemaBuilder<SchemaTypes>> = [WVBucketSchema];

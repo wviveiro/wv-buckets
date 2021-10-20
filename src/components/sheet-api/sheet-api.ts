@@ -2,6 +2,7 @@ import { getGlobalSettings } from 'components/global-settings';
 
 export const treatGoogleAPIError = (error: any): string => {
   console.error(error);
+  if (typeof error === 'string') return error;
   if (error?.message) {
     return error.message;
   } else if (error?.details) {
@@ -107,4 +108,66 @@ export const getSpreadsheetDetails = async (
       return reject(treatGoogleAPIError(error));
     }
   });
+};
+
+/**
+ * Create sheet inside spreadsheet
+ */
+export const createSheet = async (
+  spreadsheetId: string,
+  title: string,
+  columns: string[]
+) => {
+  try {
+    const result = await gapi.client.sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      resource: {
+        requests: [
+          {
+            addSheet: {
+              properties: {
+                title,
+              },
+            },
+          },
+        ],
+      },
+    });
+
+    await addSheetRows(spreadsheetId, title, [columns]);
+
+    const properties = result.result.replies?.[0].addSheet?.properties;
+
+    if (!properties) throw new Error('Invalid response from the api.');
+
+    return {
+      title: properties.title,
+      sheetId: properties.sheetId,
+    };
+  } catch (e) {
+    throw treatGoogleAPIError(e);
+  }
+};
+
+/**
+ * Add rows to spreadsheet
+ */
+export const addSheetRows = async (
+  spreadsheetId: string,
+  title: string,
+  rows: string[][]
+) => {
+  try {
+    const result = await gapi.client.sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: `${title}!A1`,
+      valueInputOption: 'USER_ENTERED',
+      resource: {
+        values: rows,
+      },
+    });
+    return result;
+  } catch (e) {
+    throw treatGoogleAPIError(e);
+  }
 };
