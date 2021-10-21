@@ -14,7 +14,7 @@ export interface AppStateInterface {
 }
 
 export interface AppContextInterface extends AppStateInterface {
-  onAddAccount: (account: AccountInterface) => void;
+  onAddAccount: (spreadsheetId: string) => void;
 }
 
 export interface AccountInterface {

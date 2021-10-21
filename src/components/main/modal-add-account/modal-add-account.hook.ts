@@ -1,6 +1,7 @@
 import { setAlert } from 'components/alert';
 import { useAppContext } from 'components/app/app.hook';
 import { initialiseDatabase } from 'components/schemas';
+import { treatGoogleAPIError } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
 import React, { useEffect } from 'react';
@@ -56,54 +57,19 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
     setState({ status: Status.loading, error: {} });
 
     try {
-      const details = await initialiseDatabase([found[1]]);
-      console.log(details);
-      throw new Error('Not Implemented');
+      await onAddAccount(found[1]);
 
-      // onAddAccount({
-      //   title: details.result.properties?.title || '',
-      //   spreadsheetId: found[1],
-      // });
-
-      setAlert('Account added successfully', 'success');
-
-      setState({
+      setAlert('Account created successfully', 'success');
+      return setState({
         status: Status.loaded,
         show: false,
       });
     } catch (error: any) {
-      if (typeof error === 'string') {
-        return setState({
-          status: Status.loaded,
-          error: { url: error },
-        });
-      }
-
-      if (error instanceof Error)
-        return setState({
-          status: Status.loaded,
-          error: { url: error.message },
-        });
-
-      console.error(error);
-
-      if (error?.result?.error?.message)
-        return setState({
-          status: Status.loaded,
-          error: {
-            url: error.result.error.message,
-          },
-        });
-
       return setState({
         status: Status.loaded,
-        error: {
-          url: ModalAddAccountErrors.invalidUrl,
-        },
+        error: { url: treatGoogleAPIError(error) },
       });
     }
-
-    setState({ status: Status.loaded });
   };
 
   const handleCreateButton = () => {

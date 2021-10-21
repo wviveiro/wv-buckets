@@ -3,6 +3,7 @@ import {
   getGlobalSettings,
   setGlobalSettings,
 } from 'components/global-settings';
+import { initialiseDatabase } from 'components/schemas';
 import {
   authenticate,
   isSignedIn,
@@ -99,11 +100,26 @@ export const useAppState = () => {
     };
   }, [setState]);
 
-  const onAddAccount = (account: AccountInterface) => {
+  const onAddAccount = async (spreadsheetId: string) => {
+    const details = await initialiseDatabase([spreadsheetId]);
+    const accounts = details.reduce(
+      (acc, curr) => {
+        return {
+          ids: [...acc.ids, curr.spreadsheetId],
+          entities: {
+            ...acc.entities,
+            [curr.spreadsheetId]: { ...curr },
+          },
+        };
+      },
+      { ...state.accounts }
+    );
+
     const globalSettings = getGlobalSettings();
     setGlobalSettings({
-      accounts: [...globalSettings.accounts, account.spreadsheetId],
+      accounts: [...globalSettings.accounts, spreadsheetId],
     });
+    setState({ accounts });
   };
 
   return {
