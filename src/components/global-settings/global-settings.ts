@@ -9,7 +9,7 @@ import {
 export const getGlobalSettings = (): GlobalSettingsInterface => {
   const defaultSettings: GlobalSettingsInterface = {
     apikey: '',
-    client_id: '',
+    client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID || '',
     spid: '',
     accounts: [],
   };

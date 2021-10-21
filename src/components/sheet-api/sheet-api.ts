@@ -215,3 +215,15 @@ export const getSheetRows = async (
 
   return values;
 };
+
+export const createSpreadsheet = async (title: string) => {
+  const response = await gapi.client.sheets.spreadsheets.create({
+    resource: {
+      properties: {
+        title,
+      },
+    },
+  });
+
+  return response;
+};

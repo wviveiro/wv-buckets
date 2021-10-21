@@ -81,4 +81,8 @@ export const BottomModalButton = styled.button<BottomModalButtonProps>`
           margin: 30px 0 10px;
           text-transform: uppercase;
         `}
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
