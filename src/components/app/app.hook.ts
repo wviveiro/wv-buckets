@@ -1,20 +1,36 @@
 import { setAlert } from 'components/alert';
-import { getGlobalSettings } from 'components/global-settings';
-import { authenticate, subscribeUserSignedStatus } from 'components/sheet-api';
+import {
+  getGlobalSettings,
+  setGlobalSettings,
+} from 'components/global-settings';
+import { initialiseDatabase } from 'components/schemas';
+import {
+  authenticate,
+  isSignedIn,
+  subscribeUserSignedStatus,
+} from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { createContext, useContext, useEffect } from 'react';
 import useCreateState from 'react-hook-setstate';
-import { AppContextInterface } from './app.interface';
+import {
+  AccountInterface,
+  AppContextInterface,
+  AppStateInterface,
+} from './app.interface';
 
 export const AppContext = createContext<AppContextInterface>({
   status: Status.initializing,
   authenticated: false,
   signedin: false,
+  accounts: { ids: [], entities: {} },
+  onAddAccount: () => {
+    // Not implemented
+  },
 });
 
 export const useAppState = () => {
   const context = useContext(AppContext);
-  const [state, setState] = useCreateState<AppContextInterface>({ ...context });
+  const [state, setState] = useCreateState<AppStateInterface>({ ...context });
 
   // Verify if app is authenticated
   useEffect(() => {
@@ -37,15 +53,39 @@ export const useAppState = () => {
     } else {
       // Verify if authentication is valid
       authenticate()
-        .then(() => {
+        .then(async () => {
           // App authenticated, check if user is logged in
-          subscribeUserSignedStatus((signedin) => {
+          subscribeUserSignedStatus((signedin: boolean) => {
             if (!mounted) return;
             return setState({
-              authenticated: true,
               signedin,
-              status: Status.loaded,
             });
+          });
+
+          const accounts = settings.accounts.reduce(
+            (acc: AppStateInterface['accounts'], curr) => {
+              return {
+                ids: [...acc.ids, curr],
+                entities: {
+                  ...acc.entities,
+                  [curr]: {
+                    title: '',
+                    spreadsheetId: curr,
+                    initialised: false,
+                    loading: false,
+                    error: false,
+                  },
+                },
+              };
+            },
+            { ids: [], entities: {} }
+          );
+
+          return setState({
+            status: Status.loaded,
+            authenticated: true,
+            signedin: isSignedIn(),
+            accounts,
           });
         })
         .catch((reason) => {
@@ -60,7 +100,34 @@ export const useAppState = () => {
     };
   }, [setState]);
 
+  const onAddAccount = async (spreadsheetId: string) => {
+    const details = await initialiseDatabase([spreadsheetId]);
+    const accounts = details.reduce(
+      (acc, curr) => {
+        return {
+          ids: [...acc.ids, curr.spreadsheetId],
+          entities: {
+            ...acc.entities,
+            [curr.spreadsheetId]: { ...curr },
+          },
+        };
+      },
+      { ...state.accounts }
+    );
+
+    const globalSettings = getGlobalSettings();
+    setGlobalSettings({
+      accounts: [...globalSettings.accounts, spreadsheetId],
+    });
+    setState({ accounts });
+  };
+
   return {
     state,
+    onAddAccount,
   };
+};
+
+export const useAppContext = () => {
+  return useContext(AppContext);
 };

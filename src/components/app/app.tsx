@@ -1,6 +1,6 @@
 import { Status } from 'components/util/status';
 import React from 'react';
-import { useAppState } from './app.hook';
+import { AppContext, useAppState } from './app.hook';
 import '@fortawesome/fontawesome-free/js/brands';
 import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/fontawesome';
@@ -8,21 +8,33 @@ import { LayoutTheme } from 'components/global-style';
 import { SplashScreen } from 'components/splash-screen';
 import { Settings } from 'components/settings';
 import { AlertsCreator } from 'components/alert';
+import { Router } from 'components/router';
 import { Login } from 'components/login';
+import { ConfirmModal } from 'components/ui-components/confirm-modal/confirm-modal';
 
 export const App: React.FC = () => {
-  const { state } = useAppState();
+  const { state, onAddAccount } = useAppState();
 
   return (
-    <LayoutTheme>
-      {state.status === Status.initializing ? (
-        <SplashScreen hasSpinner={true}>Initialising</SplashScreen>
-      ) : !state.authenticated ? (
-        <Settings />
-      ) : (
-        <Login />
-      )}
-      <AlertsCreator />
-    </LayoutTheme>
+    <AppContext.Provider
+      value={{
+        ...state,
+        onAddAccount,
+      }}
+    >
+      <LayoutTheme>
+        {state.status === Status.initializing ? (
+          <SplashScreen hasSpinner={true}>Initialising</SplashScreen>
+        ) : !state.authenticated ? (
+          <Settings />
+        ) : !state.signedin ? (
+          <Login />
+        ) : (
+          <Router />
+        )}
+        <AlertsCreator />
+        <ConfirmModal />
+      </LayoutTheme>
+    </AppContext.Provider>
   );
 };

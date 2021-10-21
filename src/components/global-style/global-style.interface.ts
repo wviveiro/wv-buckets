@@ -1,6 +1,13 @@
 export interface GlobalStyleTheme {
   colors: {
     primary: string;
+    danger: string;
+    background: string;
+    textWhite: string;
+    textBlack: string;
+  };
+  device: {
+    padding: string;
   };
 }
 

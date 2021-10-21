@@ -20,6 +20,11 @@ export const AlertsCreator = () => {
     ) => {
       if (!mounted) return;
 
+      if (typeof message !== 'string') {
+        console.error('Error: ', message);
+        message = 'Invalid error message';
+      }
+
       const _alerts = alerts.slice(0);
       _alerts.push({ message, variant: alert });
       setAlerts(_alerts);
