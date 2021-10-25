@@ -12,7 +12,7 @@ export const Main: React.FC = () => {
   return (
     <MainContainer>
       {accounts.ids.length > 0 ? (
-        <div className="inner-container">
+        <div className="inner-container accounts-list">
           {accounts.ids.map((id, i) => {
             return <Account key={i} account={accounts.entities[id]} />;
           })}

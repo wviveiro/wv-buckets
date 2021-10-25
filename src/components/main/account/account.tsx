@@ -6,16 +6,22 @@ import { AccountContainer } from './account.styled';
 export const Account: React.FC<AccountProps> = (props) => {
   const { account } = AccountState(props);
 
-  if (!account.initialised) {
-    return (
-      <AccountContainer>
-        <div className="loading-account">
-          <i className="fas fa-fan fa-spin splash-screen-spinner" />
-          <p>Loading Account</p>
-          <p>{account.spreadsheetId}</p>
-        </div>
-      </AccountContainer>
-    );
+  //if (!account.initialised) {
+  return (
+    <AccountContainer>
+      <div className="loading-account">
+        <i className="fas fa-fan fa-spin splash-screen-spinner" />
+        <p>Loading Account</p>
+        <p>{account.spreadsheetId}</p>
+      </div>
+    </AccountContainer>
+  );
+  //}
+
+  if (account.error) {
+    <AccountContainer>
+      <span className="text-danger">{account.error}</span>
+    </AccountContainer>;
   }
 
   return (

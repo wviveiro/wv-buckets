@@ -8,6 +8,7 @@ import {
   authenticate,
   isSignedIn,
   subscribeUserSignedStatus,
+  treatGoogleAPIError,
 } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { createContext, useContext, useEffect } from 'react';
@@ -72,7 +73,7 @@ export const useAppState = () => {
                     title: '',
                     spreadsheetId: curr,
                     initialised: false,
-                    loading: false,
+                    loading: true,
                     error: false,
                   },
                 },
@@ -100,6 +101,13 @@ export const useAppState = () => {
     };
   }, [setState]);
 
+  useEffect(() => {
+    if (state.status === Status.loaded) {
+      // console.log(gapi.auth2.getAuthInstance().grantOfflineAccess());
+      initialiseAccounts();
+    }
+  }, [state.status]);
+
   const onAddAccount = async (spreadsheetId: string) => {
     const details = await initialiseDatabase([spreadsheetId]);
     const accounts = details.reduce(
@@ -119,6 +127,27 @@ export const useAppState = () => {
     setGlobalSettings({
       accounts: [...globalSettings.accounts, spreadsheetId],
     });
+    setState({ accounts });
+  };
+
+  const initialiseAccounts = async () => {
+    const details = await initialiseDatabase(state.accounts.ids);
+    const accounts = details.reduce(
+      (acc, curr) => {
+        return {
+          ids: acc.ids.includes(curr.spreadsheetId)
+            ? acc.ids
+            : [...acc.ids, curr.spreadsheetId],
+          entities: {
+            ...acc.entities,
+            [curr.spreadsheetId]: { ...curr },
+          },
+        };
+      },
+      { ...state.accounts }
+    );
+
+    console.log(accounts);
     setState({ accounts });
   };
 

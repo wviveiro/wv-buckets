@@ -12,6 +12,10 @@ export const MainContainer = styled.div`
     width: 100%;
   }
 
+  .accounts-list {
+    margin-bottom: 20px;
+  }
+
   .add-account-btn {
     width: 100%;
   }
