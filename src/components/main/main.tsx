@@ -12,9 +12,11 @@ export const Main: React.FC = () => {
   return (
     <MainContainer>
       {accounts.ids.length > 0 ? (
-        accounts.ids.map((id, i) => {
-          return <Account key={i} />;
-        })
+        <div className="inner-container">
+          {accounts.ids.map((id, i) => {
+            return <Account key={i} account={accounts.entities[id]} />;
+          })}
+        </div>
       ) : (
         <div className="inner-container">
           <NoAccount />
