@@ -1,6 +1,4 @@
 import { setAlert } from 'components/alert';
-import { useAppContext } from 'components/app/app.hook';
-import { initialiseDatabase } from 'components/schemas';
 import { createSpreadsheet, treatGoogleAPIError } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
@@ -13,7 +11,6 @@ import {
 } from './modal-add-account.interface';
 
 export const useModalAddAccountState = (props: ModalAddAccountProps) => {
-  const { onAddAccount } = useAppContext();
   const history = useHistory();
   const [state, setState] = useStateStatus<ModalAddAccountStateInterface>({
     status: Status.loaded,
@@ -57,7 +54,7 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
     setState({ status: Status.loading, error: {} });
 
     try {
-      await onAddAccount(found[1]);
+      // await onAddAccount(found[1]);
 
       setAlert('Account created successfully', 'success');
       return setState({
@@ -89,7 +86,7 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
 
       if (!spreadsheetId) throw new Error('Spreadsheet not returned from api');
 
-      await onAddAccount(spreadsheetId);
+      //await onAddAccount(spreadsheetId);
 
       setAlert('Account created successfully', 'success');
       return setState({

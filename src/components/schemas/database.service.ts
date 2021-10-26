@@ -1,4 +1,4 @@
-import { AccountInterface } from 'components/app/app.interface';
+import { AccountInterface } from 'components/redux/slices/accounts/accounts.interface';
 import {
   createSheet,
   getSheetRows,
@@ -75,9 +75,9 @@ export const initialiseDatabase = async (
         title: details.result.properties?.title || 'Untitled',
         spreadsheetId,
         schemas: schemas,
-        error: false,
         initialised: true,
         loading: false,
+        error: false,
       });
     } catch (error: any) {
       accounts.push({

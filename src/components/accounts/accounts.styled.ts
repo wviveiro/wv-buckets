@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const MainContainer = styled.div`
+export const AccountsContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;

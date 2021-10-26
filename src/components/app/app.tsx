@@ -1,40 +1,25 @@
-import { Status } from 'components/util/status';
 import React from 'react';
-import { AppContext, useAppState } from './app.hook';
+import { LayoutTheme } from 'components/global-style';
+import { AlertsCreator } from 'components/alert';
+import { ConfirmModal } from 'components/ui-components/confirm-modal/confirm-modal';
+import { store } from 'components/redux/store';
+import { Provider } from 'react-redux';
+import { Main } from './main';
+
+// CSS
+
 import '@fortawesome/fontawesome-free/js/brands';
 import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/fontawesome';
-import { LayoutTheme } from 'components/global-style';
-import { SplashScreen } from 'components/splash-screen';
-import { Settings } from 'components/settings';
-import { AlertsCreator } from 'components/alert';
-import { Router } from 'components/router';
-import { Login } from 'components/login';
-import { ConfirmModal } from 'components/ui-components/confirm-modal/confirm-modal';
 
 export const App: React.FC = () => {
-  const { state, onAddAccount } = useAppState();
-
   return (
-    <AppContext.Provider
-      value={{
-        ...state,
-        onAddAccount,
-      }}
-    >
+    <Provider store={store}>
       <LayoutTheme>
-        {state.status === Status.initializing ? (
-          <SplashScreen hasSpinner={true}>Initialising</SplashScreen>
-        ) : !state.authenticated ? (
-          <Settings />
-        ) : !state.signedin ? (
-          <Login />
-        ) : (
-          <Router />
-        )}
+        <Main />
         <AlertsCreator />
         <ConfirmModal />
       </LayoutTheme>
-    </AppContext.Provider>
+    </Provider>
   );
 };
