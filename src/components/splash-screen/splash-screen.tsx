@@ -1,6 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { SplashScreenInterface } from './splash-screen.interface';
 import { SplashScreenContainer } from './splash-screen.styled';
+import { faFan } from '@fortawesome/free-solid-svg-icons';
 
 export const SplashScreen: React.FC<SplashScreenInterface> = ({
   hasSpinner,
@@ -10,7 +12,13 @@ export const SplashScreen: React.FC<SplashScreenInterface> = ({
     <SplashScreenContainer>
       <div className="splash-screen-inner">
         {hasSpinner && (
-          <i className="fas fa-fan fa-spin splash-screen-spinner" />
+          <div>
+            <FontAwesomeIcon
+              icon={faFan}
+              spin
+              className="splash-screen-spinner"
+            />
+          </div>
         )}
         {children}
       </div>

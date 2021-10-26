@@ -1,3 +1,5 @@
+import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { AccountState } from './account.hook';
 import { AccountProps } from './account.interface';
@@ -30,9 +32,12 @@ export const Account: React.FC<AccountProps> = (props) => {
 
   return (
     <AccountContainer>
-      <div className="icon-area" />
+      <div className="icon-area">
+        <FontAwesomeIcon icon={faCreditCard} className="icon" />
+      </div>
       <div className="account-details">
         <h4>{account.title}</h4>
+        <span className="account-id">{account.spreadsheetId}</span>
       </div>
     </AccountContainer>
   );
