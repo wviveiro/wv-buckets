@@ -40,15 +40,10 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
     opacity: 0.7;
   }
 
-  ${BottomModalContainerInner} {
-    color: ${(props) => props.theme.colors.textBlack};
-    background: #fff;
+  .main-container-menu {
     position: fixed;
     width: 100%;
     bottom: 0;
-    border-radius: 30px 30px 0 0;
-    padding: 30px;
-    text-align: center;
     transition: bottom ${bottomModalTransitionMilliseconds}ms linear;
     ${(props) =>
       props.show
@@ -58,11 +53,46 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
         : css`
             bottom: -100vh;
           `}
+
+    .main-content-bottom-modal {
+      margin-bottom: 15px;
+    }
+
+    .menu-item {
+      a,
+      button {
+        color: ${(props) => props.theme.colors.primary};
+        border-top: solid 1px #eee;
+        width: 100%;
+        padding: 10px;
+      }
+
+      &:only-child {
+        a,
+        button {
+          border-top: 0;
+          padding: 0;
+        }
+      }
+    }
   }
 
-  &.hasExtra ${BottomModalContainerInner} {
-    border-radius: 30px;
-    margin-bottom: 10px;
+  ${BottomModalContainerInner} {
+    color: ${(props) => props.theme.colors.textBlack};
+    background: #fff;
+    border-radius: 30px 30px 0 0;
+    padding: 30px;
+    text-align: center;
+  }
+
+  &.isMenu ${BottomModalContainerInner} {
+    border-radius: 15px;
+    margin: 0 15px;
+    padding: 15px;
+
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
   }
 `;
 

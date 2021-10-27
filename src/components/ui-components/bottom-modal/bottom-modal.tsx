@@ -9,6 +9,7 @@ import {
 } from './bottom-modal.styled';
 import { BottomModalProps } from './bottom-modal.interface';
 import { useBottomModalState } from './bottom-modal.hook';
+import { Link } from 'react-router-dom';
 
 export const BottomModal: React.FC<BottomModalProps> = (props) => {
   const { children, className } = props;
@@ -21,24 +22,33 @@ export const BottomModal: React.FC<BottomModalProps> = (props) => {
         isMenu: !!props.menu,
       })}
     >
-      {props.menu ? (
-        props.menu.map((row, i) => (
-          <BottomModalContainerInner
-            key={i}
-            className={classNames({ hasExtra: (props.menu?.length || 0) > 1 })}
-          >
-            {i === 0 && (
-              <div className="main-content-bottom-modal">{children}</div>
-            )}
+      <div className="main-container-menu">
+        {props.menu ? (
+          props.menu.map((row, i) => (
+            <BottomModalContainerInner key={i}>
+              {i === 0 && (
+                <div className="main-content-bottom-modal">{children}</div>
+              )}
 
-            {row.map((menu, index) => (
-              <div key={index}>Menu {index}</div>
-            ))}
-          </BottomModalContainerInner>
-        ))
-      ) : (
-        <BottomModalContainerInner>{children}</BottomModalContainerInner>
-      )}
+              {row.map((menu, index) => (
+                <div key={index} className="menu-item">
+                  {menu.href ? (
+                    <a href={menu.href} onClick={menu.onClick}>
+                      {menu.label}
+                    </a>
+                  ) : menu.to ? (
+                    <Link to={menu.to}>{menu.label}</Link>
+                  ) : (
+                    <button onClick={menu.onClick}>{menu.label}</button>
+                  )}
+                </div>
+              ))}
+            </BottomModalContainerInner>
+          ))
+        ) : (
+          <BottomModalContainerInner>{children}</BottomModalContainerInner>
+        )}
+      </div>
     </BottomModalContainer>
   );
 };
