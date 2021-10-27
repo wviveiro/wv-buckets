@@ -47,5 +47,20 @@ export const AccountContainer = styled.div`
       text-overflow: ellipsis;
       font-size: 0.8rem;
     }
+
+    .account-summary {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      .account-summary-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .total-summary {
+          color: #000;
+          font-weight: bold;
+        }
+      }
+    }
   }
 `;

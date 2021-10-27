@@ -5,6 +5,7 @@ import {
   getSpreadsheetDetails,
   treatGoogleAPIError,
 } from 'components/sheet-api';
+import { SheetProperties } from '.';
 import { Schemas } from './database.interface';
 import { DatabaseInterface, SchemaTypes } from './database.interface';
 
@@ -18,7 +19,7 @@ export const initialiseDatabase = async (
 
       // Find sheets inside spreadsheet
       const sheets = (details.result.sheets || []).reduce(
-        (acc: { [key: string]: gapi.client.sheets.SheetProperties }, curr) => {
+        (acc: { [key: string]: SheetProperties }, curr) => {
           if (!curr.properties) return acc;
           const title = curr.properties?.title || 'Untitled';
           return {

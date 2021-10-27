@@ -71,7 +71,7 @@ export const useMainState = () => {
     return () => {
       mounted = false;
     };
-  }, [setState]);
+  }, [setState, dispatch]);
 
   // const onAddAccount = async (spreadsheetId: string) => {
   //   const details = await initialiseDatabase([spreadsheetId]);

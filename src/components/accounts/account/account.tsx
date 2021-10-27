@@ -38,6 +38,16 @@ export const Account: React.FC<AccountProps> = (props) => {
       <div className="account-details">
         <h4>{account.title}</h4>
         <span className="account-id">{account.spreadsheetId}</span>
+        <div className="account-summary">
+          <div className="account-summary-line">
+            <div className="label-summary">Balance</div>
+            <div className="total-summary">$0.00</div>
+          </div>
+          <div className="account-summary-line">
+            <div className="label-summary">Buckets</div>
+            <div className="total-summary">0</div>
+          </div>
+        </div>
       </div>
     </AccountContainer>
   );

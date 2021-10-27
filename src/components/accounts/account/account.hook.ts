@@ -16,6 +16,9 @@ export const AccountState = (props: AccountProps) => {
     const main = async () => {
       dispatch(startLoadingAccount(account.spreadsheetId));
       const details = await initialiseDatabase([account.spreadsheetId]);
+
+      if (!mounted) return;
+
       dispatch(loadAccounts(details));
     };
 

@@ -18,3 +18,5 @@ export interface DatabaseInterface {
  * All schemas to build application
  */
 export const Schemas: Array<SchemaBuilder<SchemaTypes>> = [WVBucketSchema];
+
+export type SheetProperties = gapi.client.sheets.SheetProperties;
