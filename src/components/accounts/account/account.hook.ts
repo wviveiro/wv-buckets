@@ -3,13 +3,14 @@ import {
   startLoadingAccount,
 } from 'components/redux/slices/accounts';
 import { initialiseDatabase } from 'components/schemas';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AccountProps } from './account.interface';
 
 export const AccountState = (props: AccountProps) => {
   const { account } = props;
   const dispatch = useDispatch();
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -29,5 +30,10 @@ export const AccountState = (props: AccountProps) => {
     };
   }, [account.spreadsheetId, dispatch]);
 
-  return { account };
+  const onOpenMenu = () => {
+    console.log('here?');
+    setShowMenu(true);
+  };
+
+  return { account, showMenu, onOpenMenu };
 };

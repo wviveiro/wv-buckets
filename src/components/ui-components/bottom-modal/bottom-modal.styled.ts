@@ -59,6 +59,11 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
             bottom: -100vh;
           `}
   }
+
+  &.hasExtra ${BottomModalContainerInner} {
+    border-radius: 30px;
+    margin-bottom: 10px;
+  }
 `;
 
 export const BottomModalButton = styled.button<BottomModalButtonProps>`

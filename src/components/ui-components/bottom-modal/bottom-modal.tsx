@@ -15,8 +15,30 @@ export const BottomModal: React.FC<BottomModalProps> = (props) => {
   const { state } = useBottomModalState(props);
 
   return (
-    <BottomModalContainer show={state.show} className={classNames(className)}>
-      <BottomModalContainerInner>{children}</BottomModalContainerInner>
+    <BottomModalContainer
+      show={state.show}
+      className={classNames(className, {
+        isMenu: !!props.menu,
+      })}
+    >
+      {props.menu ? (
+        props.menu.map((row, i) => (
+          <BottomModalContainerInner
+            key={i}
+            className={classNames({ hasExtra: (props.menu?.length || 0) > 1 })}
+          >
+            {i === 0 && (
+              <div className="main-content-bottom-modal">{children}</div>
+            )}
+
+            {row.map((menu, index) => (
+              <div key={index}>Menu {index}</div>
+            ))}
+          </BottomModalContainerInner>
+        ))
+      ) : (
+        <BottomModalContainerInner>{children}</BottomModalContainerInner>
+      )}
     </BottomModalContainer>
   );
 };

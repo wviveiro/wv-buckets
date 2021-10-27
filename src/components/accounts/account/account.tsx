@@ -1,12 +1,15 @@
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BottomMenu } from 'components/ui-components/bottom-menu';
+import { BottomModal } from 'components/ui-components/bottom-modal';
 import * as React from 'react';
 import { AccountState } from './account.hook';
 import { AccountProps } from './account.interface';
 import { AccountContainer } from './account.styled';
 
 export const Account: React.FC<AccountProps> = (props) => {
-  const { account } = AccountState(props);
+  const { account, showMenu, onOpenMenu } = AccountState(props);
 
   if (account.loading) {
     return (
@@ -31,24 +34,30 @@ export const Account: React.FC<AccountProps> = (props) => {
   if (!account.initialised) return null;
 
   return (
-    <AccountContainer>
-      <div className="icon-area">
-        <FontAwesomeIcon icon={faCreditCard} className="icon" />
-      </div>
-      <div className="account-details">
-        <h4>{account.title}</h4>
-        <span className="account-id">{account.spreadsheetId}</span>
-        <div className="account-summary">
-          <div className="account-summary-line">
-            <div className="label-summary">Balance</div>
-            <div className="total-summary">$0.00</div>
-          </div>
-          <div className="account-summary-line">
-            <div className="label-summary">Buckets</div>
-            <div className="total-summary">0</div>
+    <>
+      <AccountContainer>
+        <div className="icon-area">
+          <FontAwesomeIcon icon={faCreditCard} className="icon" />
+        </div>
+        <div className="account-details">
+          <h4>{account.title}</h4>
+          <span className="account-id">{account.spreadsheetId}</span>
+          <div className="account-summary">
+            <div className="account-summary-line">
+              <div className="label-summary">Balance</div>
+              <div className="total-summary">$0.00</div>
+            </div>
+            <div className="account-summary-line">
+              <div className="label-summary">Buckets</div>
+              <div className="total-summary">0</div>
+            </div>
           </div>
         </div>
-      </div>
-    </AccountContainer>
+        <button className="button-more" onClick={onOpenMenu}>
+          <FontAwesomeIcon icon={faEllipsisH} />
+        </button>
+      </AccountContainer>
+      <BottomMenu show={showMenu} />
+    </>
   );
 };

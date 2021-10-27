@@ -7,6 +7,7 @@ export const AccountContainer = styled.div`
   padding: 15px;
   margin: 10px 0;
   border-radius: 4px;
+  position: relative;
 
   .loading-account {
     color: #ccc;
@@ -37,6 +38,7 @@ export const AccountContainer = styled.div`
       font-size: 1rem;
       font-weight: bold;
       margin-bottom: 0;
+      flex-grow: 1;
     }
 
     .account-id {
@@ -62,5 +64,12 @@ export const AccountContainer = styled.div`
         }
       }
     }
+  }
+
+  .button-more {
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    font-size: 1rem;
   }
 `;
