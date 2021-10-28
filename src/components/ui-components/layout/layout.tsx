@@ -1,3 +1,5 @@
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useLayoutState } from './layout.hook';
 import { LayoutContainer } from './layout.styled';
@@ -15,7 +17,7 @@ export const Layout: React.FC = (props) => {
           onClick={toggleSideMenu(true)}
           disabled={state.disabled}
         >
-          <i className="fas fa-bars" />
+          <FontAwesomeIcon icon={faBars} />
         </button>
       </div>
       {children}
@@ -55,6 +57,11 @@ export const Layout: React.FC = (props) => {
               >
                 Delete Settings
               </button>
+            </li>
+            <li>
+              <span className="info-versioning">
+                version: {process.env.REACT_APP_VERSION}
+              </span>
             </li>
           </ul>
         </div>

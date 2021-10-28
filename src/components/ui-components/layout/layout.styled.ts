@@ -57,6 +57,12 @@ export const LayoutContainer = styled.div`
 
         & > li {
           padding: 10px 5px;
+
+          .info-versioning {
+            padding-left: 10px;
+            font-style: italic;
+            opacity: 0.7;
+          }
         }
       }
     }
