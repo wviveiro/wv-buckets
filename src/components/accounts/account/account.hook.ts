@@ -1,3 +1,4 @@
+import { useAccountDetails } from 'components/redux/selectors/accounts/accounts.hooks';
 import {
   loadAccounts,
   startLoadingAccount,
@@ -10,6 +11,8 @@ import { AccountProps } from './account.interface';
 export const AccountState = (props: AccountProps) => {
   const { account, onShowMenu } = props;
   const dispatch = useDispatch();
+
+  const { balance, buckets } = useAccountDetails(account.spreadsheetId);
 
   useEffect(() => {
     if (account.initialised) return;
@@ -30,5 +33,5 @@ export const AccountState = (props: AccountProps) => {
     };
   }, [account.spreadsheetId, account.initialised, dispatch]);
 
-  return { account, onShowMenu };
+  return { account, balance, buckets, onShowMenu };
 };

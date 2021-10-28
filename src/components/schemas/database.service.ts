@@ -57,16 +57,16 @@ export const initialiseDatabase = async (
           columns: Object.entries(Schema.schema).length,
         });
 
-        schemas[Schema.name].rows = rows.map((row) => {
-          const values = Object.keys(Schema.schema).map((key, index) => [
-            key,
-            row[index],
-          ]);
+        schemas[Schema.name].rows = rows.map((row, index) => {
+          const values: [string, string, string | undefined][] = Object.entries(
+            Schema.schema
+          ).map(([key, entry], index) => [key, row[index], entry.type]);
 
           return values.reduce((acc, curr) => {
             return {
               ...acc,
-              [curr[0]]: curr[1],
+              [curr[0]]:
+                curr[2] === 'number' ? +curr[1].replace(/,/g, '') : curr[1],
             };
           }, {}) as SchemaTypes;
         });

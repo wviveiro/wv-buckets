@@ -8,6 +8,7 @@ export interface SchemaBuilder<Columns> {
   schema: {
     [key in keyof Columns]: {
       label: string;
+      type?: 'string' | 'number';
     };
   };
 }

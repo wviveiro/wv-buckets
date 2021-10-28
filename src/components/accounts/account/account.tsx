@@ -1,13 +1,14 @@
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import * as React from 'react';
 import { AccountState } from './account.hook';
 import { AccountProps } from './account.interface';
 import { AccountContainer } from './account.styled';
 
 export const Account: React.FC<AccountProps> = (props) => {
-  const { account, onShowMenu } = AccountState(props);
+  const { account, balance, buckets, onShowMenu } = AccountState(props);
 
   if (account.loading) {
     return (
@@ -43,11 +44,17 @@ export const Account: React.FC<AccountProps> = (props) => {
           <div className="account-summary">
             <div className="account-summary-line">
               <div className="label-summary">Balance</div>
-              <div className="total-summary">$0.00</div>
+              <div
+                className={classNames('total-summary', {
+                  'text-danger': balance < 0,
+                })}
+              >
+                ${balance.toLocaleString()}
+              </div>
             </div>
             <div className="account-summary-line">
               <div className="label-summary">Buckets</div>
-              <div className="total-summary">0</div>
+              <div className="total-summary">{buckets.ids.length}</div>
             </div>
           </div>
         </div>
