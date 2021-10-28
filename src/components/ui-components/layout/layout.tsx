@@ -1,4 +1,4 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useLayoutState } from './layout.hook';
@@ -32,7 +32,7 @@ export const Layout: React.FC = (props) => {
               disabled={state.disabled}
               onClick={toggleSideMenu(false)}
             >
-              <i className="fas fa-caret-left" />
+              <FontAwesomeIcon icon={faCaretLeft} />
             </button>
           </div>
           <div className="center-side">WVBuckets</div>

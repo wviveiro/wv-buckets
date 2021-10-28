@@ -63,10 +63,16 @@ export const initialiseDatabase = async (
           ).map(([key, entry], index) => [key, row[index], entry.type]);
 
           return values.reduce((acc, curr) => {
+            let v: string | number = curr[1];
+
+            if (curr[2] === 'number') {
+              const num = +v.replace(/[$,]/g, '');
+              if (!isNaN(num)) v = num;
+            }
+
             return {
               ...acc,
-              [curr[0]]:
-                curr[2] === 'number' ? +curr[1].replace(/,/g, '') : curr[1],
+              [curr[0]]: v,
             };
           }, {}) as SchemaTypes;
         });
