@@ -5,6 +5,7 @@ import { onConfirm } from 'components/ui-components/confirm-modal/confirm-modal'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { onDeleteAccount } from './accounts.service';
 import { ModalAddAccountProps } from './modal-add-account/modal-add-account.interface';
 
 export const useAccountsState = () => {
@@ -31,6 +32,7 @@ export const useAccountsState = () => {
         if (showMenu === false) return;
         setShowMenu(false);
         dispatch(removeAccount(showMenu));
+        onDeleteAccount(showMenu as string);
       },
     });
   };

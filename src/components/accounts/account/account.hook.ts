@@ -12,6 +12,7 @@ export const AccountState = (props: AccountProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (account.initialised) return;
     let mounted = true;
     const main = async () => {
       dispatch(startLoadingAccount(account.spreadsheetId));
@@ -27,7 +28,7 @@ export const AccountState = (props: AccountProps) => {
     return () => {
       mounted = false;
     };
-  }, [account.spreadsheetId, dispatch]);
+  }, [account.spreadsheetId, account.initialised, dispatch]);
 
   return { account, onShowMenu };
 };

@@ -1,9 +1,13 @@
 import { setAlert } from 'components/alert';
+import { importAccounts, loadAccounts } from 'components/redux/slices/accounts';
+import { initialiseDatabase } from 'components/schemas';
 import { createSpreadsheet, treatGoogleAPIError } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { accountExists, onAddAccount } from '../accounts.service';
 import {
   ModalAddAccountErrors,
   ModalAddAccountProps,
@@ -19,6 +23,8 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
     show: !!props.type,
     error: {},
   });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setState({ show: !!props.type });
@@ -51,10 +57,27 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
       });
     }
 
+    if (accountExists(found[1])) {
+      return setState({
+        error: {
+          url: ModalAddAccountErrors.accountExists,
+        },
+      });
+    }
+
     setState({ status: Status.loading, error: {} });
 
     try {
-      // await onAddAccount(found[1]);
+      // Verify if ID is correct
+      const accounts = await initialiseDatabase([found[1]]);
+
+      const hasError = accounts.find((account) => account.error);
+
+      if (hasError) throw new Error(hasError.error as string);
+
+      dispatch(loadAccounts(accounts));
+
+      onAddAccount(found[1]);
 
       setAlert('Account created successfully', 'success');
       return setState({
@@ -86,7 +109,8 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
 
       if (!spreadsheetId) throw new Error('Spreadsheet not returned from api');
 
-      //await onAddAccount(spreadsheetId);
+      dispatch(importAccounts([spreadsheetId]));
+      onAddAccount(spreadsheetId);
 
       setAlert('Account created successfully', 'success');
       return setState({

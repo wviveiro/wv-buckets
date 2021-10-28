@@ -1,8 +1,6 @@
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { BottomMenu } from 'components/ui-components/bottom-menu';
-import { BottomModal } from 'components/ui-components/bottom-modal';
 import * as React from 'react';
 import { AccountState } from './account.hook';
 import { AccountProps } from './account.interface';

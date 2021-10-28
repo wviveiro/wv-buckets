@@ -19,4 +19,5 @@ export enum ModalAddAccountErrors {
   missingUrl = 'Please add a google sheets url',
   missingTitle = 'A title is required to create a new google sheet',
   invalidUrl = 'The URL is invalid. Please check if you have access to this google sheets',
+  accountExists = 'Account already exists in the app',
 }
