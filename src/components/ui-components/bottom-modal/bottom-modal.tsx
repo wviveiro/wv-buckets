@@ -26,12 +26,15 @@ export const BottomModal: React.FC<BottomModalProps> = (props) => {
         {props.menu ? (
           props.menu.map((row, i) => (
             <BottomModalContainerInner key={i}>
-              {i === 0 && (
+              {i === 0 && children && (
                 <div className="main-content-bottom-modal">{children}</div>
               )}
 
               {row.map((menu, index) => (
-                <div key={index} className="menu-item">
+                <div
+                  key={index}
+                  className={classNames('menu-item', menu.className)}
+                >
                   {menu.href ? (
                     <a href={menu.href} onClick={menu.onClick}>
                       {menu.label}

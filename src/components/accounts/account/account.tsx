@@ -9,7 +9,7 @@ import { AccountProps } from './account.interface';
 import { AccountContainer } from './account.styled';
 
 export const Account: React.FC<AccountProps> = (props) => {
-  const { account, showMenu, onOpenMenu } = AccountState(props);
+  const { account, onShowMenu } = AccountState(props);
 
   if (account.loading) {
     return (
@@ -53,11 +53,13 @@ export const Account: React.FC<AccountProps> = (props) => {
             </div>
           </div>
         </div>
-        <button className="button-more" onClick={onOpenMenu}>
+        <button
+          className="button-more"
+          onClick={onShowMenu(account.spreadsheetId)}
+        >
           <FontAwesomeIcon icon={faEllipsisH} />
         </button>
       </AccountContainer>
-      <BottomMenu show={showMenu} />
     </>
   );
 };

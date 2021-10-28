@@ -44,10 +44,17 @@ const accountSlice = createSlice({
     loadAccounts: (state, { payload }: PayloadAction<AccountInterface[]>) => {
       accountsAdapter.upsertMany(state, payload);
     },
+    removeAccount: (state, { payload }: PayloadAction<EntityId>) => {
+      accountsAdapter.removeOne(state, payload);
+    },
   },
 });
 
-export const { importAccounts, startLoadingAccount, loadAccounts } =
-  accountSlice.actions;
+export const {
+  importAccounts,
+  startLoadingAccount,
+  loadAccounts,
+  removeAccount,
+} = accountSlice.actions;
 
 export default accountSlice.reducer;

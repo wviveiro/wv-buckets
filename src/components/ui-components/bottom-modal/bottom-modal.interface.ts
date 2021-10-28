@@ -5,6 +5,7 @@ export interface BottomMenuItem {
   href?: string;
   onClick?: () => void;
   to?: string;
+  className?: string;
 }
 
 export interface BottomModalProps {

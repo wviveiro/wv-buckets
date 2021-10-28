@@ -67,6 +67,13 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
         padding: 10px;
       }
 
+      &.text-danger {
+        a,
+        button {
+          color: ${(props) => props.theme.colors.danger};
+        }
+      }
+
       &:only-child {
         a,
         button {

@@ -1,21 +1,22 @@
-import { useEffect } from 'react';
-import useCreateState from 'react-hook-setstate';
+import { useLayoutEffect, useState } from 'react';
 import { BottomMenuProps } from './bottom-menu.interface';
 
 export const useBottomMenuState = (props: BottomMenuProps) => {
-  const [state, setState] = useCreateState({
-    closed: true,
-  });
-
-  useEffect(() => {
-    if (props.show && state.closed) {
-      setState({ closed: false });
+  const [closed, setClosed] = useState(true);
+  const [show, setShow] = useState(false);
+  useLayoutEffect(() => {
+    if (!show && props.show && closed) {
+      setClosed(false);
+    } else if (!show && props.show) {
+      setShow(true);
+    } else if (show && !props.show && !closed) {
+      setShow(false);
     }
-  }, [props.show, state.closed]);
+  }, [props.show, show, closed]);
 
   const onClose = () => {
-    setState({ closed: true });
+    setClosed(true);
   };
 
-  return { state, onClose };
+  return { closed, show, onClose };
 };
