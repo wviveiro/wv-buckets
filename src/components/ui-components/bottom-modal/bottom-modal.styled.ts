@@ -92,13 +92,19 @@ export const BottomModalContainer = styled.div<BottomModalProps>`
     text-align: center;
   }
 
-  &.isMenu ${BottomModalContainerInner} {
-    border-radius: 15px;
-    margin: 0 15px;
-    padding: 15px;
+  &.isMenu {
+    .main-container-menu {
+      padding-bottom: ${(props) => props.theme.device.paddingBottom};
+    }
 
-    &:not(:first-child) {
-      margin-top: 10px;
+    ${BottomModalContainerInner} {
+      border-radius: 15px;
+      margin: 0 15px;
+      padding: 15px;
+
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
     }
   }
 `;

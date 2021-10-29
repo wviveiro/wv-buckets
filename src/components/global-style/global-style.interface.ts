@@ -8,6 +8,7 @@ export interface GlobalStyleTheme {
   };
   device: {
     padding: string;
+    paddingBottom: string;
   };
 }
 
