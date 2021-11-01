@@ -155,6 +155,7 @@ export const Switcher = styled.div<{ active?: number; length: number }>`
   border-radius: 5px;
   display: flex;
   position: relative;
+  padding: ${paddingSwitch}px;
 
   ${(props) =>
     props.active !== undefined &&
@@ -164,11 +165,11 @@ export const Switcher = styled.div<{ active?: number; length: number }>`
         background: rgb(28, 28, 28);
         top: ${paddingSwitch}px;
         left: ${props.active === 0
-          ? 0
+          ? `${paddingSwitch}px`
           : props.active === props.length - 1
           ? `calc(${100 / props.length}% - ${paddingSwitch}px)`
           : `${100 / props.length}%`};
-        width: calc(${100 / props.length}%);
+        width: calc(${100 / props.length}% - ${paddingSwitch}px);
         bottom: ${paddingSwitch}px;
         position: absolute;
         border-radius: ${paddingSwitch}px;
