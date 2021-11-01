@@ -29,6 +29,18 @@ export const GlobalStyle = createGlobalStyle`
       background: none;
       text-decoration: none;
     }
+
+    .flex {
+      display: flex;
+
+      &.alignCenter {
+        align-items: center;
+      }
+
+      &.justifyCenter {
+        justify-content: center;
+      }
+    }
   `;
 
 /**
@@ -46,6 +58,9 @@ const theme: GlobalStyleTheme = {
     padding:
       'env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)',
     paddingBottom: 'env(safe-area-inset-bottom)',
+    paddingTop: 'env(safe-area-inset-top)',
+    paddingLeft: 'env(safe-area-inset-left)',
+    paddingRight: 'env(safe-area-inset-right)',
   },
 };
 

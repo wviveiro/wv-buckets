@@ -9,6 +9,9 @@ export interface GlobalStyleTheme {
   device: {
     padding: string;
     paddingBottom: string;
+    paddingTop: string;
+    paddingLeft: string;
+    paddingRight: string;
   };
 }
 
