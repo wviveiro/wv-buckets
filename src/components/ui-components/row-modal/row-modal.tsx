@@ -8,7 +8,14 @@ import { useRowModal } from './row-modal.hook';
 import { RowModalContainer } from './row-modal.styled';
 
 export const RowModal: React.FC = () => {
-  const { state, typeOptions, onSelectType } = useRowModal();
+  const {
+    state,
+    decimal,
+    integer,
+    typeOptions,
+    onSelectType,
+    onKeyPressAmount,
+  } = useRowModal();
 
   return (
     <RowModalContainer>
@@ -64,10 +71,18 @@ export const RowModal: React.FC = () => {
           <span className="dollar-sign">
             {state.type === 'expense' ? '-$' : '$'}
           </span>
-          <span className="integer-part">39</span>
-          <span className="decimal-part">.00</span>
-          <input className="input-amount" type="number" />
+          <span className="integer-part">{integer}</span>
+          <span className="decimal-part">.{decimal}</span>
+
+          <input
+            className="input-amount"
+            type="number"
+            onKeyDown={onKeyPressAmount}
+          />
+          <hr />
         </div>
+
+        <button className="add-row-button">SAVE TRANSACTION</button>
       </div>
     </RowModalContainer>
   );

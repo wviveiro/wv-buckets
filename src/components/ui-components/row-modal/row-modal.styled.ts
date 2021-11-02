@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 
 const topSpacing = 50;
 
@@ -125,6 +125,14 @@ export const RowModalContainer = styled.div`
       color: ${gray};
       position: relative;
 
+      hr {
+        display: none;
+      }
+
+      .input-amount:focus ~ hr {
+        display: block;
+      }
+
       .dollar-sign {
         font-size: 3.3rem;
       }
@@ -151,6 +159,14 @@ export const RowModalContainer = styled.div`
           color: rgba(255, 120, 120);
         }
       }
+    }
+
+    .add-row-button {
+      background-color: rgba(130, 145, 255);
+      width: 100%;
+      margin-top: 40px;
+      padding: 20px;
+      border-radius: 5px;
     }
   }
 `;
