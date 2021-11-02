@@ -1,17 +1,14 @@
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
-import {
-  faAngleRight,
-  faBackspace,
-  faChevronRight,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import React from 'react';
+import { Toggler } from '../toggler';
 import { useRowModal } from './row-modal.hook';
-import { RowModalContainer, Switcher } from './row-modal.styled';
+import { RowModalContainer } from './row-modal.styled';
 
 export const RowModal: React.FC = () => {
-  const { selectedType, typeOptions, onSelectType } = useRowModal();
+  const { state, typeOptions, onSelectType } = useRowModal();
 
   return (
     <RowModalContainer>
@@ -57,21 +54,16 @@ export const RowModal: React.FC = () => {
           </div>
         </div>
 
-        <Switcher active={selectedType} length={typeOptions.length}>
-          {typeOptions.map((option, index) => (
-            <div className="switch-item" key={index}>
-              <button
-                className="switch-button"
-                onClick={onSelectType(option.value)}
-              >
-                {option.label}
-              </button>
-            </div>
-          ))}
-        </Switcher>
+        <Toggler
+          value={state.type}
+          options={typeOptions}
+          onChange={onSelectType}
+        />
 
-        <div className="account-amount">
-          <span className="dollar-sign">$</span>
+        <div className={classNames('account-amount', state.type)}>
+          <span className="dollar-sign">
+            {state.type === 'expense' ? '-$' : '$'}
+          </span>
           <span className="integer-part">39</span>
           <span className="decimal-part">.00</span>
           <input className="input-amount" type="number" />

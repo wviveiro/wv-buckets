@@ -28,6 +28,10 @@ export const GlobalStyle = createGlobalStyle`
       border: 0;
       background: none;
       text-decoration: none;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     .flex {

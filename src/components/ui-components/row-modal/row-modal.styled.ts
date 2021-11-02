@@ -143,50 +143,14 @@ export const RowModalContainer = styled.div`
         opacity: 0;
         display: block;
       }
-    }
-  }
-`;
 
-const paddingSwitch = 5;
-export const Switcher = styled.div<{ active?: number; length: number }>`
-  background: #000;
-  width: 80%;
-  margin: 20px auto;
-  border-radius: 5px;
-  display: flex;
-  position: relative;
-  padding: ${paddingSwitch}px;
+      &.expense {
+        color: rgba(140, 120, 120);
 
-  ${(props) =>
-    props.active !== undefined &&
-    css`
-      &:before {
-        content: '';
-        background: rgb(28, 28, 28);
-        top: ${paddingSwitch}px;
-        left: ${props.active === 0
-          ? `${paddingSwitch}px`
-          : props.active === props.length - 1
-          ? `calc(${100 / props.length}% - ${paddingSwitch}px)`
-          : `${100 / props.length}%`};
-        width: calc(${100 / props.length}% - ${paddingSwitch}px);
-        bottom: ${paddingSwitch}px;
-        position: absolute;
-        border-radius: ${paddingSwitch}px;
-        z-index: 0;
-        transition: left 0.5s ease-out;
+        .integer-part {
+          color: rgba(255, 120, 120);
+        }
       }
-    `}
-
-  .switch-item {
-    width: 50%;
-    text-align: center;
-    z-index: 1;
-    .switch-button {
-      color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      width: 100%;
     }
   }
 `;
