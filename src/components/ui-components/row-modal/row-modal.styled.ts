@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 
-const topSpacing = 50;
+export const topSpacing = 50;
 
-const gray = 'rgba(120, 120, 120, 1)';
-const gray2 = 'rgba(255, 255, 255, 0.05)';
+export const gray = 'rgba(120, 120, 120, 1)';
+export const gray2 = 'rgba(255, 255, 255, 0.05)';
 
 export const RowModalContainer = styled.div`
   position: fixed;
@@ -40,6 +40,11 @@ export const RowModalContainer = styled.div`
 
       h4 {
         font-size: 1.2rem;
+
+        .button-arrow-left {
+          color: #fff;
+          margin-right: 20px;
+        }
       }
 
       .button-close-modal {
@@ -126,11 +131,12 @@ export const RowModalContainer = styled.div`
       position: relative;
 
       hr {
-        display: none;
+        opacity: 0;
+        margin-bottom: 0;
       }
 
       .input-amount:focus ~ hr {
-        display: block;
+        opacity: 1;
       }
 
       .dollar-sign {
@@ -164,7 +170,7 @@ export const RowModalContainer = styled.div`
     .add-row-button {
       background-color: rgba(130, 145, 255);
       width: 100%;
-      margin-top: 40px;
+      margin-top: 30px;
       padding: 20px;
       border-radius: 5px;
     }

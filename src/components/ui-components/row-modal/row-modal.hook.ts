@@ -1,12 +1,18 @@
+import { selectAccounts } from 'components/redux/selectors/accounts';
 import React, { useMemo } from 'react';
 import useCreateState from 'react-hook-setstate';
+import { useSelector } from 'react-redux';
 import { TogglerOption } from '../toggler/toggler.interface';
 
 export const useRowModal = () => {
   const [state, setState] = useCreateState({
     type: 'expense',
     amount: '0',
+    message: '',
+    view: 'main',
   });
+
+  const accounts = useSelector(selectAccounts);
 
   const typeOptions = [
     { label: 'Income', value: 'income' },
@@ -23,7 +29,7 @@ export const useRowModal = () => {
     const integer =
       stramount.length > 2
         ? (+stramount.substr(0, stramount.length - 2)).toLocaleString()
-        : 0;
+        : '0';
 
     return {
       decimal,
@@ -53,12 +59,19 @@ export const useRowModal = () => {
     setState({ amount });
   };
 
+  const onSetDescription = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ message: ev.target.value });
+  };
+
   return {
     state,
     typeOptions,
     decimal,
     integer,
+    accounts,
     onSelectType,
     onKeyPressAmount,
+    onSetDescription,
+    setState,
   };
 };
