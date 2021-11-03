@@ -5,6 +5,8 @@ export interface GlobalStyleTheme {
     background: string;
     textWhite: string;
     textBlack: string;
+    gray: string;
+    gray2: string;
   };
   device: {
     padding: string;

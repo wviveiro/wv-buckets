@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { Toggler } from 'components/ui-components/toggler';
 import React from 'react';
 import { useRowModalContext } from '../../context/row-modal-context';
+import BlackModal from 'components/ui-components/black-modal';
 
 export const RowMainView: React.FC = () => {
   const {
@@ -25,14 +26,22 @@ export const RowMainView: React.FC = () => {
     setState({ view: 'select-account' });
   };
 
+  const onClose = () => {
+    setState({ open: false });
+  };
+
   return (
-    <div className="row-modal-inner">
-      <div className="row-modal-title-container">
-        <h4>Transaction</h4>
-        <button className="button-close-modal">
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
-      </div>
+    <>
+      <BlackModal.Title
+        rightButton={
+          <button onClick={onClose}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        }
+      >
+        Transaction
+      </BlackModal.Title>
+
       <div className="row-modal-selected-account">
         <div className="account-details">
           <h5>Account Name</h5>
@@ -89,11 +98,12 @@ export const RowMainView: React.FC = () => {
           className="input-amount"
           type="number"
           onKeyDown={onKeyPressAmount}
+          inputMode="decimal"
         />
         <hr />
       </div>
 
       <button className="add-row-button">Save Transaction</button>
-    </div>
+    </>
   );
 };

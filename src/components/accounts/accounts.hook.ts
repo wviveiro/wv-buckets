@@ -2,6 +2,7 @@ import { EntityId } from '@reduxjs/toolkit';
 import { selectAccounts } from 'components/redux/selectors/accounts';
 import { removeAccount } from 'components/redux/slices/accounts';
 import { onConfirm } from 'components/ui-components/confirm-modal/confirm-modal';
+import { rowController } from 'components/ui-components/row-modal/row-modal.hook';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -37,5 +38,17 @@ export const useAccountsState = () => {
     });
   };
 
-  return { accounts, typeCreation, showMenu, onSetShowMenu, onClickDelete };
+  const onAddRowModal = () => {
+    setShowMenu(false);
+    rowController.open();
+  };
+
+  return {
+    accounts,
+    typeCreation,
+    showMenu,
+    onSetShowMenu,
+    onClickDelete,
+    onAddRowModal,
+  };
 };

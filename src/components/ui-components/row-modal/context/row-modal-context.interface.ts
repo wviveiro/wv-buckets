@@ -4,6 +4,7 @@ import { TogglerOption } from 'components/ui-components/toggler/toggler.interfac
 import React from 'react';
 
 export interface RowModalContextStateInterface {
+  open: boolean;
   type: string;
   amount: string;
   message: string;

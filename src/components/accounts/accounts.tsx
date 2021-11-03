@@ -9,8 +9,14 @@ import { ModalAddAccount } from './modal-add-account';
 import { NoAccount } from './no-account';
 
 export const Main: React.FC = () => {
-  const { accounts, typeCreation, showMenu, onSetShowMenu, onClickDelete } =
-    useAccountsState();
+  const {
+    accounts,
+    typeCreation,
+    showMenu,
+    onSetShowMenu,
+    onClickDelete,
+    onAddRowModal,
+  } = useAccountsState();
 
   return (
     <AccountsContainer>
@@ -45,7 +51,7 @@ export const Main: React.FC = () => {
         show={!!showMenu}
         menu={[
           [
-            { label: 'Add Row' },
+            { label: 'Add Row', onClick: onAddRowModal },
             {
               label: 'Delete',
               className: 'text-danger',

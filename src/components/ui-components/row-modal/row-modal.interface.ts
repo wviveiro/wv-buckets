@@ -1,1 +1,1 @@
-export interface RowModalState {}
+export interface RowModalProps {}

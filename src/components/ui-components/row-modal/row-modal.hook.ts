@@ -1,11 +1,18 @@
 import { selectAccounts } from 'components/redux/selectors/accounts';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import useCreateState from 'react-hook-setstate';
 import { useSelector } from 'react-redux';
 import { TogglerOption } from '../toggler/toggler.interface';
 
+export const rowController = {
+  open: () => {
+    // Not Implemented
+  },
+};
+
 export const useRowModal = () => {
   const [state, setState] = useCreateState({
+    open: false,
     type: 'expense',
     amount: '0',
     message: '',
@@ -62,6 +69,12 @@ export const useRowModal = () => {
   const onSetDescription = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setState({ message: ev.target.value });
   };
+
+  useEffect(() => {
+    rowController.open = () => {
+      setState({ open: true });
+    };
+  }, [setState]);
 
   return {
     state,

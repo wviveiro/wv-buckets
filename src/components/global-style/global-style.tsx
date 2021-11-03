@@ -57,6 +57,8 @@ const theme: GlobalStyleTheme = {
     background: '#3264a8',
     textWhite: '#FFF',
     textBlack: '#000',
+    gray: 'rgba(120, 120, 120, 1)',
+    gray2: 'rgba(255, 255, 255, 0.05)',
   },
   device: {
     padding:
