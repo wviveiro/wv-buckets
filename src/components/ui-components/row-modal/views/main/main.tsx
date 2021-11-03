@@ -9,6 +9,7 @@ import { Toggler } from 'components/ui-components/toggler';
 import React from 'react';
 import { useRowModalContext } from '../../context/row-modal-context';
 import BlackModal from 'components/ui-components/black-modal';
+import { format, parseISO } from 'date-fns';
 
 export const RowMainView: React.FC = () => {
   const {
@@ -65,7 +66,7 @@ export const RowMainView: React.FC = () => {
         </div>
         <div className="account-block half-block">
           <strong>Date</strong>
-          <span>10/10/2010</span>
+          <span>{format(parseISO(state.date), 'dd/MM/yyyy')}</span>
         </div>
       </div>
       <hr />
