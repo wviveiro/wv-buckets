@@ -1,12 +1,13 @@
+import { EntityId } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAccounts } from '.';
 
-export const useAccountDetails = (spreadsheetId: string) => {
+export const useAccountDetails = (spreadsheetId: EntityId) => {
   const accounts = useSelector(selectAccounts);
 
   const account = useMemo(() => {
-    return accounts.entities[spreadsheetId] || false;
+    return accounts.entities[spreadsheetId] || undefined;
   }, [accounts, spreadsheetId]);
 
   const rows = useMemo(() => {
@@ -36,7 +37,7 @@ export const useAccountDetails = (spreadsheetId: string) => {
       ) => {
         if (!acc.ids.includes(curr.category)) {
           return {
-            ids: [...acc.ids, curr.category],
+            ids: [...acc.ids, curr.category].sort(),
             buckets: {
               ...acc.buckets,
               [curr.category]: [curr],

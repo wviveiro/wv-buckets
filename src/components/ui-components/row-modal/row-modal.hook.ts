@@ -1,25 +1,46 @@
 import { selectAccounts } from 'components/redux/selectors/accounts';
+import { useAccountDetails } from 'components/redux/selectors/accounts/accounts.hooks';
+import { format } from 'date-fns';
 import React, { useEffect, useMemo } from 'react';
 import useCreateState from 'react-hook-setstate';
 import { useSelector } from 'react-redux';
 import { TogglerOption } from '../toggler/toggler.interface';
+import { RowModalContextStateInterface } from './context/row-modal-context.interface';
+import { RowControllerArgs } from './row-modal.interface';
 
 export const rowController = {
-  open: () => {
+  open: (args: RowControllerArgs) => {
     // Not Implemented
   },
 };
 
 export const useRowModal = () => {
-  const [state, setState] = useCreateState({
+  const [state, setState] = useCreateState<RowModalContextStateInterface>({
     open: false,
     type: 'expense',
     amount: '0',
     message: '',
     view: 'main',
+    date: format(new Date(), 'yyyy-MM-dd'),
+    account_id: '',
+    category: '',
   });
 
   const accounts = useSelector(selectAccounts);
+
+  const accountDetails = useAccountDetails(state.account_id);
+
+  const selectedAccount = accountDetails.account || undefined;
+
+  // const selectedAccount = useMemo(() => {
+  //   if (!state.account_id) return undefined;
+
+  //   const found = accounts.ids.find((id) => id === state.account_id);
+
+  //   if (!found) return undefined;
+
+  //   return accounts.entities[found];
+  // }, [accounts, state.account_id]);
 
   const typeOptions = [
     { label: 'Income', value: 'income' },
@@ -71,8 +92,18 @@ export const useRowModal = () => {
   };
 
   useEffect(() => {
-    rowController.open = () => {
-      setState({ open: true });
+    rowController.open = (args: RowControllerArgs) => {
+      setState({
+        account_id: args.account_id,
+        open: true,
+        type: args.type || 'income',
+        message: args.description || '',
+        date: args.date || format(new Date(), 'yyyy-MM-dd'),
+        category:
+          args.category || accountDetails.buckets.ids.length > 0
+            ? accountDetails.buckets.ids[0]
+            : '',
+      });
     };
   }, [setState]);
 
@@ -82,6 +113,7 @@ export const useRowModal = () => {
     decimal,
     integer,
     accounts,
+    selectedAccount,
     onSelectType,
     onKeyPressAmount,
     onSetDescription,

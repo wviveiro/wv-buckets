@@ -16,6 +16,7 @@ export const RowMainView: React.FC = () => {
     typeOptions,
     integer,
     decimal,
+    selectedAccount,
     onSelectType,
     onSetDescription,
     onKeyPressAmount,
@@ -44,7 +45,7 @@ export const RowMainView: React.FC = () => {
 
       <div className="row-modal-selected-account">
         <div className="account-details">
-          <h5>Account Name</h5>
+          <h5>{selectedAccount?.title || state.account_id}</h5>
           <span>
             <FontAwesomeIcon icon={faCreditCard} className="icon" /> Selected
             Account
@@ -60,7 +61,7 @@ export const RowMainView: React.FC = () => {
       <div className="flex account-row-details">
         <div className="account-block half-block right-border">
           <strong>Category</strong>
-          <span>Miscelanious</span>
+          <span>{state.category || 'UNKNOWN'}</span>
         </div>
         <div className="account-block half-block">
           <strong>Date</strong>

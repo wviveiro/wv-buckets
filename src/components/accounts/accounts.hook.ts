@@ -39,8 +39,12 @@ export const useAccountsState = () => {
   };
 
   const onAddRowModal = () => {
+    if (!showMenu) return;
+
     setShowMenu(false);
-    rowController.open();
+    rowController.open({
+      account_id: showMenu as EntityId,
+    });
   };
 
   return {
