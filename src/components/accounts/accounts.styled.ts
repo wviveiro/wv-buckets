@@ -18,5 +18,8 @@ export const AccountsContainer = styled.div`
 
   .add-account-btn {
     width: 100%;
+    background-color: ${(props) => props.theme.colors.background2};
+    color: #fff;
+    padding: 20px;
   }
 `;
