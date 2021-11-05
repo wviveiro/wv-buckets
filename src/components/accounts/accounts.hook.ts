@@ -1,5 +1,6 @@
 import { EntityId } from '@reduxjs/toolkit';
 import { selectAccounts } from 'components/redux/selectors/accounts';
+import { getAccountDetails } from 'components/redux/selectors/accounts/accounts.helpers';
 import { removeAccount } from 'components/redux/slices/accounts';
 import { onConfirm } from 'components/ui-components/confirm-modal/confirm-modal';
 import { rowController } from 'components/ui-components/row-modal/row-modal.hook';
@@ -41,9 +42,12 @@ export const useAccountsState = () => {
   const onAddRowModal = () => {
     if (!showMenu) return;
 
+    const { buckets } = getAccountDetails(accounts, showMenu);
+
     setShowMenu(false);
     rowController.open({
       account_id: showMenu as EntityId,
+      category: buckets.ids.length > 0 ? buckets.ids[0] : '',
     });
   };
 

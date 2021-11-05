@@ -1,9 +1,5 @@
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons';
-import {
-  faCheck,
-  faChevronLeft,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useRowModalContext } from '../../context/row-modal-context';

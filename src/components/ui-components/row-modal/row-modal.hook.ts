@@ -99,10 +99,7 @@ export const useRowModal = () => {
         type: args.type || 'income',
         message: args.description || '',
         date: args.date || format(new Date(), 'yyyy-MM-dd'),
-        category:
-          args.category || accountDetails.buckets.ids.length > 0
-            ? accountDetails.buckets.ids[0]
-            : '',
+        category: args.category,
       });
     };
   }, [setState]);
