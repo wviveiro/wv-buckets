@@ -30,7 +30,7 @@ export const initialiseDatabase = async (
         {}
       );
 
-      const schemas: DatabaseInterface = {};
+      const schemas: Partial<DatabaseInterface> = {};
 
       // Verify if all sheets are in the account
       for (const Schema of Schemas) {
@@ -57,31 +57,36 @@ export const initialiseDatabase = async (
           columns: Object.entries(Schema.schema).length,
         });
 
-        schemas[Schema.name].rows = rows.map((row, index) => {
-          const values: [string, string, string | undefined][] = Object.entries(
-            Schema.schema
-          ).map(([key, entry], index) => [key, row[index], entry.type]);
+        (schemas as DatabaseInterface)[Schema.name].rows = rows.map(
+          (row, index) => {
+            const values: [string, string, string | undefined][] =
+              Object.entries(Schema.schema).map(([key, entry], index) => [
+                key,
+                row[index],
+                entry.type,
+              ]);
 
-          return values.reduce((acc, curr) => {
-            let v: string | number = curr[1];
+            return values.reduce((acc, curr) => {
+              let v: string | number = curr[1];
 
-            if (curr[2] === 'number') {
-              const num = +v.replace(/[$,]/g, '');
-              if (!isNaN(num)) v = num;
-            }
+              if (curr[2] === 'number') {
+                const num = +v.replace(/[$,]/g, '');
+                if (!isNaN(num)) v = num;
+              }
 
-            return {
-              ...acc,
-              [curr[0]]: v,
-            };
-          }, {}) as SchemaTypes;
-        });
+              return {
+                ...acc,
+                [curr[0]]: v,
+              };
+            }, {}) as SchemaTypes;
+          }
+        );
       }
 
       accounts.push({
         title: details.result.properties?.title || 'Untitled',
         spreadsheetId,
-        schemas: schemas,
+        schemas: schemas as DatabaseInterface,
         initialised: true,
         loading: false,
         error: false,

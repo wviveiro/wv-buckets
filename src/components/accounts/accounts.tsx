@@ -39,10 +39,7 @@ export const Main: React.FC = () => {
         </div>
       )}
       <div className="inner-container">
-        <Link
-          to="/import-account"
-          className="add-account-btn btn btn-secondary"
-        >
+        <Link to="/import-account" className="add-account-btn btn">
           <i className="fas fa-plus" /> Add Account
         </Link>
       </div>

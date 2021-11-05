@@ -3,6 +3,7 @@ export interface GlobalStyleTheme {
     primary: string;
     danger: string;
     background: string;
+    background2: string;
     textWhite: string;
     textBlack: string;
     gray: string;

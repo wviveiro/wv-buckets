@@ -127,7 +127,7 @@ export const RowModalContainer = styled.div`
   }
 
   .add-row-button {
-    background-color: rgba(130, 145, 255);
+    background-color: ${(props) => props.theme.colors.background};
     width: 100%;
     margin-top: 30px;
     padding: 20px;

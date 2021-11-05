@@ -1,4 +1,4 @@
-import { SchemaBuilder, SchemaInterface } from './schemas.interface';
+import { SchemaBuilder } from './schemas.interface';
 
 import {
   WVBucketInterface,
@@ -6,17 +6,33 @@ import {
 } from './wvbuckets/wvbuckets.interface';
 
 export type SchemaTypes = WVBucketInterface;
+export enum EnumSchemas {
+  WVBUCKET = 'WVBUCKET',
+}
+
+export interface SchemaInterface {
+  name: EnumSchemas;
+  schema: SchemaBuilder<SchemaTypes>;
+}
 
 /**
  * Build Application database
  */
-export interface DatabaseInterface {
-  [key: string]: SchemaInterface<SchemaTypes>;
-}
+export type DatabaseInterface = {
+  [key in EnumSchemas]: {
+    id: string | number;
+    rows: SchemaTypes[];
+  };
+};
 
 /**
  * All schemas to build application
  */
-export const Schemas: Array<SchemaBuilder<SchemaTypes>> = [WVBucketSchema];
+export const Schemas: SchemaInterface[] = [
+  {
+    name: EnumSchemas.WVBUCKET,
+    schema: WVBucketSchema,
+  },
+];
 
 export type SheetProperties = gapi.client.sheets.SheetProperties;

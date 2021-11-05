@@ -54,7 +54,8 @@ const theme: GlobalStyleTheme = {
   colors: {
     primary: 'var(--bs-primary)',
     danger: 'var(--bs-danger)',
-    background: '#3264a8',
+    background: 'rgba(130, 145, 255)',
+    background2: 'rgb(28, 28, 28)',
     textWhite: '#FFF',
     textBlack: '#000',
     gray: 'rgba(120, 120, 120, 1)',
