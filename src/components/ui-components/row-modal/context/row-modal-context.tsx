@@ -1,3 +1,4 @@
+import { noop } from 'components/util/noop';
 import React, { useContext } from 'react';
 import { RowModalContextInterface } from './row-modal-context.interface';
 
@@ -20,22 +21,13 @@ export const RowModalContext = React.createContext<RowModalContextInterface>({
     ids: [],
     entities: {},
   },
-  onSelectType: () => {
-    // Not Implemented
-  },
-  onKeyPressAmount: () => {
-    // Not Implemented
-  },
-  onSetDescription: () => {
-    // Not Implemented
-  },
-  setState: () => {
-    // Not Implemented
-  },
-  onSelectAccount: () => {
-    // Not Implemented
-  },
+  multipleAccounts: false,
   selectedAccount: undefined,
+  onSelectType: noop,
+  onKeyPressAmount: noop,
+  onSetDescription: noop,
+  setState: noop,
+  onSelectAccount: noop,
 });
 
 export const useRowModalContext = () => {

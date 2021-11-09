@@ -31,9 +31,12 @@ export const useRowModal = () => {
 
   const accounts = useSelector(selectAccounts);
 
+  const multipleAccounts = accounts.ids.length > 1;
+
   const accountDetails = useAccountDetails(state.account_id);
 
   const selectedAccount = accountDetails.account || undefined;
+  const accountBalance = accountDetails.balance || 0;
 
   const typeOptions = [
     { label: 'Income', value: 'income' },
@@ -108,6 +111,8 @@ export const useRowModal = () => {
     integer,
     accounts,
     selectedAccount,
+    multipleAccounts,
+    accountBalance,
     onSelectType,
     onKeyPressAmount,
     onSetDescription,

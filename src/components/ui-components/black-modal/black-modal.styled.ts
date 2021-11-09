@@ -43,6 +43,7 @@ export const BlackModalTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 40px;
 
   .black-modal-title-left-button,
   .black-modal-title-right-button {
@@ -55,5 +56,42 @@ export const BlackModalTitle = styled.div`
     flex-grow: 1;
     padding: 0 10px;
     margin: 0;
+  }
+`;
+
+export const BlackModalList = styled.div``;
+
+export const BlackModalListItem = styled.div`
+  border-bottom: solid 2px ${(props) => props.theme.colors.gray2};
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  span {
+    color: ${(props) => props.theme.colors.gray};
+
+    &.balance {
+      color: #fff;
+    }
+  }
+
+  .flex {
+    justify-content: space-between;
+
+    .icon-container {
+      margin-right: 10px;
+    }
+
+    .tick-container {
+      width: calc(30px + 1rem);
+      padding-left: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: ${(props) => props.theme.colors.primary};
+    }
   }
 `;

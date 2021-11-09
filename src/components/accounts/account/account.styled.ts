@@ -73,3 +73,7 @@ export const AccountContainer = styled.div`
     font-size: 1rem;
   }
 `;
+
+export const AccountBalance = styled.span<{ negative?: boolean }>`
+  color: ${(props) => (props.negative ? props.theme.colors.danger : '#fff')};
+`;
