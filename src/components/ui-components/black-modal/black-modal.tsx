@@ -9,7 +9,7 @@ export const BlackModal: React.FC<BlackModalProps> = (props) => {
   if (!render) return null;
 
   return (
-    <BlackModalContainer show={show}>
+    <BlackModalContainer show={show} noBackground={props.noBackground}>
       <div className="row-modal-inner">{props.children}</div>
     </BlackModalContainer>
   );

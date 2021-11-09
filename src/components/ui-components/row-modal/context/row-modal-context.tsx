@@ -3,10 +3,15 @@ import { RowModalContextInterface } from './row-modal-context.interface';
 
 export const RowModalContext = React.createContext<RowModalContextInterface>({
   state: {
+    open: false,
+    openAccountList: false,
     type: 'expense',
     amount: '0',
     message: '',
+    date: '',
     view: 'main',
+    account_id: '',
+    category: '',
   },
   typeOptions: [],
   decimal: '0',
@@ -27,6 +32,10 @@ export const RowModalContext = React.createContext<RowModalContextInterface>({
   setState: () => {
     // Not Implemented
   },
+  onSelectAccount: () => {
+    // Not Implemented
+  },
+  selectedAccount: undefined,
 });
 
 export const useRowModalContext = () => {

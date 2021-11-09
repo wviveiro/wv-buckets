@@ -10,7 +10,11 @@ export const BlackModalContainer = styled.div<BlackModalStyledInterface>`
     top: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, ${props.show ? 0.7 : 0});
+    ${props.noBackground &&
+    css`
+      background-color: rgba(0, 0, 0, ${props.show ? 0.7 : 0});
+    `}
+
     transition: background-color ${blackModalTransitionTime}ms ease-in;
 
     .row-modal-inner {
@@ -45,5 +49,11 @@ export const BlackModalTitle = styled.div`
     button {
       color: #fff;
     }
+  }
+
+  h4 {
+    flex-grow: 1;
+    padding: 0 10px;
+    margin: 0;
   }
 `;

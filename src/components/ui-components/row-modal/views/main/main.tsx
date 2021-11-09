@@ -21,12 +21,9 @@ export const RowMainView: React.FC = () => {
     onSelectType,
     onSetDescription,
     onKeyPressAmount,
+    onSelectAccount,
     setState,
   } = useRowModalContext();
-
-  const onSelectAccount = () => {
-    setState({ view: 'select-account' });
-  };
 
   const onClose = () => {
     setState({ open: false });
