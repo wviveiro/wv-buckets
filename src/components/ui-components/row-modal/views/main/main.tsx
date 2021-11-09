@@ -10,6 +10,7 @@ import React from 'react';
 import { useRowModalContext } from '../../context/row-modal-context';
 import BlackModal from 'components/ui-components/black-modal';
 import { format, parseISO } from 'date-fns';
+import { AccountBalance } from 'components/accounts/account/account.styled';
 
 export const RowMainView: React.FC = () => {
   const {
@@ -18,15 +19,14 @@ export const RowMainView: React.FC = () => {
     integer,
     decimal,
     selectedAccount,
+    multipleAccounts,
+    accountBalance,
     onSelectType,
     onSetDescription,
     onKeyPressAmount,
+    onSelectAccount,
     setState,
   } = useRowModalContext();
-
-  const onSelectAccount = () => {
-    setState({ view: 'select-account' });
-  };
 
   const onClose = () => {
     setState({ open: false });
@@ -48,15 +48,20 @@ export const RowMainView: React.FC = () => {
         <div className="account-details">
           <h5>{selectedAccount?.title || state.account_id}</h5>
           <span>
-            <FontAwesomeIcon icon={faCreditCard} className="icon" /> Selected
-            Account
+            <FontAwesomeIcon icon={faCreditCard} className="icon" />
           </span>
+          <span>Balance&nbsp;&nbsp;</span>
+          <AccountBalance negative={accountBalance < 0}>
+            ${accountBalance.toLocaleString()}
+          </AccountBalance>
         </div>
-        <div className="account-more">
-          <button className="btn-select-account" onClick={onSelectAccount}>
-            <FontAwesomeIcon icon={faChevronRight} className="icon" />
-          </button>
-        </div>
+        {multipleAccounts && (
+          <div className="account-more">
+            <button className="btn-select-account" onClick={onSelectAccount}>
+              <FontAwesomeIcon icon={faChevronRight} className="icon" />
+            </button>
+          </div>
+        )}
       </div>
       <hr />
       <div className="flex account-row-details">

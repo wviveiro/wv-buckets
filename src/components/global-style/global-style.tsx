@@ -44,6 +44,10 @@ export const GlobalStyle = createGlobalStyle`
       &.justifyCenter {
         justify-content: center;
       }
+
+      & > .flexGrow {
+        flex-grow: 1;
+      }
     }
   `;
 

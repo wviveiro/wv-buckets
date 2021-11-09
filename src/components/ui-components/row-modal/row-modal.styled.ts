@@ -23,11 +23,13 @@ export const RowModalContainer = styled.div`
 
     .account-details {
       flex-grow: 1;
+      color: ${(props) => props.theme.colors.gray};
+
       h5 {
         font-size: 1rem;
+        color: #fff;
       }
       span {
-        color: ${(props) => props.theme.colors.gray};
         font-size: 0.9rem;
 
         .icon {

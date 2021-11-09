@@ -1,7 +1,13 @@
 import React from 'react';
+import { DefaultTheme, StyledComponent } from 'styled-components';
 import { useBlackModalState } from './black-modal.hook';
 import { BlackModalProps, BlackModalTitleProps } from './black-modal.interface';
-import { BlackModalContainer, BlackModalTitle } from './black-modal.styled';
+import {
+  BlackModalContainer,
+  BlackModalList,
+  BlackModalListItem,
+  BlackModalTitle,
+} from './black-modal.styled';
 
 export const BlackModal: React.FC<BlackModalProps> = (props) => {
   const { render, show } = useBlackModalState(props);
@@ -9,7 +15,7 @@ export const BlackModal: React.FC<BlackModalProps> = (props) => {
   if (!render) return null;
 
   return (
-    <BlackModalContainer show={show}>
+    <BlackModalContainer show={show} noBackground={props.noBackground}>
       <div className="row-modal-inner">{props.children}</div>
     </BlackModalContainer>
   );
@@ -31,8 +37,17 @@ export const Title: React.FC<BlackModalTitleProps> = (props) => {
   );
 };
 
+export const Item = BlackModalListItem;
+
+export const List: React.FC = (props) => {
+  return <BlackModalList>{props.children}</BlackModalList>;
+};
+
+const ListComponent = Object.assign(List, { Item });
+
 const components = {
   Title,
+  List: ListComponent,
 };
 
 export default Object.assign(BlackModal, components);

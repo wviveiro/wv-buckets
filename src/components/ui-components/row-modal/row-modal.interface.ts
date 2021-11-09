@@ -7,3 +7,15 @@ export interface RowControllerArgs {
   description?: string;
   type?: 'income' | 'expense';
 }
+
+export interface RowModalStateInterface {
+  open: boolean;
+  openAccountList: boolean;
+  type: string;
+  amount: string;
+  message: string;
+  view: string;
+  date: string;
+  account_id: EntityId;
+  category: string;
+}

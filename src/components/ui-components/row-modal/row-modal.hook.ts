@@ -5,8 +5,10 @@ import React, { useEffect, useMemo } from 'react';
 import useCreateState from 'react-hook-setstate';
 import { useSelector } from 'react-redux';
 import { TogglerOption } from '../toggler/toggler.interface';
-import { RowModalContextStateInterface } from './context/row-modal-context.interface';
-import { RowControllerArgs } from './row-modal.interface';
+import {
+  RowControllerArgs,
+  RowModalStateInterface,
+} from './row-modal.interface';
 
 export const rowController = {
   open: (args: RowControllerArgs) => {
@@ -15,8 +17,9 @@ export const rowController = {
 };
 
 export const useRowModal = () => {
-  const [state, setState] = useCreateState<RowModalContextStateInterface>({
+  const [state, setState] = useCreateState<RowModalStateInterface>({
     open: false,
+    openAccountList: false,
     type: 'expense',
     amount: '0',
     message: '',
@@ -28,19 +31,12 @@ export const useRowModal = () => {
 
   const accounts = useSelector(selectAccounts);
 
+  const multipleAccounts = accounts.ids.length > 1;
+
   const accountDetails = useAccountDetails(state.account_id);
 
   const selectedAccount = accountDetails.account || undefined;
-
-  // const selectedAccount = useMemo(() => {
-  //   if (!state.account_id) return undefined;
-
-  //   const found = accounts.ids.find((id) => id === state.account_id);
-
-  //   if (!found) return undefined;
-
-  //   return accounts.entities[found];
-  // }, [accounts, state.account_id]);
+  const accountBalance = accountDetails.balance || 0;
 
   const typeOptions = [
     { label: 'Income', value: 'income' },
@@ -91,6 +87,10 @@ export const useRowModal = () => {
     setState({ message: ev.target.value });
   };
 
+  const onSelectAccount = () => {
+    setState({ openAccountList: true });
+  };
+
   useEffect(() => {
     rowController.open = (args: RowControllerArgs) => {
       setState({
@@ -111,9 +111,12 @@ export const useRowModal = () => {
     integer,
     accounts,
     selectedAccount,
+    multipleAccounts,
+    accountBalance,
     onSelectType,
     onKeyPressAmount,
     onSetDescription,
+    onSelectAccount,
     setState,
   };
 };
