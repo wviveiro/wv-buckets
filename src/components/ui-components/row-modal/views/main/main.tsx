@@ -47,76 +47,77 @@ export const RowMainView: React.FC = () => {
       >
         Transaction
       </BlackModal.Title>
-
-      <div className="row-modal-selected-account">
-        <div className="account-details">
-          <h5>{selectedAccount?.title || state.account_id}</h5>
-          <span>
-            <FontAwesomeIcon icon={faCreditCard} className="icon" />
-          </span>
-          <span>Balance&nbsp;&nbsp;</span>
-          <AccountBalance negative={accountBalance < 0}>
-            ${accountBalance.toLocaleString()}
-          </AccountBalance>
+      <BlackModal.List>
+        <div className="row-modal-selected-account">
+          <div className="account-details">
+            <h5>{selectedAccount?.title || state.account_id}</h5>
+            <span>
+              <FontAwesomeIcon icon={faCreditCard} className="icon" />
+            </span>
+            <span>Balance&nbsp;&nbsp;</span>
+            <AccountBalance negative={accountBalance < 0}>
+              ${accountBalance.toLocaleString()}
+            </AccountBalance>
+          </div>
+          {multipleAccounts && (
+            <div className="account-more">
+              <button className="btn-select-account" onClick={onSelectAccount}>
+                <FontAwesomeIcon icon={faChevronRight} className="icon" />
+              </button>
+            </div>
+          )}
         </div>
-        {multipleAccounts && (
-          <div className="account-more">
-            <button className="btn-select-account" onClick={onSelectAccount}>
-              <FontAwesomeIcon icon={faChevronRight} className="icon" />
+        <hr />
+        <div className="flex account-row-details">
+          <div className="account-block half-block right-border">
+            <strong>Category</strong>
+            <button onClick={onClickCategory}>
+              <span>{state.category || 'UNKNOWN'}</span>
             </button>
           </div>
-        )}
-      </div>
-      <hr />
-      <div className="flex account-row-details">
-        <div className="account-block half-block right-border">
-          <strong>Category</strong>
-          <button onClick={onClickCategory}>
-            <span>{state.category || 'UNKNOWN'}</span>
-          </button>
+          <div className="account-block half-block">
+            <strong>Date</strong>
+            <span>{format(parseISO(state.date), 'dd/MM/yyyy')}</span>
+          </div>
         </div>
-        <div className="account-block half-block">
-          <strong>Date</strong>
-          <span>{format(parseISO(state.date), 'dd/MM/yyyy')}</span>
-        </div>
-      </div>
-      <hr />
-      <div className="account-row-details">
-        <div className="account-block">
-          <strong>
-            Description <small>(optional)</small>
-          </strong>
-          <input
-            className="input-description"
-            value={state.message}
-            onChange={onSetDescription}
-          />
-        </div>
-      </div>
-
-      <Toggler
-        value={state.type}
-        options={typeOptions}
-        onChange={onSelectType}
-      />
-
-      <div className={classNames('account-amount', state.type)}>
-        <span className="dollar-sign">
-          {state.type === 'expense' ? '-$' : '$'}
-        </span>
-        <span className="integer-part">{integer}</span>
-        <span className="decimal-part">.{decimal}</span>
-
-        <input
-          className="input-amount"
-          type="number"
-          onKeyDown={onKeyPressAmount}
-          inputMode="decimal"
-        />
         <hr />
-      </div>
+        <div className="account-row-details">
+          <div className="account-block">
+            <strong>
+              Description <small>(optional)</small>
+            </strong>
+            <input
+              className="input-description"
+              value={state.message}
+              onChange={onSetDescription}
+            />
+          </div>
+        </div>
 
-      <button className="add-row-button">Save Transaction</button>
+        <Toggler
+          value={state.type}
+          options={typeOptions}
+          onChange={onSelectType}
+        />
+
+        <div className={classNames('account-amount', state.type)}>
+          <span className="dollar-sign">
+            {state.type === 'expense' ? '-$' : '$'}
+          </span>
+          <span className="integer-part">{integer}</span>
+          <span className="decimal-part">.{decimal}</span>
+
+          <input
+            className="input-amount"
+            type="number"
+            onKeyDown={onKeyPressAmount}
+            inputMode="decimal"
+          />
+          <hr />
+        </div>
+
+        <button className="add-row-button">Save Transaction</button>
+      </BlackModal.List>
     </>
   );
 };
