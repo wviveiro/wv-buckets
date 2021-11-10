@@ -1,5 +1,4 @@
 import React from 'react';
-import { DefaultTheme, StyledComponent } from 'styled-components';
 import { useBlackModalState } from './black-modal.hook';
 import { BlackModalProps, BlackModalTitleProps } from './black-modal.interface';
 import {

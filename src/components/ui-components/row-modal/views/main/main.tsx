@@ -32,6 +32,10 @@ export const RowMainView: React.FC = () => {
     setState({ open: false });
   };
 
+  const onClickCategory = () => {
+    setState({ openCategoryList: true });
+  };
+
   return (
     <>
       <BlackModal.Title
@@ -67,7 +71,9 @@ export const RowMainView: React.FC = () => {
       <div className="flex account-row-details">
         <div className="account-block half-block right-border">
           <strong>Category</strong>
-          <span>{state.category || 'UNKNOWN'}</span>
+          <button onClick={onClickCategory}>
+            <span>{state.category || 'UNKNOWN'}</span>
+          </button>
         </div>
         <div className="account-block half-block">
           <strong>Date</strong>

@@ -11,6 +11,8 @@ export interface RowControllerArgs {
 export interface RowModalStateInterface {
   open: boolean;
   openAccountList: boolean;
+  openCategoryList: boolean;
+  openAddCategory: boolean;
   type: string;
   amount: string;
   message: string;

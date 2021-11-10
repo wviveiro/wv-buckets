@@ -65,6 +65,7 @@ export const RowModalContainer = styled.div`
     }
 
     span {
+      color: #fff;
       font-weight: 100;
       font-size: 1.3rem;
     }
