@@ -95,7 +95,10 @@ export const useRowModal = () => {
   };
 
   const onFocusAmount = (ev: React.FocusEvent<HTMLInputElement>) => {
-    ev.target.scrollIntoView({ behavior: 'smooth' });
+    const rect = ev.target.getBoundingClientRect();
+    setTimeout(() => {
+      document.body.scrollTop = rect.top - 20;
+    }, 100);
   };
 
   useEffect(() => {
