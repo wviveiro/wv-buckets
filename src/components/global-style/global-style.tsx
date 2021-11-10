@@ -16,10 +16,6 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Open Sans', sans-serif;
     }
 
-    html {
-      padding: ${(props) => props.theme.device.padding};
-    }
-
     h1, h2 {
       font-weight: bold;
     }
@@ -67,8 +63,8 @@ const theme: GlobalStyleTheme = {
   },
   device: {
     padding:
-      'env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)',
-    paddingBottom: 'env(safe-area-inset-bottom)',
+      'env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 20px) env(safe-area-inset-left)',
+    paddingBottom: 'calc(env(safe-area-inset-bottom) + 20px)',
     paddingTop: 'env(safe-area-inset-top)',
     paddingLeft: 'env(safe-area-inset-left)',
     paddingRight: 'env(safe-area-inset-right)',

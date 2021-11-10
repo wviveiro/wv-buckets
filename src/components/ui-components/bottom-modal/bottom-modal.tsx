@@ -13,11 +13,13 @@ import { Link } from 'react-router-dom';
 
 export const BottomModal: React.FC<BottomModalProps> = (props) => {
   const { children, className } = props;
-  const { state } = useBottomModalState(props);
+  const { show, render } = useBottomModalState(props);
+
+  if (!render) return null;
 
   return (
     <BottomModalContainer
-      show={state.show}
+      show={show}
       className={classNames(className, {
         isMenu: !!props.menu,
       })}

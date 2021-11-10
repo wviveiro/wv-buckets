@@ -3,7 +3,7 @@ import { faCheck, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useAccountDetails } from 'components/redux/selectors/accounts/accounts.hooks';
-import BlackModal, { Item } from 'components/ui-components/black-modal';
+import BlackModal from 'components/ui-components/black-modal';
 import React from 'react';
 import { useRowModalContext } from '../../context/row-modal-context';
 import { SelectAccountItemProps } from './select-account.interface';
@@ -44,10 +44,14 @@ const SelectAccountItem: React.FC<SelectAccountItemProps> = ({
   selected,
 }) => {
   const { setState } = useRowModalContext();
-  const { account, balance } = useAccountDetails(id);
+  const { account, balance, buckets } = useAccountDetails(id);
 
   const onClick = () => {
-    setState({ account_id: id, openAccountList: false });
+    setState({
+      account_id: id,
+      category: buckets.ids?.[0] || '',
+      openAccountList: false,
+    });
   };
 
   return (

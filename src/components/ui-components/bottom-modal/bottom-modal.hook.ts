@@ -1,27 +1,36 @@
-import { useStateStatus } from 'components/util/use-state-status';
-import { useEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { BottomModalProps } from './bottom-modal.interface';
 import { bottomModalTransitionMilliseconds } from './bottom-modal.styled';
 
 export const useBottomModalState = (props: BottomModalProps) => {
-  const [state, setState] = useStateStatus({
-    show: false,
-  });
+  const [render, setRender] = useState(false);
+  const [show, setShow] = useState(false);
 
-  const { show, onOpen, onClose } = props;
+  const { show: open, onClose } = props;
 
-  useEffect(() => {
-    if (state.show === show) return;
-    setState({ show });
+  useLayoutEffect(() => {
+    let mounted = true;
+    if (open && !render && !show) {
+      setRender(true);
+    } else if (open && render && !show) {
+      setTimeout(() => {
+        if (!mounted) return;
+        setShow(true);
+      }, 1);
+    } else if (!open && render && show) {
+      setShow(false);
+    } else if (!open && render && !show) {
+      setTimeout(() => {
+        if (!mounted) return;
+        setRender(false);
+        if (onClose) onClose();
+      }, bottomModalTransitionMilliseconds);
+    }
 
-    setTimeout(() => {
-      if (show && onOpen) {
-        onOpen();
-      } else if (!show && onClose) {
-        onClose();
-      }
-    }, bottomModalTransitionMilliseconds);
-  }, [show, setState, state.show, onClose, onOpen]);
+    return () => {
+      mounted = false;
+    };
+  }, [open, render, show, onClose]);
 
-  return { state };
+  return { show, render };
 };

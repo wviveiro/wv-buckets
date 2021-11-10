@@ -20,6 +20,8 @@ export const useRowModal = () => {
   const [state, setState] = useCreateState<RowModalStateInterface>({
     open: false,
     openAccountList: false,
+    openCategoryList: false,
+    openAddCategory: false,
     type: 'expense',
     amount: '0',
     message: '',
@@ -37,6 +39,7 @@ export const useRowModal = () => {
 
   const selectedAccount = accountDetails.account || undefined;
   const accountBalance = accountDetails.balance || 0;
+  const accountBuckets = accountDetails.buckets || [];
 
   const typeOptions = [
     { label: 'Income', value: 'income' },
@@ -113,6 +116,7 @@ export const useRowModal = () => {
     selectedAccount,
     multipleAccounts,
     accountBalance,
+    accountBuckets,
     onSelectType,
     onKeyPressAmount,
     onSetDescription,

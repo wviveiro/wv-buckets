@@ -10,7 +10,7 @@ export const BlackModalContainer = styled.div<BlackModalStyledInterface>`
     top: 0;
     bottom: 0;
     width: 100%;
-    ${props.noBackground &&
+    ${!props.noBackground &&
     css`
       background-color: rgba(0, 0, 0, ${props.show ? 0.7 : 0});
     `}
@@ -27,6 +27,8 @@ export const BlackModalContainer = styled.div<BlackModalStyledInterface>`
       padding: 30px 20px;
       padding-bottom: ${(props) => props.theme.device.paddingBottom};
       transition: bottom ${blackModalTransitionTime}ms ease-in;
+      display: flex;
+      flex-direction: column;
 
       bottom: ${props.show ? 0 : '-100vh'};
     }
@@ -59,7 +61,12 @@ export const BlackModalTitle = styled.div`
   }
 `;
 
-export const BlackModalList = styled.div``;
+export const BlackModalList = styled.div`
+  flex-grow: 1;
+  overflow: auto;
+  margin: 0 -20px;
+  padding: 0 20px;
+`;
 
 export const BlackModalListItem = styled.div`
   border-bottom: solid 2px ${(props) => props.theme.colors.gray2};
