@@ -26,6 +26,7 @@ export const RowMainView: React.FC = () => {
     onKeyPressAmount,
     onSelectAccount,
     setState,
+    onFocusAmount,
   } = useRowModalContext();
 
   const onClose = () => {
@@ -112,6 +113,7 @@ export const RowMainView: React.FC = () => {
             type="number"
             onKeyDown={onKeyPressAmount}
             inputMode="decimal"
+            onFocus={onFocusAmount}
           />
           <hr />
         </div>

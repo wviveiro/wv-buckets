@@ -39,7 +39,7 @@ export const useRowModal = () => {
 
   const selectedAccount = accountDetails.account || undefined;
   const accountBalance = accountDetails.balance || 0;
-  const accountBuckets = accountDetails.buckets || [];
+  const accountBuckets = accountDetails.buckets || {};
 
   const typeOptions = [
     { label: 'Income', value: 'income' },
@@ -94,6 +94,10 @@ export const useRowModal = () => {
     setState({ openAccountList: true });
   };
 
+  const onFocusAmount = (ev: React.FocusEvent<HTMLInputElement>) => {
+    ev.target.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     rowController.open = (args: RowControllerArgs) => {
       setState({
@@ -122,5 +126,6 @@ export const useRowModal = () => {
     onSetDescription,
     onSelectAccount,
     setState,
+    onFocusAmount,
   };
 };
