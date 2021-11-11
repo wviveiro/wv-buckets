@@ -71,6 +71,7 @@ export const useRowModal = () => {
   };
 
   const onKeyPressAmount = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+    ev.preventDefault();
     if (ev.key === 'Backspace') {
       let amount = state.amount.substr(0, state.amount.length - 1);
       if (!amount) amount = '0';
@@ -92,13 +93,6 @@ export const useRowModal = () => {
 
   const onSelectAccount = () => {
     setState({ openAccountList: true });
-  };
-
-  const onFocusAmount = (ev: React.FocusEvent<HTMLInputElement>) => {
-    const rect = ev.target.getBoundingClientRect();
-    setTimeout(() => {
-      document.body.scrollTop = rect.top - 20;
-    }, 100);
   };
 
   useEffect(() => {
@@ -129,6 +123,5 @@ export const useRowModal = () => {
     onSetDescription,
     onSelectAccount,
     setState,
-    onFocusAmount,
   };
 };

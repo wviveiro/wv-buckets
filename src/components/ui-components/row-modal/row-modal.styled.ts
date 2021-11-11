@@ -110,14 +110,22 @@ export const RowModalContainer = styled.div`
     }
 
     .input-amount {
+      background: transparent;
+      border: 0;
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       width: 100%;
-      opacity: 0;
+      opacity: 1;
       display: block;
+      color: transparent;
+      caret-color: transparent;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     &.expense {
