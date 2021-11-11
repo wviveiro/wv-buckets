@@ -1,6 +1,7 @@
 import React from 'react';
 import { BlackModal } from '../black-modal/black-modal';
 import BottomModal from '../bottom-modal';
+import { DateModal } from '../date-modal/date-modal';
 import { RowModalContext } from './context/row-modal-context';
 import { useRowModal } from './row-modal.hook';
 import { RowModalContainer } from './row-modal.styled';
@@ -30,6 +31,7 @@ export const RowModal: React.FC = () => {
         <BottomModal show={openAddCategory}>
           <AddCategory />
         </BottomModal>
+        <DateModal />
       </RowModalContext.Provider>
     </RowModalContainer>
   );
