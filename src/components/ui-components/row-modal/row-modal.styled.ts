@@ -91,6 +91,7 @@ export const RowModalContainer = styled.div`
     margin-top: 20px;
     color: ${(props) => props.theme.colors.gray};
     position: relative;
+    overflow: hidden;
 
     hr {
       opacity: 0;
@@ -114,15 +115,14 @@ export const RowModalContainer = styled.div`
       border: 0;
       position: absolute;
       top: 0;
-      left: 0;
+      left: -5px;
       right: 0;
       bottom: 0;
       width: 100%;
       opacity: 1;
       display: block;
       color: transparent;
-      caret-color: transparent;
-      font-size: 0.1px;
+      caret-color: blue;
 
       &:focus {
         outline: none;
