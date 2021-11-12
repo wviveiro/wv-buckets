@@ -1,6 +1,6 @@
 {
   "name": "google-api",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "private": true,
   "homepage": "/wv-buckets",
   "dependencies": {
