@@ -52,6 +52,13 @@ export const useRowModal = () => {
 
     if (isNaN(amount)) return { decimal: '0', integer: '00' };
 
+    if (amount < 100) {
+      return {
+        integer: `0`,
+        decimal: `${amount}`.padStart(2, '0'),
+      };
+    }
+
     const stramount = `${amount}`;
     const decimal = stramount.substr(-2).padEnd(2, '0');
     const integer =

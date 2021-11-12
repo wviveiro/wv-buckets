@@ -122,6 +122,7 @@ export const RowModalContainer = styled.div`
       display: block;
       color: transparent;
       caret-color: transparent;
+      font-size: 0.1px;
 
       &:focus {
         outline: none;
