@@ -115,7 +115,7 @@ export const RowModalContainer = styled.div`
       border: 0;
       position: absolute;
       top: 0;
-      left: -5px;
+      left: -50px;
       right: 0;
       bottom: 0;
       width: 100%;

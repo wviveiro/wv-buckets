@@ -66,6 +66,7 @@ export const BlackModalList = styled.div`
   overflow: auto;
   margin: 0 -20px;
   padding: 0 20px;
+  touch-action: pan-y;
 `;
 
 export const BlackModalListItem = styled.div`
