@@ -48,6 +48,7 @@ export const useAccountsState = () => {
     rowController.open({
       account_id: showMenu as EntityId,
       category: buckets.ids.length > 0 ? buckets.ids[0] : '',
+      type: 'expense',
     });
   };
 

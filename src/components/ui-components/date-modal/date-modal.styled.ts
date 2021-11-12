@@ -1,29 +1,42 @@
 import styled, { css } from 'styled-components/macro';
 import { bottomModalTransitionMilliseconds } from '../bottom-modal/bottom-modal.styled';
 
-export const DateModalContainer = styled.div`
+export const DateModalContainer = styled.div<{ open: boolean }>`
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  pointer-events: none;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   transition: background-color ${bottomModalTransitionMilliseconds}ms linear;
+  ${(props) =>
+    props.open &&
+    css`
+      pointer-events: unset;
+      background-color: rgba(0, 0, 0, 0.5);
+    `}
 `;
 
-export const DateModalInner = styled.div`
+export const DateModalInner = styled.div<{ open: boolean }>`
   ${(props) => css`
     position: fixed;
-    bottom: 0;
+    bottom: -100vh;
     width: 100%;
     margin-bottom: ${props.theme.device.paddingBottom};
     transition: bottom ${bottomModalTransitionMilliseconds}ms linear;
+
+    ${props.open &&
+    css`
+      bottom: 0;
+    `}
 
     & > div {
       width: calc(100% - 40px);
       background-color: ${props.theme.colors.background2};
       padding: 20px;
       margin: 0 auto;
+      border-radius: 15px;
     }
 
     .date-modal-picker {

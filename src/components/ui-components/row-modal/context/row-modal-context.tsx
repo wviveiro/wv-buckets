@@ -8,6 +8,7 @@ export const RowModalContext = React.createContext<RowModalContextInterface>({
     openAccountList: false,
     openCategoryList: false,
     openAddCategory: false,
+    openDatePicker: false,
     type: 'expense',
     amount: '0',
     message: '',
@@ -32,7 +33,6 @@ export const RowModalContext = React.createContext<RowModalContextInterface>({
   onSetDescription: noop,
   setState: noop,
   onSelectAccount: noop,
-  onFocusAmount: noop,
 });
 
 export const useRowModalContext = () => {
