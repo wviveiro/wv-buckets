@@ -13,6 +13,7 @@ export interface RowModalStateInterface {
   openAccountList: boolean;
   openCategoryList: boolean;
   openAddCategory: boolean;
+  openDatePicker: boolean;
   type: string;
   amount: string;
   message: string;

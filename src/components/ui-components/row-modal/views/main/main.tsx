@@ -36,6 +36,10 @@ export const RowMainView: React.FC = () => {
     setState({ openCategoryList: true });
   };
 
+  const onOpenDatePicker = () => {
+    setState({ openDatePicker: true });
+  };
+
   return (
     <>
       <BlackModal.Title
@@ -77,7 +81,9 @@ export const RowMainView: React.FC = () => {
           </div>
           <div className="account-block half-block">
             <strong>Date</strong>
-            <span>{format(parseISO(state.date), 'dd/MM/yyyy')}</span>
+            <button onClick={onOpenDatePicker}>
+              <span>{format(parseISO(state.date), 'dd/MM/yyyy')}</span>
+            </button>
           </div>
         </div>
         <hr />

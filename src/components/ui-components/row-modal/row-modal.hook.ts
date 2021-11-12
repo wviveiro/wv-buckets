@@ -22,6 +22,7 @@ export const useRowModal = () => {
     openAccountList: false,
     openCategoryList: false,
     openAddCategory: false,
+    openDatePicker: false,
     type: 'expense',
     amount: '0',
     message: '',
