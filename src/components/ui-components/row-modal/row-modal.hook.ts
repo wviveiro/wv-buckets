@@ -1,8 +1,10 @@
+import { setAlert } from 'components/alert';
 import { selectAccounts } from 'components/redux/selectors/accounts';
 import { useAccountDetails } from 'components/redux/selectors/accounts/accounts.hooks';
+import { Status } from 'components/util/status';
+import { useStateStatus } from 'components/util/use-state-status';
 import { format } from 'date-fns';
 import React, { useEffect, useMemo } from 'react';
-import useCreateState from 'react-hook-setstate';
 import { useSelector } from 'react-redux';
 import { TogglerOption } from '../toggler/toggler.interface';
 import {
@@ -17,7 +19,8 @@ export const rowController = {
 };
 
 export const useRowModal = () => {
-  const [state, setState] = useCreateState<RowModalStateInterface>({
+  const [state, setState] = useStateStatus<RowModalStateInterface>({
+    status: Status.loaded,
     open: false,
     openAccountList: false,
     openCategoryList: false,
@@ -103,6 +106,13 @@ export const useRowModal = () => {
     setState({ openAccountList: true });
   };
 
+  const onSave = () => {
+    if (!+state.amount) return setAlert('Amount is required', 'danger');
+    if (!state.category) return setAlert('Category is required', 'danger');
+
+    setState({ status: Status.loading });
+  };
+
   useEffect(() => {
     rowController.open = (args: RowControllerArgs) => {
       setState({
@@ -131,5 +141,6 @@ export const useRowModal = () => {
     onSetDescription,
     onSelectAccount,
     setState,
+    onSave,
   };
 };

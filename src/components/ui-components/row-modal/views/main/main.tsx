@@ -11,6 +11,7 @@ import { useRowModalContext } from '../../context/row-modal-context';
 import BlackModal from 'components/ui-components/black-modal';
 import { format, parseISO } from 'date-fns';
 import { AccountBalance } from 'components/accounts/account/account.styled';
+import { Status } from 'components/util/status';
 
 export const RowMainView: React.FC = () => {
   const {
@@ -26,6 +27,7 @@ export const RowMainView: React.FC = () => {
     onKeyPressAmount,
     onSelectAccount,
     setState,
+    onSave,
   } = useRowModalContext();
 
   const onClose = () => {
@@ -44,7 +46,7 @@ export const RowMainView: React.FC = () => {
     <>
       <BlackModal.Title
         rightButton={
-          <button onClick={onClose}>
+          <button onClick={onClose} disabled={state.disabled}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
         }
@@ -65,7 +67,11 @@ export const RowMainView: React.FC = () => {
           </div>
           {multipleAccounts && (
             <div className="account-more">
-              <button className="btn-select-account" onClick={onSelectAccount}>
+              <button
+                className="btn-select-account"
+                disabled={state.disabled}
+                onClick={onSelectAccount}
+              >
                 <FontAwesomeIcon icon={faChevronRight} className="icon" />
               </button>
             </div>
@@ -75,13 +81,13 @@ export const RowMainView: React.FC = () => {
         <div className="flex account-row-details">
           <div className="account-block half-block right-border">
             <strong>Category</strong>
-            <button onClick={onClickCategory}>
+            <button onClick={onClickCategory} disabled={state.disabled}>
               <span>{state.category || 'UNKNOWN'}</span>
             </button>
           </div>
           <div className="account-block half-block">
             <strong>Date</strong>
-            <button onClick={onOpenDatePicker}>
+            <button onClick={onOpenDatePicker} disabled={state.disabled}>
               <span>{format(parseISO(state.date), 'dd/MM/yyyy')}</span>
             </button>
           </div>
@@ -96,6 +102,7 @@ export const RowMainView: React.FC = () => {
               className="input-description"
               value={state.message}
               onChange={onSetDescription}
+              disabled={state.disabled}
             />
           </div>
         </div>
@@ -104,6 +111,7 @@ export const RowMainView: React.FC = () => {
           value={state.type}
           options={typeOptions}
           onChange={onSelectType}
+          disabled={state.disabled}
         />
 
         <div className={classNames('account-amount', state.type)}>
@@ -118,11 +126,18 @@ export const RowMainView: React.FC = () => {
             type="number"
             onKeyDown={onKeyPressAmount}
             inputMode="decimal"
+            disabled={state.disabled}
           />
           <hr />
         </div>
 
-        <button className="add-row-button">Save Transaction</button>
+        <button
+          className="add-row-button"
+          onClick={onSave}
+          disabled={state.disabled}
+        >
+          {state.status === Status.loading ? 'Saving...' : 'Save Transaction'}
+        </button>
       </BlackModal.List>
     </>
   );

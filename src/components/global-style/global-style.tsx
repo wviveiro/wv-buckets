@@ -29,6 +29,10 @@ export const GlobalStyle = createGlobalStyle`
       &:focus {
         outline: none;
       }
+
+      &:disabled {
+        opacity: .5;
+      }
     }
 
     .flex {

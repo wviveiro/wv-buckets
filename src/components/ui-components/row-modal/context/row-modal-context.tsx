@@ -1,9 +1,12 @@
 import { noop } from 'components/util/noop';
+import { Status } from 'components/util/status';
 import React, { useContext } from 'react';
 import { RowModalContextInterface } from './row-modal-context.interface';
 
 export const RowModalContext = React.createContext<RowModalContextInterface>({
   state: {
+    status: Status.loaded,
+    disabled: false,
     open: false,
     openAccountList: false,
     openCategoryList: false,
@@ -33,6 +36,7 @@ export const RowModalContext = React.createContext<RowModalContextInterface>({
   onSetDescription: noop,
   setState: noop,
   onSelectAccount: noop,
+  onSave: noop,
 });
 
 export const useRowModalContext = () => {

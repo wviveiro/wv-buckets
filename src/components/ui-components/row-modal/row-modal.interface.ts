@@ -1,4 +1,5 @@
 import { EntityId } from '@reduxjs/toolkit';
+import { Status } from 'components/util/status';
 
 export interface RowControllerArgs {
   account_id: EntityId;
@@ -9,6 +10,7 @@ export interface RowControllerArgs {
 }
 
 export interface RowModalStateInterface {
+  status: Status;
   open: boolean;
   openAccountList: boolean;
   openCategoryList: boolean;
