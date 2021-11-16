@@ -4,7 +4,11 @@ import {
   PayloadAction,
   EntityId,
 } from '@reduxjs/toolkit';
-import { AccountInterface } from './accounts.interface';
+import { EnumSchemas } from 'components/schemas';
+import {
+  AccountInterface,
+  AddTransactionInterface,
+} from './accounts.interface';
 
 const accountsAdapter = createEntityAdapter<AccountInterface>({
   selectId: (account) => account.spreadsheetId,
@@ -47,6 +51,14 @@ const accountSlice = createSlice({
     removeAccount: (state, { payload }: PayloadAction<EntityId>) => {
       accountsAdapter.removeOne(state, payload);
     },
+    addTransactionAccount: (
+      state,
+      { payload }: PayloadAction<AddTransactionInterface>
+    ) => {
+      state.entities[payload.accountid]?.schemas?.[
+        EnumSchemas.WVBUCKET
+      ].rows.push(payload.transaction);
+    },
   },
 });
 
@@ -55,6 +67,7 @@ export const {
   startLoadingAccount,
   loadAccounts,
   removeAccount,
+  addTransactionAccount,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

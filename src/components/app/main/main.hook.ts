@@ -5,7 +5,9 @@ import { importAccounts } from 'components/redux/slices/accounts';
 import { setAuth } from 'components/redux/slices/auth';
 import {
   authenticate,
+  hasSheetScope,
   isSignedIn,
+  onSignOut,
   subscribeUserSignedStatus,
 } from 'components/sheet-api';
 import { Status } from 'components/util/status';
@@ -52,6 +54,15 @@ export const useMainState = () => {
               signedin,
             });
           });
+
+          if (!hasSheetScope()) {
+            setState({
+              status: Status.loaded,
+              authenticated: true,
+              signedin: false,
+            });
+            return onSignOut();
+          }
 
           dispatch(importAccounts(settings.accounts));
 

@@ -16,6 +16,7 @@ export const Main: React.FC = () => {
     onSetShowMenu,
     onClickDelete,
     onAddRowModal,
+    onCopyURL,
   } = useAccountsState();
 
   return (
@@ -49,6 +50,7 @@ export const Main: React.FC = () => {
         menu={[
           [
             { label: 'Add Row', onClick: onAddRowModal },
+            { label: 'Copy URL', onClick: onCopyURL },
             {
               label: 'Delete',
               className: 'text-danger',

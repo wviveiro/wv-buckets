@@ -1,4 +1,5 @@
 import { EntityId } from '@reduxjs/toolkit';
+import { setAlert } from 'components/alert';
 import { selectAccounts } from 'components/redux/selectors/accounts';
 import { getAccountDetails } from 'components/redux/selectors/accounts/accounts.helpers';
 import { removeAccount } from 'components/redux/slices/accounts';
@@ -52,6 +53,17 @@ export const useAccountsState = () => {
     });
   };
 
+  const onCopyURL = async () => {
+    if (!showMenu) return;
+
+    const url = `https://docs.google.com/spreadsheets/d/${showMenu}`;
+
+    await navigator.clipboard.writeText(url);
+
+    setShowMenu(false);
+    setAlert('URL copied');
+  };
+
   return {
     accounts,
     typeCreation,
@@ -59,5 +71,6 @@ export const useAccountsState = () => {
     onSetShowMenu,
     onClickDelete,
     onAddRowModal,
+    onCopyURL,
   };
 };

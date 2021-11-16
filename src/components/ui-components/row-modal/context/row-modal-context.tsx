@@ -1,24 +1,29 @@
-import { noop } from 'components/util/noop';
+import { asyncNoop, noop } from 'components/util/noop';
 import { Status } from 'components/util/status';
+import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import { RowModalContextInterface } from './row-modal-context.interface';
 
+export const DefaultState = {
+  status: Status.loaded,
+  open: false,
+  openAccountList: false,
+  openCategoryList: false,
+  openAddCategory: false,
+  openDatePicker: false,
+  type: 'expense',
+  amount: '0',
+  message: '',
+  view: 'main',
+  date: format(new Date(), 'yyyy-MM-dd'),
+  account_id: '',
+  category: '',
+};
+
 export const RowModalContext = React.createContext<RowModalContextInterface>({
   state: {
-    status: Status.loaded,
+    ...DefaultState,
     disabled: false,
-    open: false,
-    openAccountList: false,
-    openCategoryList: false,
-    openAddCategory: false,
-    openDatePicker: false,
-    type: 'expense',
-    amount: '0',
-    message: '',
-    date: '',
-    view: 'main',
-    account_id: '',
-    category: '',
   },
   typeOptions: [],
   decimal: '0',
@@ -36,7 +41,7 @@ export const RowModalContext = React.createContext<RowModalContextInterface>({
   onSetDescription: noop,
   setState: noop,
   onSelectAccount: noop,
-  onSave: noop,
+  onSave: asyncNoop,
 });
 
 export const useRowModalContext = () => {

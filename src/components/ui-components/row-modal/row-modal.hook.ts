@@ -1,12 +1,15 @@
 import { setAlert } from 'components/alert';
+import { addTransaction } from 'components/helpers/add-transaction/add-transaction';
 import { selectAccounts } from 'components/redux/selectors/accounts';
 import { useAccountDetails } from 'components/redux/selectors/accounts/accounts.hooks';
+import { addTransactionAccount } from 'components/redux/slices/accounts';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
 import { format } from 'date-fns';
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TogglerOption } from '../toggler/toggler.interface';
+import { DefaultState } from './context/row-modal-context';
 import {
   RowControllerArgs,
   RowModalStateInterface,
@@ -20,20 +23,10 @@ export const rowController = {
 
 export const useRowModal = () => {
   const [state, setState] = useStateStatus<RowModalStateInterface>({
-    status: Status.loaded,
-    open: false,
-    openAccountList: false,
-    openCategoryList: false,
-    openAddCategory: false,
-    openDatePicker: false,
-    type: 'expense',
-    amount: '0',
-    message: '',
-    view: 'main',
-    date: format(new Date(), 'yyyy-MM-dd'),
-    account_id: '',
-    category: '',
+    ...DefaultState,
   });
+
+  const dispatch = useDispatch();
 
   const accounts = useSelector(selectAccounts);
 
@@ -106,11 +99,28 @@ export const useRowModal = () => {
     setState({ openAccountList: true });
   };
 
-  const onSave = () => {
+  const onSave = async () => {
     if (!+state.amount) return setAlert('Amount is required', 'danger');
     if (!state.category) return setAlert('Category is required', 'danger');
 
     setState({ status: Status.loading });
+
+    const amount = (+state.amount / 100) * (state.type === 'expense' ? -1 : 1);
+
+    const transaction = {
+      amount,
+      category: state.category,
+      message: state.message,
+      date: state.date,
+    };
+
+    await addTransaction(state.account_id, transaction);
+    dispatch(
+      addTransactionAccount({ accountid: state.account_id, transaction })
+    );
+
+    setState({ ...DefaultState, status: Status.loaded, open: false });
+    setAlert('Transaction added', 'success');
   };
 
   useEffect(() => {

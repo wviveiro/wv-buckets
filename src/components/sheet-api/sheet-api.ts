@@ -68,11 +68,19 @@ export const subscribeUserSignedStatus = (
   };
 };
 
+export const hasSheetScope = () => {
+  return gapi.auth2
+    .getAuthInstance()
+    .currentUser.get()
+    .hasGrantedScopes('https://www.googleapis.com/auth/spreadsheets');
+};
+
 /**
  * Verify if user is signed in
  */
 export const isSignedIn = () => {
   const instance = gapi.auth2.getAuthInstance();
+
   return instance.isSignedIn.get();
 };
 

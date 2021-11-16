@@ -1,4 +1,5 @@
-import { DatabaseInterface } from 'components/schemas';
+import { EntityId } from '@reduxjs/toolkit';
+import { DatabaseInterface, WVBucketInterface } from 'components/schemas';
 
 export interface AccountInterface {
   title: string;
@@ -7,4 +8,9 @@ export interface AccountInterface {
   initialised: boolean;
   loading: boolean;
   error: boolean | string;
+}
+
+export interface AddTransactionInterface {
+  transaction: WVBucketInterface;
+  accountid: EntityId;
 }

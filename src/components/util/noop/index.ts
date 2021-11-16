@@ -4,3 +4,7 @@
 export const noop = () => {
   // Nothing happens
 };
+
+export const asyncNoop = async () => {
+  // Nothing happens
+};
