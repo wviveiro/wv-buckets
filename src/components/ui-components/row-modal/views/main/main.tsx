@@ -10,7 +10,7 @@ import React from 'react';
 import { useRowModalContext } from '../../context/row-modal-context';
 import BlackModal from 'components/ui-components/black-modal';
 import { format, parseISO } from 'date-fns';
-import { AccountBalance } from 'components/accounts/account/account.styled';
+import { AccountBalance } from 'components/pages/accounts/account/account.styled';
 import { Status } from 'components/util/status';
 
 export const RowMainView: React.FC = () => {

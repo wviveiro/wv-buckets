@@ -8,6 +8,7 @@ import { EnumSchemas } from 'components/schemas';
 import {
   AccountInterface,
   AddTransactionInterface,
+  LoadAccountErrorInterface,
 } from './accounts.interface';
 
 const accountsAdapter = createEntityAdapter<AccountInterface>({
@@ -28,7 +29,7 @@ const accountSlice = createSlice({
         initialised: false,
         loading: false,
         error: false,
-      }));
+      })) as AccountInterface[];
 
       accountsAdapter.upsertMany(state, accounts);
     },
@@ -47,6 +48,18 @@ const accountSlice = createSlice({
     },
     loadAccounts: (state, { payload }: PayloadAction<AccountInterface[]>) => {
       accountsAdapter.upsertMany(state, payload);
+    },
+    loadAccountError: (
+      state,
+      {
+        payload: { spreadsheetId, error },
+      }: PayloadAction<LoadAccountErrorInterface>
+    ) => {
+      const entity = state.entities[spreadsheetId];
+      if (entity) {
+        entity.loading = false;
+        entity.error = error;
+      }
     },
     removeAccount: (state, { payload }: PayloadAction<EntityId>) => {
       accountsAdapter.removeOne(state, payload);
@@ -68,6 +81,7 @@ export const {
   loadAccounts,
   removeAccount,
   addTransactionAccount,
+  loadAccountError,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

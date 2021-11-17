@@ -8,7 +8,8 @@ import { AccountProps } from './account.interface';
 import { AccountContainer } from './account.styled';
 
 export const Account: React.FC<AccountProps> = (props) => {
-  const { account, balance, buckets, onShowMenu } = AccountState(props);
+  const { account, balance, buckets, onShowMenu, openBuckets } =
+    AccountState(props);
 
   if (account.loading) {
     return (
@@ -38,7 +39,7 @@ export const Account: React.FC<AccountProps> = (props) => {
         <div className="icon-area">
           <FontAwesomeIcon icon={faCreditCard} className="icon" />
         </div>
-        <div className="account-details">
+        <div className="account-details" onClick={openBuckets}>
           <h4>{account.title}</h4>
           <span className="account-id">{account.spreadsheetId}</span>
           <div className="account-summary">
