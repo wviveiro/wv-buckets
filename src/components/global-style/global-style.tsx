@@ -59,6 +59,7 @@ const theme: GlobalStyleTheme = {
   colors: {
     primary: 'var(--bs-primary)',
     danger: 'var(--bs-danger)',
+    success: 'var(--bs-success)',
     background: 'rgba(130, 145, 255)',
     background2: 'rgb(28, 28, 28)',
     textWhite: '#FFF',

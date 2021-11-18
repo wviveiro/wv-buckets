@@ -2,6 +2,7 @@ export interface GlobalStyleTheme {
   colors: {
     primary: string;
     danger: string;
+    success: string;
     background: string;
     background2: string;
     textWhite: string;

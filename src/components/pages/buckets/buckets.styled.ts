@@ -39,3 +39,55 @@ export const BucketErrorContainer = styled.div`
   width: 100%;
   font-style: italic;
 `;
+
+export const BucketContentContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  overflow: auto;
+
+  & > .flex {
+    flex-wrap: wrap;
+  }
+`;
+
+export const BucketItem = styled.div<{ total: number }>`
+  ${(props) => css`
+    width: 50%;
+    height: 100px;
+
+    & > .bucket-inner {
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      margin: 10px;
+      height: calc(100% - 20px);
+      background-color: rgba(255, 255, 255, 0.1);
+
+      .bucket-name {
+        h3 {
+          font-size: 1rem;
+        }
+      }
+
+      .bucket-price {
+        strong {
+          font-size: 1.2rem;
+          font-weight: 400;
+
+          color: ${props.total > 0
+            ? props.theme.colors.success
+            : props.theme.colors.danger};
+        }
+      }
+    }
+
+    &:nth-child(even) > .bucket-inner {
+      margin-left: 5px;
+    }
+    &:nth-child(odd) > .bucket-inner {
+      margin-right: 5px;
+    }
+  `}
+`;

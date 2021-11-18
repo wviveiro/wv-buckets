@@ -23,13 +23,22 @@ export const getAccountRows = (account: AccountInterface | undefined) => {
 
 export const getAccountBuckets = (rows: ReturnType<typeof getAccountRows>) => {
   return rows.reduce(
-    (acc: { ids: string[]; buckets: { [key: string]: typeof rows } }, curr) => {
+    (
+      acc: {
+        ids: string[];
+        buckets: { [key: string]: { rows: typeof rows; total: number } };
+      },
+      curr
+    ) => {
       if (!acc.ids.includes(curr.category)) {
         return {
           ids: [...acc.ids, curr.category].sort(),
           buckets: {
             ...acc.buckets,
-            [curr.category]: [curr],
+            [curr.category]: {
+              total: +curr.amount,
+              rows: [curr],
+            },
           },
         };
       }
@@ -38,7 +47,11 @@ export const getAccountBuckets = (rows: ReturnType<typeof getAccountRows>) => {
         ...acc,
         buckets: {
           ...acc.buckets,
-          [curr.category]: [...acc.buckets[curr.category], curr],
+          [curr.category]: {
+            ...acc.buckets[curr.category],
+            rows: [...acc.buckets[curr.category].rows, curr],
+            total: acc.buckets[curr.category].total + +curr.amount,
+          },
         },
       };
     },

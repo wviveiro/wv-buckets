@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 export const useBucketsState = () => {
   const { accountid } = useParams<{ accountid: string }>();
 
-  const { account, initialiseAccount } = useAccountDetails(accountid);
+  const { account, buckets, initialiseAccount } = useAccountDetails(accountid);
 
   useEffect(() => {
     initialiseAccount();
@@ -13,5 +13,6 @@ export const useBucketsState = () => {
 
   return {
     account,
+    buckets,
   };
 };
