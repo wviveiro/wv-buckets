@@ -11,7 +11,7 @@ export const Layout: React.FC = (props) => {
 
   return (
     <LayoutContainer>
-      {/* <div className="layout-header">
+      <div className="layout-header">
         <button
           className="menu-button"
           onClick={toggleSideMenu(true)}
@@ -19,7 +19,7 @@ export const Layout: React.FC = (props) => {
         >
           <FontAwesomeIcon icon={faBars} />
         </button>
-      </div> */}
+      </div>
       {children}
       <div
         className="slide-right-menu"

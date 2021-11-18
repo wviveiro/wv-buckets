@@ -8,12 +8,14 @@ export const LayoutContainer = styled.div`
 
   & > .layout-header {
     position: fixed;
-    width: 100%;
+    width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding-right: 10px;
+    right: 0;
+    top: 0;
 
     & > .menu-button {
       color: ${(props) => props.theme.colors.textWhite};
