@@ -30,12 +30,13 @@ export const getAccountBuckets = (rows: ReturnType<typeof getAccountRows>) => {
       },
       curr
     ) => {
-      if (!acc.ids.includes(curr.category)) {
+      const category = curr.category.trim();
+      if (!acc.ids.includes(category)) {
         return {
-          ids: [...acc.ids, curr.category].sort(),
+          ids: [...acc.ids, category].sort(),
           buckets: {
             ...acc.buckets,
-            [curr.category]: {
+            [category]: {
               total: +curr.amount,
               rows: [curr],
             },
@@ -47,10 +48,10 @@ export const getAccountBuckets = (rows: ReturnType<typeof getAccountRows>) => {
         ...acc,
         buckets: {
           ...acc.buckets,
-          [curr.category]: {
-            ...acc.buckets[curr.category],
-            rows: [...acc.buckets[curr.category].rows, curr],
-            total: acc.buckets[curr.category].total + +curr.amount,
+          [category]: {
+            ...acc.buckets[category],
+            rows: [...acc.buckets[category].rows, curr],
+            total: acc.buckets[category].total + +curr.amount,
           },
         },
       };

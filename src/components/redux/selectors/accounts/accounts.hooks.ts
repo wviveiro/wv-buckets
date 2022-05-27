@@ -25,7 +25,7 @@ export const useAccountDetails = (spreadsheetId: EntityId) => {
     dispatch(startLoadingAccount(spreadsheetId));
     const details = await initialiseDatabase([spreadsheetId as string]);
     dispatch(loadAccounts(details));
-  }, [spreadsheetId, initialised]);
+  }, [spreadsheetId, initialised, dispatch]);
 
   return { ...result, initialiseAccount };
 };

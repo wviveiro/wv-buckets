@@ -12,6 +12,7 @@ export const getGlobalSettings = (): GlobalSettingsInterface => {
     client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID || '',
     spid: '',
     accounts: [],
+    access_token: '',
   };
 
   const strGlobalSettings = localStorage.getItem(GlobalEnum.name);

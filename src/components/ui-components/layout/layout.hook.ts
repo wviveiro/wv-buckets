@@ -1,8 +1,12 @@
-import { deleteGlobalSettings } from 'components/global-settings';
-import { onSignOut } from 'components/sheet-api';
+import {
+  deleteGlobalSettings,
+  setGlobalSettings,
+} from 'components/global-settings';
+import { setAuth } from 'components/redux/slices/auth';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { onConfirm } from '../confirm-modal/confirm-modal';
 
 export const useLayoutState = () => {
@@ -11,6 +15,7 @@ export const useLayoutState = () => {
     sideMenu: false,
     width: window.innerWidth,
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let mounted = true;
@@ -38,7 +43,8 @@ export const useLayoutState = () => {
   };
 
   const onSignout = () => {
-    onSignOut();
+    setGlobalSettings({ access_token: '' });
+    dispatch(setAuth({ signedin: false }));
   };
 
   const confirmDeleteSettings = () => {

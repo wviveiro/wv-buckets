@@ -7,6 +7,8 @@ export interface GlobalSettingsInterface {
   spid: string;
   /** list of spreadsheet IDs */
   accounts: string[];
+  /** Access token from google */
+  access_token: string;
 }
 
 export enum GlobalEnum {

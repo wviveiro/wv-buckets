@@ -3,13 +3,13 @@ import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
-import { AccountState } from './account.hook';
+import { useAccountState } from './account.hook';
 import { AccountProps } from './account.interface';
 import { AccountContainer } from './account.styled';
 
 export const Account: React.FC<AccountProps> = (props) => {
   const { account, balance, buckets, onShowMenu, openBuckets } =
-    AccountState(props);
+    useAccountState(props);
 
   if (account.loading) {
     return (

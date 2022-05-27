@@ -1,4 +1,4 @@
-import { getGlobalSettings } from 'components/global-settings';
+import { fetchGoogleApi } from 'components/google-api/google-api';
 import { numberToLetter } from 'components/util/number-to-letter';
 
 export const treatGoogleAPIError = (error: any): string => {
@@ -13,35 +13,6 @@ export const treatGoogleAPIError = (error: any): string => {
   } else {
     return 'Something went wrong trying to authenticated. Check your log';
   }
-};
-
-/**
- * Authenticate application using client id from local storage
- */
-export const authenticate = async () => {
-  const globalSettings = getGlobalSettings();
-  if (!globalSettings.client_id || !gapi)
-    throw new Error('Missing client ID or GAPI');
-
-  return new Promise(async (resolve, reject) => {
-    const init = async () => {
-      try {
-        await gapi.client.init({
-          discoveryDocs: [
-            'https://sheets.googleapis.com/$discovery/rest?version=v4',
-          ],
-          clientId: globalSettings.client_id,
-          scope: 'https://www.googleapis.com/auth/spreadsheets',
-        });
-      } catch (error: any) {
-        return reject(treatGoogleAPIError(error));
-      }
-
-      resolve(true);
-    };
-
-    gapi.load('client:auth2', init);
-  });
 };
 
 /**
@@ -106,13 +77,11 @@ export const getSpreadsheetDetails = async (
 ): Promise<gapi.client.Request<gapi.client.sheets.Spreadsheet>> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const details = await gapi.client.sheets.spreadsheets.get({
-        spreadsheetId,
-        fields:
-          'sheets.properties.title,sheets.properties.sheetId,properties.title',
-      });
+      const result = await fetchGoogleApi(
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}`
+      );
 
-      return resolve(details);
+      return resolve({ body: '', result });
     } catch (error: any) {
       return reject(treatGoogleAPIError(error));
     }
@@ -195,31 +164,13 @@ export const getSheetRows = async (
     ...(paramArgs || {}),
   };
 
-  const noLimit = !args.to;
-  if (args.from < 2) args.from = 2;
-  const limit = args.from - 2 + 1000;
-
   const lastColumn = numberToLetter(args.columns || 1);
 
-  const result = await gapi.client.sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: `${title}!A${args.from}:${lastColumn}${noLimit ? limit : args.to}`,
-  });
+  const result = await fetchGoogleApi(
+    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${title}!A2:${lastColumn}`
+  );
 
-  let values = (result.result.values || []) as string[][];
-
-  if (noLimit) {
-    const diff = limit - args.from;
-    if (values.length >= diff) {
-      values = [
-        ...values,
-        ...(await getSheetRows(spreadsheetId, title, {
-          ...args,
-          from: limit + 1,
-        })),
-      ];
-    }
-  }
+  let values = (result.values || []) as string[][];
 
   return values;
 };

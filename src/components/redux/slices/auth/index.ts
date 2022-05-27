@@ -8,6 +8,7 @@ const authSlice = createSlice({
     status: Status.initializing,
     authenticated: false,
     signedin: false,
+    access_token: '',
   },
   reducers: {
     setAuth: (state, { payload }: PayloadAction<Partial<AuthInterface>>) => {
@@ -22,6 +23,9 @@ const authSlice = createSlice({
       if (Object.prototype.hasOwnProperty.call(payload, 'signedin')) {
         state.signedin = payload.signedin as boolean;
       }
+    },
+    logout: (state) => {
+      state.signedin = false;
     },
   },
 });
