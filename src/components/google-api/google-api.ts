@@ -6,7 +6,10 @@ import { FetchResult } from './google-api.types';
  * @param url
  * @returns
  */
-export const fetchGoogleApi = async (url: string) => {
+export const fetchGoogleApi = async (
+  url: string,
+  options: RequestInit = {}
+) => {
   const { access_token } = getGlobalSettings();
 
   if (!access_token) {
@@ -14,9 +17,11 @@ export const fetchGoogleApi = async (url: string) => {
   }
 
   const result = await fetch(url, {
+    ...options,
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${access_token}`,
+      ...options.headers,
     },
   }).then((result) => result.json());
 

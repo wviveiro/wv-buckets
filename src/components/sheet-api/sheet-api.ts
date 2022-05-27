@@ -136,14 +136,15 @@ export const addSheetRows = async (
   rows: string[][]
 ) => {
   try {
-    const result = await gapi.client.sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: `${title}!A1`,
-      valueInputOption: 'USER_ENTERED',
-      resource: {
-        values: rows,
-      },
-    });
+    const result = await fetchGoogleApi(
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${title}!A1:append?valueInputOption=USER_ENTERED`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          values: rows,
+        }),
+      }
+    );
     return result;
   } catch (e) {
     throw treatGoogleAPIError(e);
