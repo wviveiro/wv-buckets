@@ -44,6 +44,15 @@ export const Layout: React.FC = (props) => {
               <button
                 className="logout-button text-primary"
                 disabled={state.disabled}
+                onClick={() => window.location.reload()}
+              >
+                <i className="fas fa-sign-out-alt" /> Hard Reload App
+              </button>
+            </li>
+            <li>
+              <button
+                className="logout-button text-primary"
+                disabled={state.disabled}
                 onClick={onSignout}
               >
                 <i className="fas fa-sign-out-alt" /> Logout

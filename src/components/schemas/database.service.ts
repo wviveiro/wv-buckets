@@ -67,9 +67,10 @@ export const initialiseDatabase = async (
               ]);
 
             return values.reduce((acc, curr) => {
+              if (!curr[0]) return acc;
               let v: string | number = curr[1];
 
-              if (curr[2] === 'number') {
+              if (curr[2] === 'number' && v !== undefined) {
                 const num = +v.replace(/[$,]/g, '');
                 if (!isNaN(num)) v = num;
               }

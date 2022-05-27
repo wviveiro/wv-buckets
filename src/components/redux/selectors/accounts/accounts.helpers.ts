@@ -30,7 +30,9 @@ export const getAccountBuckets = (rows: ReturnType<typeof getAccountRows>) => {
       },
       curr
     ) => {
+      if (!curr.category) return acc;
       const category = curr.category.trim();
+
       if (!acc.ids.includes(category)) {
         return {
           ids: [...acc.ids, category].sort(),
@@ -66,6 +68,8 @@ export const getAccountBuckets = (rows: ReturnType<typeof getAccountRows>) => {
 export const getAccountBalance = (rows: ReturnType<typeof getAccountRows>) => {
   return (
     rows.reduce((acc, curr) => {
+      if (curr.amount === undefined) return acc;
+
       return acc + curr.amount * 100;
     }, 0) / 100
   );
