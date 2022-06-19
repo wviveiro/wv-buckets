@@ -1,15 +1,13 @@
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SplashScreen } from 'components/splash-screen';
+import { PageHeader } from 'components/ui-components/layout/page-header';
+import { formatToCurrency } from 'components/util/format-to-currency';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useBucketsState } from './buckets.hook';
 import {
   BucketContentContainer,
   BucketErrorContainer,
   BucketItem,
   BucketsContainer,
-  BucketsHeader,
 } from './buckets.styled';
 
 export const Buckets: React.FC = () => {
@@ -17,14 +15,11 @@ export const Buckets: React.FC = () => {
 
   if (!account) return null;
 
+  const { title } = account;
+
   return (
     <BucketsContainer>
-      <BucketsHeader>
-        <Link to={'/'}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </Link>
-        <h2>Account his is this fdjd, fld jr </h2>
-      </BucketsHeader>
+      <PageHeader title={title} linkBack={`/`} />
       {account.loading ? (
         <BucketContentContainer>
           <SplashScreen hasSpinner={true} />
@@ -38,6 +33,7 @@ export const Buckets: React.FC = () => {
               <BucketItem
                 key={bucketId}
                 total={buckets.buckets[bucketId].total}
+                to={`/accounts/${account.spreadsheetId}/category/${bucketId}/list`}
               >
                 <div className="bucket-inner">
                   <div className="bucket-name">
@@ -45,7 +41,7 @@ export const Buckets: React.FC = () => {
                   </div>
                   <div className="bucket-price">
                     <strong>
-                      $ {buckets.buckets[bucketId].total.toLocaleString()}
+                      {formatToCurrency(buckets.buckets[bucketId].total)}
                     </strong>
                   </div>
                 </div>

@@ -1,7 +1,8 @@
 import { setAlert } from 'components/alert';
+import { treatGoogleAPIError } from 'components/google/google-api/google-api';
 import { importAccounts, loadAccounts } from 'components/redux/slices/accounts';
 import { initialiseDatabase } from 'components/schemas';
-import { createSpreadsheet, treatGoogleAPIError } from 'components/sheet-api';
+import { createSpreadsheet } from 'components/sheet-api';
 import { Status } from 'components/util/status';
 import { useStateStatus } from 'components/util/use-state-status';
 import React, { useEffect } from 'react';

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components/macro';
 
 export const BucketsContainer = styled.div`
@@ -5,30 +6,6 @@ export const BucketsContainer = styled.div`
   height: 100%;
   align-items: flex-start;
   flex-direction: column;
-`;
-
-export const BucketsHeader = styled.div`
-  ${(props) => css`
-    display: flex;
-    align-items: center;
-    height: 50px;
-    width: calc(100% - 50px);
-
-    a {
-      color: #fff;
-      width: 40px;
-      padding-left: calc(${props.theme.device.paddingLeft} + 10px);
-    }
-
-    h2 {
-      margin: 0;
-      font-weight: 400;
-      flex-grow: 1;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  `}
 `;
 
 export const BucketErrorContainer = styled.div`
@@ -52,18 +29,18 @@ export const BucketContentContainer = styled.div`
   }
 `;
 
-export const BucketItem = styled.div<{ total: number }>`
+export const BucketItem = styled(Link)<{ total: number }>`
   ${(props) => css`
     width: 50%;
     height: 100px;
+    color: #fff;
 
     & > .bucket-inner {
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
       padding: 10px;
       margin: 10px;
       height: calc(100% - 20px);
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.01);
 
       .bucket-name {
         h3 {

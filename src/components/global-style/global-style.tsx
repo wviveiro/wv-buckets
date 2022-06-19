@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     html, body, #root {
       height: 100%;
       touch-action: pan-y;
+      background-color: #202124;
     }
 
     * {
@@ -60,7 +61,7 @@ const theme: GlobalStyleTheme = {
     primary: 'var(--bs-primary)',
     danger: 'var(--bs-danger)',
     success: 'var(--bs-success)',
-    background: 'rgba(130, 145, 255)',
+    background: '#202124',
     background2: 'rgb(28, 28, 28)',
     textWhite: '#FFF',
     textBlack: '#000',

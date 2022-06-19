@@ -4,12 +4,15 @@ import {
   startLoadingAccount,
 } from 'components/redux/slices/accounts';
 import { initialiseDatabase } from 'components/schemas';
-import { useCallback, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccounts } from '.';
 import { getAccountDetails } from './accounts.helpers';
 
-export const useAccountDetails = (spreadsheetId: EntityId) => {
+export const useAccountDetails = (
+  spreadsheetId: EntityId,
+  initialise = false
+) => {
   const accounts = useSelector(selectAccounts);
   const dispatch = useDispatch();
 
@@ -19,13 +22,18 @@ export const useAccountDetails = (spreadsheetId: EntityId) => {
 
   const { account: { initialised = false } = {} } = result;
 
-  const initialiseAccount = useCallback(async () => {
+  useEffect(() => {
+    if (!initialise) return;
     if (initialised) return;
 
-    dispatch(startLoadingAccount(spreadsheetId));
-    const details = await initialiseDatabase([spreadsheetId as string]);
-    dispatch(loadAccounts(details));
-  }, [spreadsheetId, initialised, dispatch]);
+    const init = async () => {
+      dispatch(startLoadingAccount(spreadsheetId));
+      const details = await initialiseDatabase([spreadsheetId as string]);
+      dispatch(loadAccounts(details));
+    };
 
-  return { ...result, initialiseAccount };
+    init();
+  }, [spreadsheetId, initialise, initialised, dispatch]);
+
+  return result;
 };

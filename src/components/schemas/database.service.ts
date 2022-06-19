@@ -1,9 +1,9 @@
+import { treatGoogleAPIError } from 'components/google/google-api/google-api';
 import { AccountInterface } from 'components/redux/slices/accounts/accounts.interface';
 import {
   createSheet,
   getSheetRows,
   getSpreadsheetDetails,
-  treatGoogleAPIError,
 } from 'components/sheet-api';
 import { SheetProperties } from '.';
 import { Schemas } from './database.interface';

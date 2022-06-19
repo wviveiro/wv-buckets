@@ -1,19 +1,8 @@
-import { fetchGoogleApi } from 'components/google-api/google-api';
+import {
+  fetchGoogleApi,
+  treatGoogleAPIError,
+} from 'components/google/google-api/google-api';
 import { numberToLetter } from 'components/util/number-to-letter';
-
-export const treatGoogleAPIError = (error: any): string => {
-  console.error(error);
-  if (typeof error === 'string') return error;
-  if (error?.message) {
-    return error.message;
-  } else if (error?.details) {
-    return error.details;
-  } else if (error?.result?.error?.message) {
-    return error?.result?.error?.message;
-  } else {
-    return 'Something went wrong trying to authenticated. Check your log';
-  }
-};
 
 /**
  * Subscribe user to receive user sign status

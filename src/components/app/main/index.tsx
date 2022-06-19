@@ -1,4 +1,4 @@
-import { Login } from 'components/login';
+import { Login } from 'components/pages/login';
 import { Router } from 'components/router';
 import { Settings } from 'components/settings';
 import { SplashScreen } from 'components/splash-screen';

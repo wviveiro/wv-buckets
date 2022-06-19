@@ -1,6 +1,9 @@
 import { setAlert } from 'components/alert';
 import { getGlobalSettings } from 'components/global-settings';
-import { getUserInfo } from 'components/google-api/google-api';
+import {
+  getUserInfo,
+  treatGoogleAPIError,
+} from 'components/google/google-api/google-api';
 import { selectAuth } from 'components/redux/selectors/auth';
 import { setAuth } from 'components/redux/slices/auth';
 import { Status } from 'components/util/status';
@@ -45,7 +48,7 @@ export const useMainState = () => {
         );
       })
       .catch((error) => {
-        setAlert(error);
+        setAlert(treatGoogleAPIError(error), 'danger');
         dispatch(
           setAuth({
             status: Status.loaded,
