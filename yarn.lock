@@ -343,6 +343,11 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.0.2.tgz#1c17eadb2fa77f80a796ad5ea9bf108e6993ef06"
   integrity sha512-GRSOFhJzjGN+d4sKHTMSvNeUPoZiDHWmRnXfzaxrqe7dE/Nzlc8BiMSJdLDESZlndM7jIUrZ/F4yWqVYlI0rwQ==
 
+"@types/google.accounts@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/google.accounts/-/google.accounts-0.0.2.tgz#4e03bd249fe490f004f4f8d6423343fc51f5614a"
+  integrity sha512-wmnbDIiGZNr3dJ+NCGiWme78rhsf5gn1YJM6uRjf3FCb8lrRptybQeAnHQ+GDfKSo+z2hRxhS32VRDXJEAvCmg==
+
 "@types/hoist-non-react-statics@*":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -810,6 +815,13 @@ react-router@6.4.2:
   dependencies:
     "@remix-run/router" "1.0.2"
 
+react-sweet-state@^2.6.5:
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/react-sweet-state/-/react-sweet-state-2.6.5.tgz#462d9fec194420762c9a496c9b337346d908ad59"
+  integrity sha512-PN/B2cZkItpWkYZDzf9RXnGDkKTv8ZLzxgLCI6J+N/RcM4J0E5uFAwmbIXlK2JDoMDZU/g+Z5tYiOVeZfDIfRQ==
+  dependencies:
+    use-sync-external-store "^1.0.0"
+
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
@@ -910,6 +922,11 @@ update-browserslist-db@^1.0.9:
   dependencies:
     escalade "^3.1.1"
     picocolors "^1.0.0"
+
+use-sync-external-store@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 vite@^3.1.0:
   version "3.1.6"

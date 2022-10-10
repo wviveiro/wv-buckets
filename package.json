@@ -15,9 +15,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
+    "react-sweet-state": "^2.6.5",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
+    "@types/google.accounts": "^0.0.2",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
