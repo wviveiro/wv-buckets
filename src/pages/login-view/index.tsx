@@ -1,14 +1,14 @@
 import React from "react";
 import { LoginButtton, LoginContainer } from "./styled";
 import googleLogin from "../../assets/google-logo.svg";
-import { useLoadGoogle } from "./services/use-load-google";
+import { useLoadGoogle } from "../../services/use-load-google";
 
 export const LoginView: React.FC = () => {
-  useLoadGoogle();
+  const { disabled, onClickGoogleButton } = useLoadGoogle();
 
   return (
     <LoginContainer>
-      <LoginButtton>
+      <LoginButtton disabled={disabled} onClick={onClickGoogleButton}>
         <img src={googleLogin} /> Login with Google
       </LoginButtton>
     </LoginContainer>

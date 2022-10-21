@@ -1,5 +1,6 @@
 import React from "react";
 import { BodyComponent } from "../../components/body-component";
+import { HomeFooter } from "../../components/home-footer";
 import { MainContainer } from "../../components/main-container";
 import { TitleComponent } from "../../components/title-component";
 
@@ -16,6 +17,7 @@ export const NewAccounts: React.FC = () => {
           account
         </p>
       </BodyComponent>
+      <HomeFooter />
     </MainContainer>
   );
 };

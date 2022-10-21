@@ -5,7 +5,7 @@ export const FooterContainer = styled.div`
   border: solid 0.5px #ddd;
   padding: 8px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 48px;
 `;

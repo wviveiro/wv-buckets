@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const IconButton = styled.button`
+export const IconButton = styled.button<{ active: boolean }>`
   border: 0;
   margin: 0;
   border-radius: 50%;
@@ -8,7 +8,7 @@ export const IconButton = styled.button`
   background: inherit;
   width: 32px;
   height: 32px;
-  color: #007afe;
+  color: ${({ active }) => (active ? "#000" : "#007afe")};
 
   &:hover {
     background-color: #eee;
