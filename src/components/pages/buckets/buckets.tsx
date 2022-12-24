@@ -1,9 +1,12 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SplashScreen } from 'components/splash-screen';
 import { PageHeader } from 'components/ui-components/layout/page-header';
 import { formatToCurrency } from 'components/util/format-to-currency';
 import React from 'react';
 import { useBucketsState } from './buckets.hook';
 import {
+  AddButton,
   BucketContentContainer,
   BucketErrorContainer,
   BucketItem,
@@ -11,7 +14,7 @@ import {
 } from './buckets.styled';
 
 export const Buckets: React.FC = () => {
-  const { account, buckets } = useBucketsState();
+  const { account, buckets, addValue } = useBucketsState();
 
   if (!account) return null;
 
@@ -38,6 +41,9 @@ export const Buckets: React.FC = () => {
                 <div className="bucket-inner">
                   <div className="bucket-name">
                     <h3>{bucketId}</h3>
+                    <AddButton onClick={addValue(bucketId)}>
+                      <FontAwesomeIcon icon={faPlus} />
+                    </AddButton>
                   </div>
                   <div className="bucket-price">
                     <strong>

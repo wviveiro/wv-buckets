@@ -86,24 +86,27 @@ export const createSheet = async (
   columns: string[]
 ) => {
   try {
-    const result = await gapi.client.sheets.spreadsheets.batchUpdate({
-      spreadsheetId,
-      resource: {
-        requests: [
-          {
-            addSheet: {
-              properties: {
-                title,
+    const result = await fetchGoogleApi(
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}:batchUpdate`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          requests: [
+            {
+              addSheet: {
+                properties: {
+                  title,
+                },
               },
             },
-          },
-        ],
-      },
-    });
+          ],
+        }),
+      }
+    );
 
     await addSheetRows(spreadsheetId, title, [columns]);
 
-    const properties = result.result.replies?.[0].addSheet?.properties;
+    const properties = result.replies?.[0].addSheet?.properties;
 
     if (!properties) throw new Error('Invalid response from the api.');
 
@@ -166,13 +169,21 @@ export const getSheetRows = async (
 };
 
 export const createSpreadsheet = async (title: string) => {
-  const response = await gapi.client.sheets.spreadsheets.create({
-    resource: {
-      properties: {
-        title,
-      },
-    },
-  });
+  try {
+    const result = await fetchGoogleApi(
+      `https://sheets.googleapis.com/v4/spreadsheets`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          properties: {
+            title,
+          },
+        }),
+      }
+    );
 
-  return response;
+    return result;
+  } catch (e) {
+    throw treatGoogleAPIError(e);
+  }
 };

@@ -34,6 +34,7 @@ export const BucketItem = styled(Link)<{ total: number }>`
     width: 50%;
     height: 100px;
     color: #fff;
+    position: relative;
 
     & > .bucket-inner {
       border-radius: 5px;
@@ -43,8 +44,14 @@ export const BucketItem = styled(Link)<{ total: number }>`
       background-color: rgba(255, 255, 255, 0.01);
 
       .bucket-name {
+        display: flex;
+        align-items: center;
+        margin: 10px;
         h3 {
           font-size: 1rem;
+          flex-grow: 1;
+          margin: 0;
+          color: #fff;
         }
       }
 
@@ -67,4 +74,9 @@ export const BucketItem = styled(Link)<{ total: number }>`
       margin-right: 5px;
     }
   `}
+`;
+
+export const AddButton = styled.button`
+  color: #fff;
+  font-size: 11px;
 `;

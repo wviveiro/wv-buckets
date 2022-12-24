@@ -106,7 +106,7 @@ export const useModalAddAccountState = (props: ModalAddAccountProps) => {
 
     try {
       const response = await createSpreadsheet(state.title);
-      const spreadsheetId = response.result.spreadsheetId;
+      const spreadsheetId = response.spreadsheetId;
 
       if (!spreadsheetId) throw new Error('Spreadsheet not returned from api');
 
