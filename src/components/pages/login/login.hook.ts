@@ -20,10 +20,8 @@ export const useLoginState = () => {
   const dispatch = useDispatch();
 
   const onLogin = async () => {
-    const requestURL = new URL('request-oauth', process.env.REACT_APP_BACKEND);
-
     popup.current = window.open(
-      requestURL.href,
+      `${process.env.REACT_APP_BACKEND}/request-oauth`,
       'loginpage',
       'width=400,height=500'
     );

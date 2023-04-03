@@ -48,9 +48,8 @@ export const fetchGoogleApi = async <T extends unknown>(
 };
 
 export const requestToken = async (authToken: string) => {
-  const requestURL = new URL('request-token', process.env.REACT_APP_BACKEND);
   const checkResult = await (
-    await fetch(requestURL.href, {
+    await fetch(`${process.env.REACT_APP_BACKEND}/request-token`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
