@@ -9,6 +9,8 @@ export interface GlobalSettingsInterface {
   accounts: string[];
   /** Access token from google */
   access_token: string;
+  /** Id received from wvbucket authentication */
+  wvid: string;
 }
 
 export enum GlobalEnum {

@@ -1,5 +1,4 @@
 import { setAlert } from 'components/alert';
-import { getGlobalSettings } from 'components/global-settings';
 import {
   getUserInfo,
   treatGoogleAPIError,
@@ -15,48 +14,27 @@ export const useMainState = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { access_token, client_id } = getGlobalSettings();
-
-    if (!client_id) {
-      dispatch(
-        setAuth({
-          status: Status.loaded,
-          authenticated: false,
-          signedin: false,
-        })
-      );
-    }
-
-    if (!access_token) {
-      dispatch(
-        setAuth({
-          status: Status.loaded,
-          authenticated: true,
-          signedin: false,
-        })
-      );
-    }
-
-    getUserInfo()
-      .then(() => {
+    const isAuthenticated = async () => {
+      try {
+        await getUserInfo();
         dispatch(
           setAuth({
             status: Status.loaded,
-            authenticated: true,
             signedin: true,
           })
         );
-      })
-      .catch((error) => {
-        setAlert(treatGoogleAPIError(error), 'danger');
+      } catch (err) {
+        setAlert(treatGoogleAPIError(err), 'danger');
         dispatch(
           setAuth({
             status: Status.loaded,
-            authenticated: true,
             signedin: false,
           })
         );
-      });
+      }
+    };
+
+    isAuthenticated();
   }, [dispatch]);
 
   return {

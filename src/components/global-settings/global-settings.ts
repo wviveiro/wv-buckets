@@ -13,6 +13,7 @@ export const getGlobalSettings = (): GlobalSettingsInterface => {
     spid: '',
     accounts: [],
     access_token: '',
+    wvid: '',
   };
 
   const strGlobalSettings = localStorage.getItem(GlobalEnum.name);

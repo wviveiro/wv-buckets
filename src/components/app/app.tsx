@@ -6,18 +6,15 @@ import { store } from 'components/redux/store';
 import { Provider } from 'react-redux';
 import { Main } from './main';
 import { RowModal } from 'components/ui-components/row-modal';
-import { LoadGoogleScripts } from 'components/google';
 
 export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <LayoutTheme>
-        <LoadGoogleScripts>
-          <Main />
-          <AlertsCreator />
-          <ConfirmModal />
-          <RowModal />
-        </LoadGoogleScripts>
+        <Main />
+        <AlertsCreator />
+        <ConfirmModal />
+        <RowModal />
       </LayoutTheme>
     </Provider>
   );
