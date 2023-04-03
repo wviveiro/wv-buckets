@@ -51,7 +51,7 @@ export const requestToken = async (authToken: string) => {
   const checkResult = await (
     await fetch(`${process.env.REACT_APP_BACKEND}/request-token`, {
       headers: {
-        Authorization: `Bearer ${authToken}`,
+        authorization: `Bearer ${authToken}`,
       },
     })
   ).json();
