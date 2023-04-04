@@ -66,7 +66,7 @@ export const getSpreadsheetDetails = async (
 ): Promise<gapi.client.Request<gapi.client.sheets.Spreadsheet>> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await fetchGoogleApi(
+      const result = await fetchGoogleApi<gapi.client.sheets.Spreadsheet>(
         `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}`
       );
 
@@ -86,7 +86,16 @@ export const createSheet = async (
   columns: string[]
 ) => {
   try {
-    const result = await fetchGoogleApi(
+    const result = await fetchGoogleApi<{
+      replies?: {
+        addSheet?: {
+          properties?: {
+            title: string;
+            sheetId: string;
+          };
+        };
+      }[];
+    }>(
       `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}:batchUpdate`,
       {
         method: 'POST',
@@ -159,18 +168,18 @@ export const getSheetRows = async (
 
   const lastColumn = numberToLetter(args.columns || 1);
 
-  const result = await fetchGoogleApi(
+  const result = await fetchGoogleApi<{ values: string[][] }>(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${title}!A2:${lastColumn}`
   );
 
-  let values = (result.values || []) as string[][];
+  let values = result.values || [];
 
   return values;
 };
 
 export const createSpreadsheet = async (title: string) => {
   try {
-    const result = await fetchGoogleApi(
+    const result = await fetchGoogleApi<{ spreadsheetId: string }>(
       `https://sheets.googleapis.com/v4/spreadsheets`,
       {
         method: 'POST',

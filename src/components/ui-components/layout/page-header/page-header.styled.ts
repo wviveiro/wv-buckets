@@ -5,7 +5,9 @@ export const PageHeaderContainer = styled.div`
     display: flex;
     align-items: center;
     height: 50px;
-    width: calc(100% - 50px);
+    width: 100%;
+    flex-shrink: 0;
+    box-shadow: #000 0 0 1px 0;
 
     a {
       color: #fff;
@@ -20,6 +22,7 @@ export const PageHeaderContainer = styled.div`
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      font-size: 1rem;
     }
   `}
 `;

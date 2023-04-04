@@ -30,7 +30,7 @@ export const useCategoryList = () => {
             ...acc.dateObj,
             [date]: {
               date,
-              formatDate: format(new Date(date), 'ccc dd LLL'),
+              formatDate: format(new Date(date), 'ccc dd LLL yyyy'),
               total: curr.amount,
               rows: [curr],
             },

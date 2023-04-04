@@ -22,6 +22,7 @@ export const CategoryListContainer = styled.div`
     .date-row-header {
       display: flex;
       margin-bottom: 12px;
+      justify-content: space-between;
       strong {
         margin-right: 10px;
       }
@@ -47,7 +48,6 @@ export const CurrencyTotal = styled.span<{ amount: number }>`
 `;
 
 export const LineAmount = styled.div<{ amount: number }>`
-  font-weight: bold;
   padding: 0px 5px;
   ${({ amount, ...props }) =>
     amount > 0 &&

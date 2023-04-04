@@ -29,10 +29,14 @@ export const BucketContentContainer = styled.div`
   }
 `;
 
+export const AddButton = styled.button`
+  color: #fff;
+  font-size: 11px;
+`;
+
 export const BucketItem = styled(Link)<{ total: number }>`
   ${(props) => css`
     width: 50%;
-    height: 100px;
     color: #fff;
     position: relative;
 
@@ -42,6 +46,7 @@ export const BucketItem = styled(Link)<{ total: number }>`
       margin: 10px;
       height: calc(100% - 20px);
       background-color: rgba(255, 255, 255, 0.01);
+      position: relative;
 
       .bucket-name {
         display: flex;
@@ -52,6 +57,22 @@ export const BucketItem = styled(Link)<{ total: number }>`
           flex-grow: 1;
           margin: 0;
           color: #fff;
+          max-width: 50px;
+        }
+
+        ${AddButton} {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 25px;
+          height: 25px;
+          // border: solid 1px #f00;
+          padding: 0;
+
+          svg {
+            width: 15px;
+            height: 15px;
+          }
         }
       }
 
@@ -74,9 +95,4 @@ export const BucketItem = styled(Link)<{ total: number }>`
       margin-right: 5px;
     }
   `}
-`;
-
-export const AddButton = styled.button`
-  color: #fff;
-  font-size: 11px;
 `;

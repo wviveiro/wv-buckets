@@ -1,4 +1,5 @@
 import { setAlert } from 'components/alert';
+import { getGlobalSettings } from 'components/global-settings';
 import {
   getUserInfo,
   treatGoogleAPIError,
@@ -14,6 +15,12 @@ export const useMainState = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const { access_token } = getGlobalSettings();
+    if (!access_token) {
+      dispatch(setAuth({ status: Status.loaded }));
+      return;
+    }
+
     const isAuthenticated = async () => {
       try {
         await getUserInfo();

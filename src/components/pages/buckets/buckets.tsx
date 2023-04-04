@@ -1,6 +1,8 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SplashScreen } from 'components/splash-screen';
+import { Button } from 'components/ui-components/button';
+import { LayoutFooter } from 'components/ui-components/footer';
 import { PageHeader } from 'components/ui-components/layout/page-header';
 import { formatToCurrency } from 'components/util/format-to-currency';
 import React from 'react';
@@ -56,6 +58,11 @@ export const Buckets: React.FC = () => {
           </div>
         </BucketContentContainer>
       )}
+      <LayoutFooter>
+        <Button onClick={addValue('')}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Button>
+      </LayoutFooter>
     </BucketsContainer>
   );
 };
