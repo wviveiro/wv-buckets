@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Bar,
+  Line,
 } from 'recharts';
 import { formatToCurrency } from 'components/util/format-to-currency';
 import { ThemeContext } from 'styled-components';
@@ -50,7 +51,9 @@ export const CategoryChart: React.FC = () => {
 
         <ResponsiveContainer width={'100%'} height={400}>
           <ComposedChart data={chartData}>
-            <Bar dataKey="total" fill={themeContext.colors.success} />
+            <Bar dataKey="credit" fill={themeContext.colors.success} />
+            <Bar dataKey="debit" fill={themeContext.colors.danger} />
+            <Line dataKey="balance" stroke={themeContext.colors.primary} />
             <CartesianGrid strokeDasharray="3 5" />
             <XAxis dataKey="name" />
             <Tooltip

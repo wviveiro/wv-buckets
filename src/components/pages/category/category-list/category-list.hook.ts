@@ -68,34 +68,49 @@ export const useCategoryList = () => {
     [rows]
   );
 
-  const chartObj: Record<string, { name: string; total: number }> = {};
+  const chartObj: Record<
+    string,
+    { name: string; debit: number; credit: number; balance: number }
+  > = {};
   const keyFormats = {
     week: { format: 'yyyy-II', display: 'II yyyy' },
     month: { format: 'yyyy-MM', display: 'LLL yyyy' },
     day: { format: 'yyyy-MM-dd', display: 'dd LLL yyyy' },
   };
+  let balance: number = 0;
 
-  rowDates.dates.forEach((day) => {
-    const obj = rowDates.dateObj[day];
-    const key = format(new Date(day), keyFormats[chartDisplay].format);
+  rowDates.dates
+    .slice(0)
+    .reverse()
+    .forEach((day) => {
+      const obj = rowDates.dateObj[day];
+      const key = format(new Date(day), keyFormats[chartDisplay].format);
+      const total = Math.floor(obj.total * 100);
+      balance += total;
 
-    if (!chartObj[key])
-      chartObj[key] = {
-        name: format(new Date(day), keyFormats[chartDisplay].display),
-        total: 0,
-      };
+      if (!chartObj[key])
+        chartObj[key] = {
+          name: format(new Date(day), keyFormats[chartDisplay].display),
+          credit: 0,
+          debit: 0,
+          balance: 0,
+        };
 
-    chartObj[key].total += Math.floor(obj.total * 100);
+      if (total > 0) {
+        chartObj[key].credit += total;
+      }
+      if (total < 0) {
+        chartObj[key].debit += total;
+      }
 
-    return {
-      name: obj.formatDate,
-      total: obj.total,
-    };
-  });
+      chartObj[key].balance = balance;
+    });
 
   const chartData = Object.entries(chartObj).map(([, entry]) => ({
     name: entry.name,
-    total: Math.round(entry.total / 100),
+    credit: Math.round(entry.credit / 100),
+    debit: Math.round(entry.debit / 100),
+    balance: Math.round(entry.balance / 100),
   }));
 
   const handleChangeChartType = (type: ChartType) => () =>
