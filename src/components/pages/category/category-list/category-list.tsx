@@ -9,9 +9,15 @@ import {
 import { formatToCurrency } from 'components/util/format-to-currency';
 import { PageBody, PageContainer } from 'components/ui-components/layout/page';
 import { CategoryTab } from '../category-tab';
+import { LayoutFooter } from 'components/ui-components/footer';
+import { Button } from 'components/ui-components/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useBucketsState } from 'components/pages/buckets/buckets.hook';
 
 export const CategoryList: React.FC = () => {
   const { accountid, category, available, rowDates } = useCategoryList();
+  const { addValue } = useBucketsState();
 
   return (
     <PageContainer>
@@ -51,6 +57,11 @@ export const CategoryList: React.FC = () => {
           })}
         </CategoryListContainer>
       </PageBody>
+      <LayoutFooter>
+        <Button onClick={addValue(category)}>
+          <FontAwesomeIcon icon={faPlus} />
+        </Button>
+      </LayoutFooter>
     </PageContainer>
   );
 };

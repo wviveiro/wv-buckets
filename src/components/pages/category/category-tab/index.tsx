@@ -15,13 +15,13 @@ export const CategoryTab: React.FC = () => {
     <TabContainer>
       <TabButton
         to={`/accounts/${accountid}/category/${category}/list`}
-        active={!!isList}
+        data-active={!!isList}
       >
         List
       </TabButton>
       <TabButton
         to={`/accounts/${accountid}/category/${category}/chart`}
-        active={!!isChart}
+        data-active={!!isChart}
       >
         Chart
       </TabButton>

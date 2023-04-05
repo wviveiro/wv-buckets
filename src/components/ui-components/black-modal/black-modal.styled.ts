@@ -10,6 +10,7 @@ export const BlackModalContainer = styled.div<BlackModalStyledInterface>`
     top: 0;
     bottom: 0;
     width: 100%;
+    z-index: 2;
     ${!props.noBackground &&
     css`
       background-color: rgba(0, 0, 0, ${props.show ? 0.7 : 0});

@@ -3,13 +3,22 @@ import styled, { css } from 'styled-components';
 
 export const TabContainer = styled.div`
   display: flex;
+  background-color: #000;
+  box-shadow: #000 0 0 1px 0;
 `;
 
-export const TabButton = styled(Link)<{ active: boolean }>`
+export const TabButton = styled(Link)<{ 'data-active': boolean }>`
   color: inherit;
-  ${({ active }) =>
-    active &&
+  padding: 4px 12px;
+
+  &:active,
+  &:hover {
+    color: inherit;
+  }
+
+  ${({ theme, ...props }) =>
+    props['data-active'] &&
     css`
-      background: #4d4f57;
+      background: ${theme.colors.background};
     `}
 `;
