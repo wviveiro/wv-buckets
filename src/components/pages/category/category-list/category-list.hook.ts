@@ -102,7 +102,6 @@ export const useCategoryList = () => {
       if (total < 0) {
         chartObj[key].debit += total;
       }
-
       chartObj[key].balance = balance;
     });
 
