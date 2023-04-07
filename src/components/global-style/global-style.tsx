@@ -1,6 +1,5 @@
 import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { GlobalStyleTheme } from './global-style.interface';
 
 /**
  * Global CSS
@@ -56,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
 /**
  * Main Theme
  */
-const theme: GlobalStyleTheme = {
+const theme = {
   colors: {
     primary: 'var(--bs-primary)',
     danger: 'var(--bs-danger)',
@@ -67,6 +66,7 @@ const theme: GlobalStyleTheme = {
     textBlack: '#000',
     gray: 'rgba(120, 120, 120, 1)',
     gray2: 'rgba(255, 255, 255, 0.05)',
+    selectedBackground: '#4d2975',
   },
   device: {
     padding:
@@ -77,6 +77,15 @@ const theme: GlobalStyleTheme = {
     paddingRight: 'env(safe-area-inset-right)',
   },
 };
+
+export type GlobalStyleTheme = {
+  colors: typeof theme.colors;
+  device: typeof theme.device;
+};
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends GlobalStyleTheme {}
+}
 
 /**
  * Main style and theme of application

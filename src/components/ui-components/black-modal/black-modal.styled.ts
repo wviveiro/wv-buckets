@@ -1,3 +1,4 @@
+import { zIndex } from 'components/util/z-index';
 import styled, { css } from 'styled-components/macro';
 import { BlackModalStyledInterface } from './black-modal.interface';
 
@@ -10,7 +11,7 @@ export const BlackModalContainer = styled.div<BlackModalStyledInterface>`
     top: 0;
     bottom: 0;
     width: 100%;
-    z-index: 2;
+    z-index: ${zIndex.blackModal};
     ${!props.noBackground &&
     css`
       background-color: rgba(0, 0, 0, ${props.show ? 0.7 : 0});

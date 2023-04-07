@@ -1,3 +1,4 @@
+import { zIndex } from 'components/util/z-index';
 import styled from 'styled-components';
 
 export const FooterContainer = styled.div`
@@ -8,5 +9,5 @@ export const FooterContainer = styled.div`
   align-items: center;
   flex-shrink: 0;
   box-shadow: #000 0 0 1px 0;
-  z-index: 1;
+  z-index: ${zIndex.footer};
 `;

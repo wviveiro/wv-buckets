@@ -1,3 +1,4 @@
+import { zIndex } from 'components/util/z-index';
 import styled, { css } from 'styled-components/macro';
 import { TogglerProps } from './toggler.interface';
 
@@ -21,7 +22,7 @@ export const TogglerContainer = styled.div<TogglerProps>`
       .toggler-option-container {
         width: ${width}%;
         text-align: center;
-        z-index: 1;
+        z-index: ${zIndex.toggler};
 
         .toggler-option-button {
           color: #fff;

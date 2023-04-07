@@ -1,3 +1,4 @@
+import { zIndex } from 'components/util/z-index';
 import styled, { css } from 'styled-components/macro';
 import { bottomModalTransitionMilliseconds } from '../bottom-modal/bottom-modal.styled';
 
@@ -10,6 +11,7 @@ export const DateModalContainer = styled.div<{ open: boolean }>`
   right: 0;
   bottom: 0;
   transition: background-color ${bottomModalTransitionMilliseconds}ms linear;
+  z-index: ${zIndex.dateModal};
   ${(props) =>
     props.open &&
     css`
@@ -99,7 +101,7 @@ export const DateModalInner = styled.div<{ open: boolean }>`
               }
 
               &.react-datepicker__day--selected {
-                background-color: ${props.theme.colors.background};
+                background-color: ${props.theme.colors.selectedBackground};
                 color: #fff;
               }
             }
