@@ -76,7 +76,7 @@ const theme = {
     paddingLeft: 'env(safe-area-inset-left)',
     paddingRight: 'env(safe-area-inset-right)',
   },
-};
+} as const;
 
 export type GlobalStyleTheme = {
   colors: typeof theme.colors;
