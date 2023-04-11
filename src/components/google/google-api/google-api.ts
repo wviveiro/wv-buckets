@@ -1,6 +1,6 @@
 import {
-  getGlobalSettings,
-  setGlobalSettings,
+    getGlobalSettings,
+    setGlobalSettings,
 } from 'components/global-settings';
 import { FetchResult } from './google-api.types';
 
@@ -10,74 +10,73 @@ import { FetchResult } from './google-api.types';
  * @returns
  */
 export const fetchGoogleApi = async <T extends unknown>(
-  url: string,
-  options: RequestInit = {},
-  retry: boolean = false
+    url: string,
+    options: RequestInit = {},
+    retry: boolean = false
 ): Promise<T> => {
-  const { wvid, ...settings } = getGlobalSettings();
+    const { wvid, ...settings } = getGlobalSettings();
 
-  const fallback = async () => {
-    if (!wvid) throw new Error('WVID not set');
-    return await requestToken(wvid);
-  };
+    const fallback = async () => {
+        if (!wvid) throw new Error('WVID not set');
+        return await requestToken(wvid);
+    };
 
-  const access_token = settings.access_token || (await fallback());
+    const access_token = settings.access_token || (await fallback());
 
-  const result = await (
-    await fetch(url, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${access_token}`,
-        ...options.headers,
-      },
-    })
-  ).json();
+    const result = await (
+        await fetch(url, {
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${access_token}`,
+                ...options.headers,
+            },
+        })
+    ).json();
 
-  if (result.error) {
-    if (!retry) {
-      const new_access_token = await fallback();
-      setGlobalSettings({ access_token: new_access_token });
-      return fetchGoogleApi(url, options, true);
+    if (result.error) {
+        if (!retry) {
+            const new_access_token = await fallback();
+            setGlobalSettings({ access_token: new_access_token });
+            return fetchGoogleApi(url, options, true);
+        }
+
+        throw new Error(result.error.message);
     }
 
-    throw new Error(result.error.message);
-  }
-
-  return result;
+    return result;
 };
 
 export const requestToken = async (authToken: string) => {
-  const checkResult = await (
-    await fetch(`${process.env.REACT_APP_BACKEND}/request-token`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-  ).json();
+    const checkResult = await (
+        await fetch(`${process.env.REACT_APP_BACKEND}/request-token`, {
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        })
+    ).json();
 
-  if (!checkResult.access_token) throw new Error('Invalid WVID token');
+    if (!checkResult.access_token) throw new Error('Invalid WVID token');
 
-  return checkResult.access_token;
+    return checkResult.access_token;
 };
 
 /** Get user basic info */
 export const getUserInfo = async (): Promise<FetchResult> => {
-  return await fetchGoogleApi<FetchResult>(
-    'https://www.googleapis.com/oauth2/v1/userinfo'
-  );
+    return await fetchGoogleApi<FetchResult>(
+        'https://www.googleapis.com/oauth2/v1/userinfo'
+    );
 };
 
 export const treatGoogleAPIError = (error: any): string => {
-  console.error(error);
-  if (typeof error === 'string') return error;
-  if (error?.message) {
-    return error.message;
-  } else if (error?.details) {
-    return error.details;
-  } else if (error?.result?.error?.message) {
-    return error?.result?.error?.message;
-  } else {
-    return 'Something went wrong trying to authenticated. Check your log';
-  }
+    if (typeof error === 'string') return error;
+    if (error?.message) {
+        return error.message;
+    } else if (error?.details) {
+        return error.details;
+    } else if (error?.result?.error?.message) {
+        return error?.result?.error?.message;
+    } else {
+        return 'Something went wrong trying to authenticated. Check your log';
+    }
 };
