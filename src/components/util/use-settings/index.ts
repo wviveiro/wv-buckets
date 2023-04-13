@@ -49,5 +49,16 @@ export const useSettings = (spreadsheetId: string) => {
         [settingRows]
     );
 
+    const updateSettings = useCallback(
+        (findSettingName: string, data: unknown) => {
+            const index = settingRows.findIndex(
+                ({ settingName }) => findSettingName === settingName
+            );
+
+            const cell = index > -1 ? `A${index + 2}` : `A1:append`;
+        },
+        []
+    );
+
     return [{ settingRows, status }, { getSetting }] as const;
 };

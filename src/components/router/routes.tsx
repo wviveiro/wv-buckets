@@ -6,25 +6,31 @@ import { Buckets } from 'components/pages/buckets/buckets';
 import { CategoryList } from 'components/pages/category/category-list';
 import { Authenticate } from 'components/pages/authenticate';
 import { CategoryChart } from 'components/pages/category/category-chart';
+import { accountRoute, categoryRoute } from './constants';
+import { BulkAdd } from 'components/pages/bulk-add';
 
 export const Router: React.FC = () => {
-  return (
-    <HashRouter>
-      <Switch>
-        <Route path="/authenticate/:id" component={Authenticate} />
-        <AuthRoute path="/accounts/:accountid/buckets" component={Buckets} />
-        <AuthRoute
-          path="/accounts/:accountid/category/:category/list"
-          component={CategoryList}
-        />
-        <AuthRoute
-          path="/accounts/:accountid/category/:category/chart"
-          component={CategoryChart}
-        />
-        <AuthRoute path="/:typeCreation" component={Main} />
+    return (
+        <HashRouter>
+            <Switch>
+                <Route path="/authenticate/:id" component={Authenticate} />
+                <AuthRoute
+                    path={`${accountRoute}/buckets`}
+                    component={Buckets}
+                />
+                <AuthRoute path={`${accountRoute}/bulk`} component={BulkAdd} />
+                <AuthRoute
+                    path={`${categoryRoute}/list`}
+                    component={CategoryList}
+                />
+                <AuthRoute
+                    path={`${categoryRoute}/chart`}
+                    component={CategoryChart}
+                />
+                <AuthRoute path="/:typeCreation" component={Main} />
 
-        <AuthRoute path="/" component={Main} />
-      </Switch>
-    </HashRouter>
-  );
+                <AuthRoute path="/" component={Main} />
+            </Switch>
+        </HashRouter>
+    );
 };
