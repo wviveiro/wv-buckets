@@ -11,4 +11,5 @@ export const FooterContainer = styled.div`
     box-shadow: #000 0 0 1px 0;
     z-index: ${zIndex.footer};
     padding: 0 50px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
 `;

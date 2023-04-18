@@ -7,7 +7,7 @@ import { CategoryList } from 'components/pages/category/category-list';
 import { Authenticate } from 'components/pages/authenticate';
 import { CategoryChart } from 'components/pages/category/category-chart';
 import { accountRoute, categoryRoute } from './constants';
-import { BulkAdd } from 'components/pages/bulk-add';
+import { BulkList } from 'components/pages/bulk';
 
 export const Router: React.FC = () => {
     return (
@@ -18,7 +18,7 @@ export const Router: React.FC = () => {
                     path={`${accountRoute}/buckets`}
                     component={Buckets}
                 />
-                <AuthRoute path={`${accountRoute}/bulk`} component={BulkAdd} />
+                <AuthRoute path={`${accountRoute}/bulk`} component={BulkList} />
                 <AuthRoute
                     path={`${categoryRoute}/list`}
                     component={CategoryList}

@@ -34,31 +34,39 @@ export const useSettings = (spreadsheetId: string) => {
         };
 
         load();
-    }, []);
+    }, [spreadsheetId]);
 
     const getSetting = useCallback(
-        <T>(findSettingName: string) => {
+        <T>(findSettingName: string, fallback: T) => {
             const setting = settingRows.find(
                 ({ settingName }) => findSettingName === settingName
             );
 
             if (setting) return setting.data as T;
 
-            return undefined;
+            return fallback;
         },
         [settingRows]
     );
 
-    const updateSettings = useCallback(
-        (findSettingName: string, data: unknown) => {
-            const index = settingRows.findIndex(
-                ({ settingName }) => findSettingName === settingName
-            );
+    // const updateSettings = useCallback(
+    //     (findSettingName: string, data: unknown) => {
+    //         const index = settingRows.findIndex(
+    //             ({ settingName }) => findSettingName === settingName
+    //         );
 
-            const cell = index > -1 ? `A${index + 2}` : `A1:append`;
+    //         const cell = index > -1 ? `A${index + 2}` : `A1:append`;
+    //     },
+    //     []
+    // );
+
+    return [
+        {
+            settingRows,
+            status,
+            isLoaded: status === Status.loaded,
+            hasError: status === Status.error,
         },
-        []
-    );
-
-    return [{ settingRows, status }, { getSetting }] as const;
+        { getSetting },
+    ] as const;
 };
